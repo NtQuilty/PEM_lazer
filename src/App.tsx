@@ -7,6 +7,7 @@ import { HomePage } from './components/HomePage';
 import { MainContent } from './components/MainContent/MainContent';
 import { Projects } from './components/Projects/Projects';
 import { Box } from '@mui/material';
+import { Contacts } from './components/Contacts/Contacts';
 
 export const App = () => {
   const location = useLocation();
@@ -22,7 +23,7 @@ export const App = () => {
           <Route path='/portfolio' element={<Projects />} />
           <Route path='/help' element={<FAQ />} />
           <Route path='/about' element={<About isVisible={true} />} />
-          <Route path='/contacts' element={<div>сделать</div>} />
+          <Route path='/contacts' element={<Contacts />} />
         </Routes>
       </Box>
       <Footer />
