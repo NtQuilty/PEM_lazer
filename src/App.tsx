@@ -1,4 +1,5 @@
 import { Advantages } from './components/Advantages/Advantages';
+import { ConsultationPromo } from './components/ConsultationPromo/ConsultationPromo';
 import { Header } from './components/Header/Header';
 import { LandingHero } from './components/LandingHero/LandingHero';
 import { MainContent } from './components/MainContent/MainContent';
@@ -10,6 +11,7 @@ export const App = () => {
       <LandingHero />
       <MainContent />
       <Advantages />
+      <ConsultationPromo />
     </>
   );
 };
