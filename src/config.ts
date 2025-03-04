@@ -1,4 +1,17 @@
-export const navigationLinks = [
+export type NavigationOption = {
+  id: string;
+  title: string;
+  link: string;
+};
+
+type NavigationLink = {
+  id: string;
+  title: string;
+  link: string;
+  options?: NavigationOption[];
+};
+
+export const navigationLinks: NavigationLink[] = [
   {
     id: 'home',
     title: 'Главная',
@@ -41,7 +54,7 @@ export const navigationLinks = [
     title: 'Контакты',
     link: '/contacts',
   },
-] as const;
+];
 
 export const services = [
   {
