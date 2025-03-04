@@ -62,14 +62,14 @@ export const services = [
     title: 'Отсканируем любой объект с сохранением параметров',
     description:
       'У нас в наличии много высокоточного оборудования которое позволяет осуществлять 3D сканирование любого объекта.',
-    image: '/public/images/services-images/service-lazer.png',
+    image: '/images/services-images/service-lazer.png',
   },
   {
     id: 'lathe',
     title: 'Моделируем любые объекты от винта до автомобиля',
     description:
       'Наши профессионалы владеют всеми современными инструментами для качественного результата.',
-    image: '/public/images/services-images/service-lathe.png',
+    image: '/images/services-images/service-lathe.png',
   },
 ] as const;
 
