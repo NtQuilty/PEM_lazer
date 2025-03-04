@@ -6,31 +6,31 @@ export const servicesData: ServiceItem[] = [
     title: '3D печать',
     description:
       'Принимаем заказы на 3D печать разными видами пластика, фотополимерными смолами, гипсом, металлом и полиамидом. Digital Craft располагает большим парком профессионального оборудования для реализации ваших проектов. Производственные возможности позволяют с высокой точностью воссоздать трехмерный объект любой сложности. Используем качественные материалы, а также помогаем подобрать технологию печати для вашего проекта.',
-    image: '/public/images/services-images/one.webp',
-    bgImage: '/public/images/services-images/bg-three.webp',
+    image: '/images/services-images/one.webp',
+    bgImage: '/images/services-images/bg-three.webp',
   },
   {
     id: 2,
     title: '3D сканирование',
     description:
       'Проводим 3D сканирование объектов любого размера и сложности. Сканируем для работы в CAD программах, архивации, создания проектной документации и чертежей, а также для 3D печати. Знаем тонкости сканирования в медицине, промышленности, архитектуре и рекламе, помогаем составить техническое задание. Используем 3D сканеры российских и зарубежных производителей, в том числе оборудование для метрологических измерений.',
-    image: '/public/images/services-images/two.webp',
-    bgImage: '/public/images/services-images/bg-two.webp',
+    image: '/images/services-images/two.webp',
+    bgImage: '/images/services-images/bg-two.webp',
   },
   {
     id: 3,
     title: '3D моделирование',
     description:
       'Создаём 3D модели по вашим чертежам, фотографиям или словесному описанию. Делаем reverse engineering на основе точечного облака, полученного при сканировании. Оптимизируем модели для 3D печати, анимации и игр. Работаем в различных CAD программах для создания инженерных моделей и прототипов с точностью до микрона, с соблюдением размеров и допусков.',
-    image: '/public/images/services-images/three.webp',
-    bgImage: '/public/images/services-images/bg-three.webp',
+    image: '/images/services-images/three.webp',
+    bgImage: '/images/services-images/bg-three.webp',
   },
   {
     id: 4,
     title: '3D визуализация',
     description:
       'Создаём реалистичные 3D визуализации продуктов, интерьеров, архитектурных объектов и многого другого. Наши визуализации помогут вам продемонстрировать ваш продукт клиентам, инвесторам или использовать в маркетинговых материалах. Мы используем современные технологии визуализации для создания фотореалистичных изображений с точной передачей материалов, освещения и деталей.',
-    image: '/public/images/services-images/four.webp',
-    bgImage: '/public/images/services-images/bg-four.webp',
+    image: '/images/services-images/four.webp',
+    bgImage: '/images/services-images/bg-four.webp',
   },
 ];
