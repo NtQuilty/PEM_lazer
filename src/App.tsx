@@ -1,3 +1,4 @@
+import { About } from './components/About/About';
 import { Advantages } from './components/Advantages/Advantages';
 import { ConsultationPromo } from './components/ConsultationPromo/ConsultationPromo';
 import { FAQ } from './components/FAQ/FAQ';
@@ -14,6 +15,7 @@ export const App = () => {
       <Advantages />
       <ConsultationPromo />
       <FAQ />
+      <About isVisible={false} />
     </>
   );
 };
