@@ -1,5 +1,22 @@
 export const navigationLinks = [
   {
+    id: 'services',
+    title: 'Услуги',
+    link: '/services',
+    options: [
+      {
+        id: 'laser-cutting',
+        title: 'Лазерная резка',
+        link: '/services/laser-cutting',
+      },
+      {
+        id: 'turning',
+        title: 'Токарная обработка',
+        link: '/services/turning',
+      },
+    ],
+  },
+  {
     id: 'portfolio',
     title: 'Портфолио',
     link: '/portfolio',
