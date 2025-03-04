@@ -7,6 +7,7 @@ import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
 import { LandingHero } from './components/LandingHero/LandingHero';
 import { MainContent } from './components/MainContent/MainContent';
+import { Projects } from './components/Projects/Projects';
 
 export const App = () => {
   return (
@@ -16,6 +17,7 @@ export const App = () => {
       <MainContent />
       <Advantages />
       <ConsultationPromo />
+      <Projects />
       <FAQ />
       <About isVisible={false} />
       <DiscountForm />

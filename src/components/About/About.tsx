@@ -6,7 +6,7 @@ interface AboutProps {
 
 export const About: React.FC<AboutProps> = ({ isVisible }) => {
   return (
-    <section className=' py-16'>
+    <section className='bg-[#1a1e2c] py-16'>
       <div className='max-w-[1350px] mx-auto px-4'>
         <h2 className='text-4xl font-bold text-white mb-8'>О компании</h2>
 

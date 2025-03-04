@@ -12,7 +12,7 @@ export const FAQ: React.FC = () => {
   };
 
   return (
-    <section className='bg-[#1b1e29] py-16'>
+    <section className='bg-[#13151e] py-16'>
       <div className='max-w-[1350px] mx-auto pl-[100px]'>
         <div className='max-w-[660px]'>
           <h2 className='text-4xl font-bold text-white mb-8'>{'Ответы на вопросы'}</h2>

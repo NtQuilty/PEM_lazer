@@ -13,7 +13,7 @@ export const DiscountForm: React.FC = () => {
   };
 
   return (
-    <section className='bg-[#1b1e29] py-16'>
+    <section className='bg-[#13151e] py-16'>
       <div className='max-w-[1350px] mx-auto px-4'>
         <div className='flex flex-col md:flex-row items-center justify-between gap-8'>
           {/* Левая часть с изображением и текстом */}
