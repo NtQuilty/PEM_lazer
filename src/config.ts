@@ -5,11 +5,6 @@ export const navigationLinks = [
     link: '/portfolio',
   },
   {
-    id: 'blog',
-    title: 'Блог',
-    link: '/blog',
-  },
-  {
     id: 'help',
     title: 'Помощь',
     link: '/help',
@@ -42,3 +37,5 @@ export const services = [
     image: '/public/images/services-images/service-lathe.png',
   },
 ] as const;
+
+//Лазерная резка, токарная обработка
