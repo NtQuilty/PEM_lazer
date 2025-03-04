@@ -1,6 +1,7 @@
 import { About } from './components/About/About';
 import { Advantages } from './components/Advantages/Advantages';
 import { ConsultationPromo } from './components/ConsultationPromo/ConsultationPromo';
+import { DiscountForm } from './components/DiscountForm/DiscountForm';
 import { FAQ } from './components/FAQ/FAQ';
 import { Header } from './components/Header/Header';
 import { LandingHero } from './components/LandingHero/LandingHero';
@@ -16,6 +17,7 @@ export const App = () => {
       <ConsultationPromo />
       <FAQ />
       <About isVisible={false} />
+      <DiscountForm />
     </>
   );
 };
