@@ -1,5 +1,10 @@
 export const navigationLinks = [
   {
+    id: 'home',
+    title: 'Главная',
+    link: '/',
+  },
+  {
     id: 'services',
     title: 'Услуги',
     link: '/services',

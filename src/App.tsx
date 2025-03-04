@@ -1,26 +1,30 @@
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { About } from './components/About/About';
-import { Advantages } from './components/Advantages/Advantages';
-import { ConsultationPromo } from './components/ConsultationPromo/ConsultationPromo';
-import { DiscountForm } from './components/DiscountForm/DiscountForm';
 import { FAQ } from './components/FAQ/FAQ';
 import { Footer } from './components/Footer/Footer';
 import { Header } from './components/Header/Header';
-import { LandingHero } from './components/LandingHero/LandingHero';
+import { HomePage } from './components/HomePage';
 import { MainContent } from './components/MainContent/MainContent';
 import { Projects } from './components/Projects/Projects';
+import { Box } from '@mui/material';
 
 export const App = () => {
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
   return (
     <>
       <Header />
-      <LandingHero />
-      <MainContent />
-      <Advantages />
-      <ConsultationPromo />
-      <Projects />
-      <FAQ />
-      <About isVisible={false} />
-      <DiscountForm />
+      <Box className={isHomePage ? '' : 'pt-[100px]'}>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/services' element={<MainContent />} />
+          <Route path='/portfolio' element={<Projects />} />
+          <Route path='/help' element={<FAQ />} />
+          <Route path='/about' element={<About isVisible={true} />} />
+          <Route path='/contacts' element={<div>сделать</div>} />
+        </Routes>
+      </Box>
       <Footer />
     </>
   );

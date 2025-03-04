@@ -31,7 +31,9 @@ export const Header: FC = () => {
       }`}
     >
       <div className='flex justify-between items-center max-w-[1350px] mx-auto'>
-        <img src='/public/images/logo.png' alt='logo' />
+        <Link to='/'>
+          <img src='/images/logo.png' alt='logo' />
+        </Link>{' '}
         {navigationLinks.map(({ id, title, link }) => (
           <Link key={id} to={link} className='text-[#a7a8ab] text-base'>
             {title}
