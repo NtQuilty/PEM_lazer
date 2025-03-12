@@ -25,7 +25,7 @@ export const LandingHero = () => {
   const activeService = services[activeIndex];
 
   return (
-    <div className='relative w-full h-[800px] mb-28'>
+    <div className='relative w-full h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px] mb-12 md:mb-20 lg:mb-28'>
       <div className='absolute inset-0 w-full h-full overflow-hidden'>
         <Swiper
           modules={[EffectFade, Autoplay]}
@@ -53,21 +53,21 @@ export const LandingHero = () => {
         </Swiper>
       </div>
       <div className='relative max-w-[1350px] mx-auto flex items-center h-full z-10'>
-        <div className='flex flex-col justify-center pl-20 gap-6 max-w-[950px]'>
-          <h1 className='text-[#c1c1c1] text-[54px] font-extrabold leading-[63px]'>
+        <div className='flex flex-col justify-center px-4 sm:px-8 md:px-12 lg:pl-20 gap-3 md:gap-6 max-w-full md:max-w-[950px]'>
+          <h1 className='text-[#c1c1c1] text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold md:font-extrabold leading-tight md:leading-[63px]'>
             {activeService.title}
           </h1>
-          <p className='text-[#c1c1c1] text-[24px] font-light leading-[43px] mb-[40px] max-w-[722px]'>
+          <p className='text-[#c1c1c1] text-base sm:text-lg md:text-xl lg:text-[24px] font-light leading-normal md:leading-[43px] mb-4 md:mb-[40px] max-w-full md:max-w-[722px]'>
             {activeService.description}
           </p>
 
-          <div className='flex gap-[35px]'>
+          <div className='flex flex-col sm:flex-row gap-4 sm:gap-[35px]'>
             <button
               onClick={openOrderForm}
               className='
-              bg-[#3198FF] text-white rounded-[20px] text-[23px]
-              w-[340px]
-              py-[25px]'
+              bg-[#3198FF] text-white rounded-[20px] text-base sm:text-lg md:text-xl lg:text-[23px]
+              w-full sm:w-[260px] md:w-[300px] lg:w-[340px]
+              py-3 md:py-4 lg:py-[25px]'
             >
               Рассчитать стоимость
             </button>
@@ -78,9 +78,9 @@ export const LandingHero = () => {
               border-[1px] border-solid border-[#3198ff]
               text-[#a7a8ab]
               rounded-[20px]
-              text-[23px]
-              w-[260px]
-              py-[25px]
+              text-base sm:text-lg md:text-xl lg:text-[23px]
+              w-full sm:w-[200px] md:w-[230px] lg:w-[260px]
+              py-3 md:py-4 lg:py-[25px]
             '
             >
               Подробнее
@@ -90,7 +90,7 @@ export const LandingHero = () => {
       </div>
 
       {/* Индикаторы слайдов */}
-      <div className='absolute bottom-20 right-8 flex flex-col gap-2'>
+      <div className='absolute bottom-10 md:bottom-20 right-4 md:right-8 flex flex-col gap-2'>
         {services.map((service, index) => (
           <div
             key={service.id}
@@ -111,14 +111,14 @@ export const LandingHero = () => {
         href='https://t.me/your_username'
         target='_blank'
         rel='noopener noreferrer'
-        className='absolute top-8 right-8 text-white'
+        className='absolute top-4 md:top-8 right-4 md:right-8 text-white'
       >
-        <FaTelegram size={32} />
+        <FaTelegram size={24} className='md:text-3xl' />
       </a>
 
       {/* Стрелка вниз */}
       <div
-        className='absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white cursor-pointer z-10'
+        className='absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 text-white cursor-pointer z-10'
         onClick={() => {
           if (swiperRef.current) {
             // Переходим к следующему слайду
@@ -126,7 +126,7 @@ export const LandingHero = () => {
           }
         }}
       >
-        <FaChevronDown size={32} />
+        <FaChevronDown size={24} className='md:text-3xl' />
       </div>
     </div>
   );

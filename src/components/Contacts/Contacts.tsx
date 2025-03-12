@@ -45,7 +45,7 @@ export const Contacts: React.FC = () => {
                   to='tel:+74955322269'
                   className='text-white hover:text-blue-400 transition-colors'
                 >
-                  +7 (495) 532 22 69
+                  +7 (812) 219 20 15
                 </Link>
               </div>
             </div>
@@ -123,10 +123,10 @@ export const Contacts: React.FC = () => {
               <div>
                 <p className='text-gray-400 text-sm'>E-mail</p>
                 <Link
-                  to='mailto:zakaz@digitalcraft3d.com'
+                  to='mailto:zakaz24@nrg-m.ru '
                   className='text-white hover:text-blue-400 transition-colors'
                 >
-                  Продажи: zakaz@digitalcraft3d.com
+                  Продажи: zakaz24@nrg-m.ru
                 </Link>
               </div>
             </div>

@@ -1,4 +1,3 @@
-import { SmartCaptcha } from '@yandex/smart-captcha';
 import React, { useState } from 'react';
 
 export const DiscountForm: React.FC = () => {
@@ -32,9 +31,8 @@ export const DiscountForm: React.FC = () => {
             <div className='bg-[#1b1e29] rounded-3xl p-6 border border-gray-700 shadow-md relative'>
               {/* Тонкая внутренняя подсветка */}
               <div
-                className='absolute inset-0 rounded-lg opacity-30 pointer-events-none'
+                className='absolute inset-0 rounded-lg opacity-30 pointer-events-none box-shadow-[inset_0_0_20px_rgba(100,100,100,0.2)]'
                 style={{
-                  boxShadow: 'inset 0 0 20px rgba(100, 100, 100, 0.2)',
                   border: '1px solid rgba(120, 120, 120, 0.2)',
                 }}
               ></div>
@@ -135,10 +133,6 @@ export const DiscountForm: React.FC = () => {
                 >
                   Получить скидку 10%
                 </button>
-
-                <div className='mt-4'>
-                  <SmartCaptcha sitekey={''} />
-                </div>
 
                 <div className='mt-4 flex items-start'>
                   <div className='relative flex-shrink-0' style={{ width: '42px', height: '42px' }}>
