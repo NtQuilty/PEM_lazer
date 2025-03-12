@@ -4,6 +4,8 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 import prettier from 'prettier';
+import tailwindcss from 'eslint-plugin-tailwindcss';
+import unusedImports from 'eslint-plugin-unused-imports';
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -29,6 +31,7 @@ export default tseslint.config(
       '@typescript-eslint': tseslint,
       prettier: prettier,
       tailwindcss: tailwindcss,
+      'unused-imports': unusedImports,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,

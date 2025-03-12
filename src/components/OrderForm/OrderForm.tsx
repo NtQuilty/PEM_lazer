@@ -11,7 +11,6 @@ import {
   Box,
 } from '@mui/material';
 import { IoCloseCircleOutline } from 'react-icons/io5';
-import { SmartCaptcha } from '@yandex/smart-captcha';
 
 interface OrderFormProps {
   open: boolean;
@@ -174,10 +173,6 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
                 },
               }}
             />
-
-            <Box className='my-4'>
-              <SmartCaptcha sitekey={''} />
-            </Box>
 
             <FormControlLabel
               control={

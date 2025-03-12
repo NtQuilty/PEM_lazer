@@ -6,56 +6,50 @@ interface AboutProps {
 
 export const About: React.FC<AboutProps> = ({ isVisible }) => {
   return (
-    <section className='bg-[#1a1e2c] py-16'>
-      <div className='max-w-[1350px] mx-auto px-4'>
-        <h2 className='text-4xl font-bold text-white mb-8'>О компании</h2>
+    <section className='bg-[#1a1e2c] py-8 md:py-16'>
+      <div className='px-4 mx-auto md:max-w-[1350px]'>
+        {/* Заголовок секции */}
+        <h1 className='text-[#D6D6D6] text-2xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-12'>
+          О компании
+        </h1>
 
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
-          <div>
-            <p className='text-[#D6D6D6CC] font-normal leading-[35px] mb-6'>
-              DigitalCraft3D является надежным партнером в сфере 3D услуг для бизнеса. Мы помогаем
-              решить полный спектр задач - от создания 3D модели до печати на 3D принтере, от
-              оцифровки до проектирования. Нашими услугами могут воспользоваться как частные лица,
-              так и компании, а также государственные и коммерческие учреждения, которые хотят
-              оценить преимущества аддитивных технологий для решения самых разных задач.
-            </p>
-
-            <div className='mt-8'>
+        {/* Верхняя секция с информацией */}
+        <div className='flex flex-col md:flex-row gap-6 mb-8 md:mb-12'>
+          <div className='w-full md:w-[60%]'>
+            <div className='flex flex-col gap-4 md:gap-6'>
+              <p className='text-[#D6D6D6CC] text-sm md:text-base leading-relaxed md:leading-[35px]'>
+                Петроэнергомаш - компания, специализирующаяся на услугах 3D-сканирования, 3D-печати
+                и реверс-инжиниринга. Наша команда экспертов реализует нестандартные проекты и
+                создает технологичные решения для медицинских, промышленных и коммерческих целей.
+              </p>
+              <p className='text-[#D6D6D6CC] text-sm md:text-base leading-relaxed md:leading-[35px]'>
+                Мы используем передовое 3D-оборудование, обладаем обширным опытом работы с
+                различными материалами и создаем высококачественные 3D-модели любой сложности.
+                Сотрудничаем с крупными промышленными предприятиями и выполняем индивидуальные
+                заказы.
+              </p>
+            </div>
+            <div className='mt-6 md:mt-8'>
               <img
                 src='/images/about/copper-equipment.png'
                 alt='Оборудование для 3D печати'
-                width={500}
-                height={350}
-                className='rounded-lg'
+                className='rounded-lg w-full h-auto'
               />
             </div>
           </div>
 
-          {/* Правая колонка с текстом и изображением */}
-          <div>
-            <div className='mb-8'>
+          <div className='w-full md:w-[40%] mt-6 md:mt-0'>
+            <div className='mb-4 md:mb-6'>
               <img
                 src='/images/about/gold-equipment.png'
                 alt='Оборудование с компьютером'
-                width={500}
-                height={350}
-                className='rounded-lg mb-6'
+                className='rounded-lg w-full h-auto mb-4 md:mb-6'
               />
-
-              <p className='text-[#D6D6D6CC] font-normal leading-[35px]'>
+              <p className='text-[#D6D6D6CC] text-sm md:text-base leading-relaxed md:leading-[35px]'>
                 В своей работе мы используем профессиональное оборудование для 3D печати и
                 сканирования, а также качественный софт для моделирования и проектирования.
-                Сотрудники DigitalCraft3D могут успешно реализовать любую задачу и подобрать
-                решение, которое удовлетворит вас не только по качеству, но и по цене. Мы
-                сотрудничаем с ведущими производителями 3D оборудования, поэтому в нашем парке
-                техники только мощные и производительные принтеры и сканеры, которые позволяют
-                добиться качественных результатов. Все наши сотрудники регулярно повышают свою
-                квалификацию, чтобы иметь возможность решения нестандартных и сложных задач. Наши
-                услуги востребованы в разных областях - от обучения, медицины и искусства до
-                серьезных отраслей промышленности, например авиакосмической, судостроительной или
-                энергетической. Если вы сомневаетесь в том, что аддитивные технологии могут помочь
-                вашему бизнесу - обратитесь в DigitalCraft3D, и мы найдем сферу внедрения цифровых
-                решений для вашего бизнеса.
+                Сотрудники Петроэнергомаш могут успешно реализовать любую задачу и подобрать
+                решение, которое удовлетворит вас не только по качеству, но и по цене.
               </p>
             </div>
           </div>
@@ -63,20 +57,20 @@ export const About: React.FC<AboutProps> = ({ isVisible }) => {
 
         {/* Нижняя секция с изображением */}
         {isVisible && (
-          <div className='mt-12'>
+          <div className='mt-8 md:mt-12'>
             <div className='flex flex-col md:flex-row gap-6'>
-              <div className='md:w-[40%]'>
-                <p className='text-[#D6D6D6CC] font-normal leading-[35px]'>
+              <div className='w-full md:w-[40%]'>
+                <p className='text-[#D6D6D6CC] text-sm md:text-base leading-relaxed md:leading-[35px]'>
                   Мы предлагаем своим клиентам лучший сервис. Наши сотрудники готовы помочь в выборе
                   способа решения вашей задачи (технологии сканирования или печати), а также
                   составить техническое задание на основе ваших пожеланий. Мы принимаем заявки на
                   услуги по всей России. Сотрудничество с сервисами доставки позволяет отправлять
                   заказы в любой город страны. Цифровые данные в виде файлов вы можете получить по
-                  ссылке в любом удобном формате. Свяжитесь с менеджером DigitalCraft3D, чтобы
+                  ссылке в любом удобном формате. Свяжитесь с менеджером Петроэнергомаш, чтобы
                   узнать больше об услугах и сделать заказ.
                 </p>
               </div>
-              <div className='md:w-[60%]'>
+              <div className='w-full md:w-[60%]'>
                 <img
                   src='/images/about/mesh-structure.png'
                   alt='Сетчатая структура'
