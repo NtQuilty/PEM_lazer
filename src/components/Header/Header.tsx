@@ -3,16 +3,15 @@ import { navigationLinks, NavigationOption } from '../../config';
 import { BsTelephoneFill } from 'react-icons/bs';
 import { TbMailFilled } from 'react-icons/tb';
 import _React, { FC, useState, useEffect } from 'react';
-import { Menu, MenuItem, Drawer, IconButton } from '@mui/material';
-import { MdKeyboardArrowDown, MdKeyboardArrowLeft, MdClose } from 'react-icons/md';
+import { Menu, MenuItem } from '@mui/material';
+import { MdKeyboardArrowDown, MdKeyboardArrowLeft } from 'react-icons/md';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { FaTelegram, FaVk } from 'react-icons/fa';
+import { HeaderDrawer } from './components/HeaderDrawer';
 
 export const Header: FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [servicesAnchorEl, setServicesAnchorEl] = useState<null | HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,12 +38,6 @@ export const Header: FC = () => {
     setDrawerOpen(open);
   };
 
-  const toggleMobileServices = () => {
-    setMobileServicesOpen(!mobileServicesOpen);
-  };
-
-  const servicesOption = navigationLinks.find(link => link.id === 'services');
-
   return (
     <header
       className={`fixed top-0 left-0 right-0 py-4 z-50 transition-all duration-300 ${
@@ -54,12 +47,11 @@ export const Header: FC = () => {
       }`}
     >
       <div className='flex justify-between items-center px-4 mx-auto md:max-w-[1350px]'>
-        {/* Логотип - виден на всех устройствах */}
         <button onClick={toggleDrawer(true)} className='block md:hidden ml-3' aria-label='Меню'>
           <RxHamburgerMenu size={24} color='white' />
         </button>
 
-        <Link to='/' className='relative z-10'>
+        <Link to='/' className='relative z-10 ml-14'>
           <img src='/images/logo.png' alt='logo' className='h-8 md:h-10' />
         </Link>
 
@@ -67,19 +59,18 @@ export const Header: FC = () => {
         <div className='flex items-center gap-3 md:hidden'>
           <a
             href='tel:+78122192015'
-            className='flex items-center justify-center w-8 h-8 rounded-full border border-[#dadada]'
+            className='flex items-center justify-center  rounded-full border border-[#dadada] p-[6px]'
           >
             <BsTelephoneFill className='text-white' size={16} />
           </a>
           <a
             href='mailto:zakaz24@nrg-m.ru'
-            className='flex items-center justify-center w-8 h-8 rounded-full border border-[#dadada]'
+            className='flex items-center justify-center  rounded-full border border-[#dadada]  p-[6px]'
           >
             <TbMailFilled className='text-white' size={16} />
           </a>
         </div>
 
-        {/* Навигационные ссылки - скрыты на мобильных */}
         <div className='hidden md:flex items-center justify-around flex-1 ml-8'>
           {navigationLinks.map(navigationLink => {
             if (navigationLink.id === 'home') return null;
@@ -175,116 +166,7 @@ export const Header: FC = () => {
       </div>
 
       {/* Мобильное боковое меню */}
-      <Drawer
-        anchor='left'
-        open={drawerOpen}
-        onClose={toggleDrawer(false)}
-        slotProps={{
-          backdrop: {
-            className: 'bg-black/30 backdrop-blur-sm',
-          },
-        }}
-        sx={{
-          '& .MuiDrawer-paper': {
-            backdropFilter: 'blur(87.5333px)',
-            backgroundColor: 'rgba(19,21,30,0.35)',
-            width: '310px',
-            boxShadow:
-              '0 20px 60px rgba(0, 0, 0, .44), inset 67.3333px -67.3333px 67.3333px rgba(148, 148, 148, .027), inset -67.3333px 67.3333px 67.3333px rgba(255, 255, 255, .027)',
-          },
-        }}
-      >
-        <div className='p-4 flex flex-col'>
-          {/* Шапка с логотипом и кнопкой закрытия */}
-          <div className='flex justify-between items-center mb-8'>
-            <Link to='/' onClick={toggleDrawer(false)} className='flex items-center'>
-              <img src='/images/logo.png' alt='logo' className='h-8' />
-            </Link>
-            <IconButton onClick={toggleDrawer(false)} className='text-white'>
-              <MdClose size={24} />
-            </IconButton>
-          </div>
-
-          {/* Навигационные ссылки */}
-          <div className='flex flex-col gap-6'>
-            {/* Услуги с выпадающим меню */}
-            <div className='border-b border-gray-700 pb-4'>
-              <button
-                onClick={toggleMobileServices}
-                className='text-[#a7a8ab] hover:text-[#3198ff] transition-colors text-lg flex items-center justify-between w-full'
-              >
-                Услуги
-                <MdKeyboardArrowDown
-                  size={24}
-                  className={`transition-transform ${mobileServicesOpen ? 'rotate-180' : ''}`}
-                />
-              </button>
-
-              {mobileServicesOpen && servicesOption?.options && (
-                <div className='mt-4 ml-4 flex flex-col gap-3'>
-                  {servicesOption.options.map(option => (
-                    <Link
-                      key={option.id}
-                      to={option.link}
-                      onClick={toggleDrawer(false)}
-                      className='text-[#a7a8ab] hover:text-[#3198ff] transition-colors'
-                    >
-                      {option.title}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Другие ссылки */}
-            {navigationLinks.map(link => {
-              if (link.id === 'home' || link.id === 'services') return null;
-
-              return (
-                <Link
-                  key={link.id}
-                  to={link.link}
-                  onClick={toggleDrawer(false)}
-                  className='text-[#a7a8ab] hover:text-[#3198ff] transition-colors text-lg border-b border-gray-700 pb-4'
-                >
-                  {link.title}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Кнопка заказа */}
-          <button className='mt-8 bg-[#3198ff] text-white py-3 px-6 rounded-lg hover:bg-[#1d80e2] transition-colors text-base w-full'>
-            Быстрый заказ
-          </button>
-
-          {/* Социальные сети и контакты */}
-          <div className='mt-auto pt-8 flex gap-4'>
-            <a
-              href='https://t.me/digitalcraft3d'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='bg-[#2a2d39] hover:bg-[#3a3e4d] transition-colors w-10 h-10 rounded-full flex items-center justify-center'
-            >
-              <FaTelegram size={20} className='text-white' />
-            </a>
-            <a
-              href='https://vk.com/digitalcraft3d'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='bg-[#2a2d39] hover:bg-[#3a3e4d] transition-colors w-10 h-10 rounded-full flex items-center justify-center'
-            >
-              <FaVk size={20} className='text-white' />
-            </a>
-            <a
-              href='tel:+78122192015'
-              className='bg-[#2a2d39] hover:bg-[#3a3e4d] transition-colors w-10 h-10 rounded-full flex items-center justify-center'
-            >
-              <BsTelephoneFill size={18} className='text-white' />
-            </a>
-          </div>
-        </div>
-      </Drawer>
+      <HeaderDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />
     </header>
   );
 };

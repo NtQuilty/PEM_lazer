@@ -24,24 +24,18 @@ export const Projects = () => {
     setShowAll(true);
   };
 
-  const visibleProjects = showAll ? projectsData : projectsData.slice(0, 6);
+  const visibleProjects = showAll ? projectsData : projectsData.slice(0, 3);
 
   return (
     <Box className='py-4 md:py-5 bg-[#1a1e2c]'>
       <Container className='px-4 md:px-6'>
-        <Typography
-          variant='h2'
-          component='h2'
-          className='text-white text-xl md:text-2xl lg:text-3xl mb-3 md:mb-4 font-bold'
-        >
-          Наши проекты
-        </Typography>
+        <div className='text-white text-4xl md:text-6xl  mb-3 md:mb-10 font-bold'>Наши проекты</div>
 
         <Box className='flex flex-wrap gap-2 md:gap-3'>
           {visibleProjects.map(project => (
             <Box
               key={project.id}
-              className='w-full sm:w-[calc(50%-8px)] md:w-[calc(33.333%-12px)] relative h-40 md:h-60 rounded-md overflow-hidden cursor-pointer group'
+              className='w-full sm:w-[calc(50%-8px)] md:w-[calc(33.333%-12px)] relative md:h-60 rounded-md overflow-hidden cursor-pointer group'
               onClick={() => handleOpen(project.imagePath, project.title)}
             >
               <Box
@@ -62,7 +56,7 @@ export const Projects = () => {
           ))}
         </Box>
 
-        {!showAll && (
+        {!showAll && projectsData.length > 3 && (
           <Box className='flex justify-center mt-3 md:mt-4'>
             <Button
               variant='text'

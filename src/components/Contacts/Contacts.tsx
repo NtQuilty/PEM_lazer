@@ -1,4 +1,5 @@
 import React from 'react';
+import { BsTelephoneFill } from 'react-icons/bs';
 import { FaTelegram } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -22,27 +23,14 @@ export const Contacts: React.FC = () => {
           <h1 className='text-4xl font-bold text-white mb-8'>Контакты</h1>
 
           <div className='space-y-8'>
-            {/* Телефон */}
             <div className='flex items-start'>
               <div className='w-10 h-10 rounded-full flex items-center justify-center bg-[#1b1e29] mr-4'>
-                <svg
-                  className='w-5 h-5 text-gray-400'
-                  fill='none'
-                  stroke='currentColor'
-                  viewBox='0 0 24 24'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    d='M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'
-                  />
-                </svg>
+                <BsTelephoneFill size={18} className='text-white' />
               </div>
               <div>
                 <p className='text-gray-400 text-sm'>Телефон</p>
                 <Link
-                  to='tel:+74955322269'
+                  to='tel:+78122192015'
                   className='text-white hover:text-blue-400 transition-colors'
                 >
                   +7 (812) 219 20 15
@@ -75,7 +63,7 @@ export const Contacts: React.FC = () => {
               </div>
               <div>
                 <p className='text-gray-400 text-sm'>Адрес</p>
-                <p className='text-white'>г. Москва, Варшавское шоссе, д. 17, стр. 5</p>
+                <p className='text-white'>г. Санкт-Петербург, ул. Седова 57.</p>
               </div>
             </div>
 
@@ -152,7 +140,7 @@ export const Contacts: React.FC = () => {
                 <p className='text-gray-400 text-sm'>Мессенджеры</p>
                 <div className='mt-2'>
                   <Link
-                    to='https://t.me/digitalcraft3d'
+                    to='https://t.me/nrgmru'
                     target='_blank'
                     rel='noopener noreferrer'
                     className='inline-flex items-center justify-center bg-[#1b1e29] hover:bg-[#252a39] text-white px-4 py-2 rounded-lg transition-colors'
@@ -184,17 +172,15 @@ export const Contacts: React.FC = () => {
                 <p className='text-gray-400 text-sm'>Соц. сети</p>
                 <div className='flex mt-2 space-x-3'>
                   <Link
-                    to='https://t.me/digitalcraft3d'
+                    to='https://t.me/nrgmru'
                     target='_blank'
                     rel='noopener noreferrer'
                     className='w-10 h-10 rounded-full flex items-center justify-center bg-[#1b1e29] hover:bg-[#252a39] transition-colors'
                   >
-                    <svg className='w-5 h-5 text-gray-400' viewBox='0 0 24 24' fill='currentColor'>
-                      <path d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.14 19.018c-.237 0-.47-.033-.696-.1-1.92-.569-3.71-1.464-5.19-2.72-1.42-1.273-2.63-2.96-3.6-4.976-.38-.802-.57-1.684-.57-2.622 0-3.438 2.8-6.236 6.238-6.236.954 0 1.856.205 2.674.608 1.73.838 2.996 2.393 3.5 4.272.134.59.206 1.2.206 1.822 0 1.228-.27 2.397-.782 3.455-.52 1.062-1.27 1.934-2.21 2.578-.939.643-2.01.97-3.16.97zm5.935-10.353l-1.407 6.624c-.104.487-.563.752-1.068.752h-1.885c-.561 0-1.082-.295-1.15-.847l-.174-1.436c-.089-.741-.52-1.383-1.15-1.7l-1.82-.923c-.53-.271-.686-.941-.32-1.385.367-.444 1.05-.503 1.568-.184l2.161 1.333c.262.162.583.176.868.041l5.653-2.812c.548-.273 1.13.174.97.75z' />
-                    </svg>
+                    <FaTelegram size={20} className='text-white' />
                   </Link>
                   <Link
-                    to='https://vk.com/digitalcraft3d'
+                    to='https://vk.com/nrgmru'
                     target='_blank'
                     rel='noopener noreferrer'
                     className='w-10 h-10 rounded-full flex items-center justify-center bg-[#1b1e29] hover:bg-[#252a39] transition-colors'
