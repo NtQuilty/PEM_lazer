@@ -30,7 +30,7 @@ export const LandingHero = () => {
         <Swiper
           modules={[EffectFade, Autoplay]}
           effect='fade'
-          direction='vertical'
+          direction='horizontal'
           autoplay={{
             delay: 5000,
             disableOnInteraction: false,

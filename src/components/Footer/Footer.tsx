@@ -23,7 +23,7 @@ export const Footer: React.FC = () => {
                 <img
                   src='/images/logo.png'
                   alt='PEM'
-                  width={30}
+                  width={50}
                   height={30}
                   className='md:w-[40px] md:h-[40px]'
                 />
@@ -36,7 +36,7 @@ export const Footer: React.FC = () => {
             </Link>
             <div className='flex space-x-3 mb-6'>
               <SocialLink to='https://t.me/dmpmax' icon={FaTelegram} />
-              <SocialLink to='https://vk.com/digitalcraft3d' icon={FaWhatsapp} />
+              <SocialLink to='https://vk.com/nrgmru' icon={FaWhatsapp} />
             </div>
           </div>
 
