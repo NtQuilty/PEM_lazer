@@ -22,29 +22,31 @@ export const About: React.FC<AboutProps> = ({ isVisible }) => {
                 и реверс-инжиниринга. Наша команда экспертов реализует нестандартные проекты и
                 создает технологичные решения для медицинских, промышленных и коммерческих целей.
               </p>
+            </div>
+            <div className='mt-6 md:mt-8 md:h-[500px] md:overflow-hidden'>
+              <img
+                src='/images/about/copper-equipment.png'
+                alt='Оборудование для 3D печати'
+                className='rounded-lg w-full h-auto md:h-full md:w-full md:object-cover'
+              />
+            </div>
+          </div>
+
+          <div className='w-full md:w-[40%] mt-6 md:mt-0'>
+            <div className='flex flex-col mb-4 md:mb-6 gap-5'>
+              <div className='md:h-[250px] md:overflow-hidden'>
+                <img
+                  src='/images/about/gold-equipment.png'
+                  alt='Оборудование с компьютером'
+                  className='rounded-lg w-full h-auto mb-4 md:h-full md:w-full md:object-cover md:mb-0'
+                />
+              </div>
               <p className='text-[#D6D6D6CC] text-sm md:text-base leading-relaxed md:leading-[35px]'>
                 Мы используем передовое 3D-оборудование, обладаем обширным опытом работы с
                 различными материалами и создаем высококачественные 3D-модели любой сложности.
                 Сотрудничаем с крупными промышленными предприятиями и выполняем индивидуальные
                 заказы.
               </p>
-            </div>
-            <div className='mt-6 md:mt-8'>
-              <img
-                src='/images/about/copper-equipment.png'
-                alt='Оборудование для 3D печати'
-                className='rounded-lg w-full h-auto'
-              />
-            </div>
-          </div>
-
-          <div className='w-full md:w-[40%] mt-6 md:mt-0'>
-            <div className='mb-4 md:mb-6'>
-              <img
-                src='/images/about/gold-equipment.png'
-                alt='Оборудование с компьютером'
-                className='rounded-lg w-full h-auto mb-4 md:mb-6'
-              />
               <p className='text-[#D6D6D6CC] text-sm md:text-base leading-relaxed md:leading-[35px]'>
                 В своей работе мы используем профессиональное оборудование для 3D печати и
                 сканирования, а также качественный софт для моделирования и проектирования.
@@ -70,11 +72,11 @@ export const About: React.FC<AboutProps> = ({ isVisible }) => {
                   узнать больше об услугах и сделать заказ.
                 </p>
               </div>
-              <div className='w-full md:w-[60%]'>
+              <div className='w-full md:w-[60%] md:h-[400px] md:overflow-hidden'>
                 <img
                   src='/images/about/mesh-structure.png'
                   alt='Сетчатая структура'
-                  className='rounded-lg w-full h-auto'
+                  className='rounded-lg w-full h-auto md:h-full md:w-full md:object-cover'
                 />
               </div>
             </div>
