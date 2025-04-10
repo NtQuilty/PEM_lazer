@@ -1,204 +1,357 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Dialog,
   DialogContent,
   TextField,
   Button,
-  IconButton,
   Typography,
   Checkbox,
   FormControlLabel,
   Box,
+  FormHelperText,
+  IconButton,
 } from '@mui/material';
-import { IoCloseCircleOutline } from 'react-icons/io5';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { IoPersonOutline } from 'react-icons/io5';
+import { IoMdClose } from 'react-icons/io';
+import { BsTelephone } from 'react-icons/bs';
+import { HiOutlineMail } from 'react-icons/hi';
+import { FiMessageCircle } from 'react-icons/fi';
+import { schema } from './hookform';
+import { FaCloudDownloadAlt } from 'react-icons/fa';
+import { VisuallyHiddenInput } from './style';
+import { MdClose } from 'react-icons/md';
 
 interface OrderFormProps {
   open: boolean;
   onClose: () => void;
 }
 
-export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [agreeToTerms, setAgreeToTerms] = useState(false);
+interface FormValues {
+  name: string;
+  telephone: string;
+  mail: string;
+  message: string;
+  agreeToTerms: boolean;
+  files: File[];
+}
 
-  const handleSubmit = () => {
-    console.log({ name, phone, email, message });
+export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
+  const {
+    handleSubmit,
+    control,
+    formState: { isValid },
+    watch,
+    reset,
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+    mode: 'onChange',
+    defaultValues: {
+      name: '',
+      telephone: '',
+      mail: '',
+      message: '',
+      agreeToTerms: false,
+      files: [],
+    },
+  });
+
+  const files = watch('files');
+
+  const handleClose = () => {
+    reset();
     onClose();
   };
 
-  const isFormValid = name && phone && email && message && agreeToTerms;
+  const onSubmit = async (data: FormValues) => {
+    const formData = new FormData();
+
+    Object.keys(data).forEach(key => {
+      if (key !== 'files') {
+        formData.append(key, String(data[key as keyof FormValues]));
+      }
+    });
+
+    if (data.files && data.files.length > 0) {
+      data.files.forEach((file: File) => {
+        formData.append('files', file);
+      });
+    }
+
+    try {
+      const response = await fetch(
+        'https://meyson-bot-pem-zay-bxzly0-0d088f-194-164-235-187.traefik.me/api/submit-form',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+      const result_1 = await response.json();
+      if (result_1.success) {
+        alert(`Заявка #${result_1.orderId} успешно отправлена!`);
+        reset();
+        onClose();
+      } else {
+        alert('Произошла ошибка при отправке заявки');
+      }
+    } catch (error) {
+      console.error('Ошибка:', error);
+      alert('Произошла ошибка при отправке заявки');
+    }
+  };
 
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       maxWidth='lg'
       fullWidth
       slotProps={{
         paper: {
-          className: 'bg-[#1A202C] bg-no-repeat bg-right',
-          style: { backgroundImage: 'url(/images/zakaz.png)' },
+          style: {
+            backgroundImage: 'url(/images/zakaz.png)',
+            overflow: 'hidden',
+          },
+          className: '!rounded-2xl !bg-transparent',
         },
       }}
     >
-      <IconButton onClick={onClose} className='absolute right-4 top-4 text-white z-10' size='large'>
-        <IoCloseCircleOutline size={24} />
-      </IconButton>
+      <Box sx={{ position: 'absolute', right: 16, top: 16, zIndex: 1 }}>
+        <IconButton onClick={handleClose} sx={{ color: 'white' }}>
+          <IoMdClose size={32} />
+        </IconButton>
+      </Box>
 
-      <DialogContent className='p-8'>
-        <div className='w-full md:w-1/2'>
-          <Typography variant='h4' className='font-bold text-white mb-2'>
-            Заказать услугу
-          </Typography>
-          <Typography variant='body1' className='text-gray-300 mb-6'>
-            Отправьте заявку и мы свяжемся с вами в течение 15 минут
-          </Typography>
+      <DialogContent className='p-4 sm:p-6 md:p-8'>
+        <div className='w-full md:w-1/2 max-w-md '>
+          <div className='mb-2 sm:mb-4'>
+            <Typography variant='h5' className='font-bold text-white sm:text-h4'>
+              Заказать услугу
+            </Typography>
+            <Typography variant='body2' className='text-gray-300 sm:text-body1'>
+              Отправьте заявку и мы свяжемся с вами
+            </Typography>
+          </div>
 
-          <div className='space-y-4'>
-            <TextField
-              fullWidth
-              placeholder='Ваше имя'
-              value={name}
-              onChange={e => setName(e.target.value)}
-              className='rounded'
-              slotProps={{
-                input: {
-                  className: 'bg-white text-white rounded',
-                  startAdornment: (
-                    <Box className='mr-2 text-gray-400'>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='18'
-                        height='18'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        strokeWidth='2'
-                      >
-                        <path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'></path>
-                        <circle cx='12' cy='7' r='4'></circle>
-                      </svg>
-                    </Box>
-                  ),
-                },
-              }}
+          <form onSubmit={handleSubmit(onSubmit)} className='space-y-2 sm:space-y-4'>
+            <Controller
+              name='name'
+              control={control}
+              render={({ field, fieldState: { error } }) => (
+                <>
+                  <TextField
+                    fullWidth
+                    placeholder='Ваше имя *'
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={!!error}
+                    size='small'
+                    autoComplete='off'
+                    slotProps={{
+                      input: {
+                        className: 'bg-white !rounded-2xl',
+                        startAdornment: (
+                          <Box className='mr-2'>
+                            <IoPersonOutline size={16} color='black' />
+                          </Box>
+                        ),
+                      },
+                    }}
+                  />
+                  {error && <FormHelperText error>{error.message}</FormHelperText>}
+                </>
+              )}
             />
 
-            <TextField
-              fullWidth
-              placeholder='Ваш телефон'
-              value={phone}
-              onChange={e => setPhone(e.target.value)}
-              className='rounded'
-              slotProps={{
-                input: {
-                  className: 'bg-white text-white rounded',
-                  startAdornment: (
-                    <Box className='mr-2 text-gray-400'>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='18'
-                        height='18'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        strokeWidth='2'
-                      >
-                        <path d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z'></path>
-                      </svg>
-                    </Box>
-                  ),
-                },
-              }}
+            <Controller
+              name='telephone'
+              control={control}
+              render={({ field, fieldState: { error } }) => (
+                <>
+                  <TextField
+                    fullWidth
+                    placeholder='Ваш телефон *'
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={!!error}
+                    size='small'
+                    autoComplete='off'
+                    slotProps={{
+                      input: {
+                        className: 'bg-white !rounded-2xl',
+                        startAdornment: (
+                          <Box className='mr-2'>
+                            <BsTelephone size={16} color='black' />
+                          </Box>
+                        ),
+                      },
+                    }}
+                  />
+                  {error && <FormHelperText error>{error.message}</FormHelperText>}
+                </>
+              )}
             />
 
-            <TextField
-              fullWidth
-              placeholder='Ваш Email'
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              className='rounded'
-              slotProps={{
-                input: {
-                  className: 'bg-white text-white rounded',
-                  startAdornment: (
-                    <Box className='mr-2 text-gray-400'>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='18'
-                        height='18'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        strokeWidth='2'
-                      >
-                        <path d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'></path>
-                        <polyline points='22,6 12,13 2,6'></polyline>
-                      </svg>
-                    </Box>
-                  ),
-                },
-              }}
+            <Controller
+              name='mail'
+              control={control}
+              render={({ field, fieldState: { error } }) => (
+                <>
+                  <TextField
+                    fullWidth
+                    placeholder='Ваш email'
+                    type='email'
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={!!error}
+                    size='small'
+                    autoComplete='off'
+                    slotProps={{
+                      input: {
+                        className: '!rounded-2xl bg-white',
+                        startAdornment: (
+                          <Box className='mr-2'>
+                            <HiOutlineMail size={16} color='black' />
+                          </Box>
+                        ),
+                      },
+                    }}
+                  />
+                  {error && <FormHelperText error>{error.message}</FormHelperText>}
+                </>
+              )}
             />
 
-            <TextField
-              fullWidth
-              multiline
-              rows={4}
-              placeholder='Ваше сообщение'
-              value={message}
-              onChange={e => setMessage(e.target.value)}
-              className='rounded'
-              slotProps={{
-                input: {
-                  className: 'bg-white text-white rounded',
-                  startAdornment: (
-                    <Box className='mr-2 text-gray-400 absolute top-3'>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='18'
-                        height='18'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        strokeWidth='2'
-                      >
-                        <path d='M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z'></path>
-                      </svg>
-                    </Box>
-                  ),
-                },
-              }}
-            />
-
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={agreeToTerms}
-                  onChange={e => setAgreeToTerms(e.target.checked)}
-                  className='text-white'
+            <Controller
+              name='message'
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={2}
+                  placeholder='Ваше сообщение'
+                  value={field.value}
+                  onChange={field.onChange}
+                  className='rounded-2xl bg-white'
+                  size='small'
+                  autoComplete='off'
+                  slotProps={{
+                    input: {
+                      startAdornment: (
+                        <Box className='mr-2 mt-[-25px]'>
+                          <FiMessageCircle size={16} color='black' />
+                        </Box>
+                      ),
+                    },
+                  }}
                 />
-              }
-              label={
-                <Typography variant='body2' className='text-gray-300'>
-                  Нажав кнопку "Отправить", вы даете согласие на обработку персональных данных.
-                </Typography>
-              }
+              )}
+            />
+
+            <Controller
+              name='files'
+              control={control}
+              render={({ field }) => (
+                <Button
+                  component='label'
+                  variant='outlined'
+                  startIcon={<FaCloudDownloadAlt />}
+                  className='bg-white text-black hover:bg-gray-100 w-full justify-center text-xs sm:text-sm py-1'
+                  size='small'
+                >
+                  {field.value && field.value.length > 0
+                    ? 'Файлов: ' + field.value.length
+                    : 'Загрузить файлы'}
+                  <VisuallyHiddenInput
+                    type='file'
+                    multiple
+                    onChange={e => {
+                      const fileList = e.target.files;
+                      if (fileList) {
+                        const filesArray = Array.from(fileList);
+                        field.onChange(filesArray);
+                      }
+                    }}
+                  />
+                </Button>
+              )}
+            />
+
+            {files && files.length > 0 && (
+              <Box className='bg-gray-100 rounded p-1 sm:p-2'>
+                <Box className='flex flex-wrap gap-1 sm:gap-2'>
+                  {files.slice(0, 2).map((file, index) => (
+                    <Box key={index} className='bg-white rounded px-1 py-0.5 flex items-center'>
+                      <Typography variant='caption' className='font-medium'>
+                        {file?.name}
+                      </Typography>
+                      <Typography variant='caption' className='text-gray-500 ml-1'>
+                        ({(file?.size / 1024).toFixed(0)} КБ)
+                      </Typography>
+                      <IconButton size='small' onClick={() => undefined} sx={{ ml: 0.5, p: 0.2 }}>
+                        <MdClose size={16} />
+                      </IconButton>
+                    </Box>
+                  ))}
+                  {files.length > 2 && (
+                    <Box className='bg-white rounded px-1 py-0.5 flex items-center'>
+                      <Typography variant='caption'>... и еще {files.length - 2}</Typography>
+                    </Box>
+                  )}
+                </Box>
+              </Box>
+            )}
+
+            <Controller
+              name='agreeToTerms'
+              control={control}
+              render={({ field, fieldState: { error } }) => (
+                <>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={field.value}
+                        onChange={field.onChange}
+                        size='small'
+                        sx={{
+                          color: 'white',
+                          '&.Mui-checked': {
+                            color: 'primary.main',
+                          },
+                        }}
+                      />
+                    }
+                    label={
+                      <Typography variant='caption' className='text-gray-300'>
+                        Нажав кнопку "Отправить", вы даете согласие на обработку персональных
+                        данных.
+                      </Typography>
+                    }
+                  />
+                  {error && <FormHelperText error>{error.message}</FormHelperText>}
+                </>
+              )}
             />
 
             <Button
               variant='contained'
               fullWidth
-              disabled={!isFormValid}
-              onClick={handleSubmit}
-              className='py-3 bg-[#3182CE] hover:bg-[#2B6CB0] text-white font-medium'
+              type='submit'
+              size='small'
+              sx={{
+                mt: 1,
+                py: 0.75,
+                opacity: isValid ? 1 : 0.7,
+                '&:hover': {
+                  cursor: isValid ? 'pointer' : 'not-allowed',
+                },
+              }}
             >
               Отправить
             </Button>
-          </div>
+          </form>
         </div>
       </DialogContent>
     </Dialog>
