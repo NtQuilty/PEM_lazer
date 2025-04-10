@@ -56,7 +56,7 @@ export const HeaderDrawer: FC<HeaderDrawerProps> = ({ drawerOpen, toggleDrawer }
 
             if (link.id === 'services') {
               return (
-                <div className='border-b border-gray-700 pb-4'>
+                <div key={link.id} className='border-b border-gray-700 pb-4'>
                   <button
                     onClick={toggleMobileServices}
                     className='text-[#a7a8ab] hover:text-[#3198ff] transition-colors text-lg flex items-center justify-between w-full'
