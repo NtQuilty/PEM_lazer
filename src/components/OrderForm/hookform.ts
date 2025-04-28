@@ -9,7 +9,11 @@ export const schema = yup.object().shape({
   telephone: yup
     .string()
     .required('Обязательное поле')
-    .matches(/^[0-9+\-() ]+$/, 'Некорректный формат телефона'),
+    .test('is-valid-phone', 'Введите корректный номер телефона', value => {
+      if (!value) return false;
+
+      return /^\+7\(\d{3}\)-\d{3}-\d{2}-\d{2}$/.test(value);
+    }),
 
   mail: yup
     .string()
@@ -24,10 +28,19 @@ export const schema = yup.object().shape({
   files: yup
     .mixed<File[]>()
     .default([])
-    .test('is-file-array', 'Должен быть массив файлов', value => {
-      if (!value || !Array.isArray(value)) return false;
-      return value.every(item => item instanceof File);
-    }),
+
+    .test(
+      'file-formats',
+      'Поддерживаются только файлы в форматах: PDF, DXF, DWG, STL, STEP, IGS',
+      value => {
+        if (!value || !Array.isArray(value)) return true;
+        const allowedExtensions = ['pdf', 'dxf', 'dwg', 'stl', 'step', 'igs'];
+        return value.every(file => {
+          const ext = file.name.split('.').pop()?.toLowerCase() || '';
+          return allowedExtensions.includes(ext);
+        });
+      }
+    ),
 
   agreeToTerms: yup.boolean().oneOf([true], 'Необходимо согласие').required('Обязательное поле'),
 });
