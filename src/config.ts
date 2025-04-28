@@ -18,21 +18,9 @@ export const navigationLinks: NavigationLink[] = [
     link: '/',
   },
   {
-    id: 'services',
-    title: 'Услуги',
-    link: '/services',
-    options: [
-      {
-        id: 'laser-cutting',
-        title: 'Лазерная резка',
-        link: '/services/laser-cutting',
-      },
-      {
-        id: 'turning',
-        title: 'Токарная обработка',
-        link: '/services/turning',
-      },
-    ],
+    id: 'laser-cutting',
+    title: 'Лазерная резка',
+    link: '/services/laser-cutting',
   },
   {
     id: 'portfolio',

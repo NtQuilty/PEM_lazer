@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -10,6 +10,8 @@ import {
   Box,
   FormHelperText,
   IconButton,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,6 +24,7 @@ import { schema } from './hookform';
 import { FaCloudDownloadAlt } from 'react-icons/fa';
 import { VisuallyHiddenInput } from './style';
 import { MdClose } from 'react-icons/md';
+import { PhoneMaskCustom } from './components/PhoneMaskCustom';
 
 interface OrderFormProps {
   open: boolean;
@@ -44,6 +47,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
     formState: { isValid },
     watch,
     reset,
+    setValue,
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
     mode: 'onChange',
@@ -59,9 +63,24 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
 
   const files = watch('files');
 
+  const [showAllFiles, setShowAllFiles] = useState(false);
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: 'success' | 'error';
+  }>({
+    open: false,
+    message: '',
+    severity: 'success',
+  });
+
   const handleClose = () => {
     reset();
     onClose();
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   const onSubmit = async (data: FormValues) => {
@@ -87,18 +106,30 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
           body: formData,
         }
       );
-      const result_1 = await response.json();
-      if (result_1.success) {
-        alert(`Заявка #${result_1.orderId} успешно отправлена!`);
+      const result = await response.json();
+      if (result.success) {
+        setSnackbar({
+          open: true,
+          message: `Заявка #${result.orderId} успешно отправлена!`,
+          severity: 'success',
+        });
         reset();
         onClose();
-      } else {
-        alert('Произошла ошибка при отправке заявки');
       }
     } catch (error) {
-      console.error('Ошибка:', error);
-      alert('Произошла ошибка при отправке заявки');
+      setSnackbar({
+        open: true,
+        message: 'Произошла ошибка при отправке заявки. Попробуйте снова',
+        severity: 'error',
+      });
     }
+  };
+
+  const onDeleteFiles = (index: number) => {
+    setValue(
+      'files',
+      files.filter((_, i) => i !== index)
+    );
   };
 
   return (
@@ -117,14 +148,14 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
         },
       }}
     >
-      <Box sx={{ position: 'absolute', right: 16, top: 16, zIndex: 1 }}>
+      <Box sx={{ position: 'absolute', right: 16, top: 16 }}>
         <IconButton onClick={handleClose} sx={{ color: 'white' }}>
           <IoMdClose size={32} />
         </IconButton>
       </Box>
 
       <DialogContent className='p-4 sm:p-6 md:p-8'>
-        <div className='w-full md:w-1/2 max-w-md '>
+        <div className='md:w-1/2'>
           <div className='mb-2 sm:mb-4'>
             <Typography variant='h5' className='font-bold text-white sm:text-h4'>
               Заказать услугу
@@ -135,63 +166,69 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className='space-y-2 sm:space-y-4'>
-            <Controller
-              name='name'
-              control={control}
-              render={({ field, fieldState: { error } }) => (
-                <>
-                  <TextField
-                    fullWidth
-                    placeholder='Ваше имя *'
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={!!error}
-                    size='small'
-                    autoComplete='off'
-                    slotProps={{
-                      input: {
-                        className: 'bg-white !rounded-2xl',
-                        startAdornment: (
-                          <Box className='mr-2'>
-                            <IoPersonOutline size={16} color='black' />
-                          </Box>
-                        ),
-                      },
-                    }}
-                  />
-                  {error && <FormHelperText error>{error.message}</FormHelperText>}
-                </>
-              )}
-            />
-
-            <Controller
-              name='telephone'
-              control={control}
-              render={({ field, fieldState: { error } }) => (
-                <>
-                  <TextField
-                    fullWidth
-                    placeholder='Ваш телефон *'
-                    value={field.value}
-                    onChange={field.onChange}
-                    error={!!error}
-                    size='small'
-                    autoComplete='off'
-                    slotProps={{
-                      input: {
-                        className: 'bg-white !rounded-2xl',
-                        startAdornment: (
-                          <Box className='mr-2'>
-                            <BsTelephone size={16} color='black' />
-                          </Box>
-                        ),
-                      },
-                    }}
-                  />
-                  {error && <FormHelperText error>{error.message}</FormHelperText>}
-                </>
-              )}
-            />
+            <Box className='flex justify-center gap-3 flex-col md:flex-row'>
+              <Controller
+                name='name'
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                  <Box className='flex flex-col gap-2 flex-1'>
+                    <TextField
+                      fullWidth
+                      placeholder='Ваше имя *'
+                      value={field.value}
+                      onChange={field.onChange}
+                      error={!!error}
+                      slotProps={{
+                        input: {
+                          className: 'bg-white !rounded-2xl',
+                          startAdornment: (
+                            <Box className='mr-2'>
+                              <IoPersonOutline size={20} color='black' />
+                            </Box>
+                          ),
+                        },
+                      }}
+                    />
+                    {error && (
+                      <FormHelperText error className='md:ml-3'>
+                        {error.message}
+                      </FormHelperText>
+                    )}
+                  </Box>
+                )}
+              />
+              <Controller
+                name='telephone'
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                  <Box className='flex flex-col gap-2 flex-1'>
+                    <TextField
+                      fullWidth
+                      placeholder='Ваш телефон *'
+                      value={field.value}
+                      onChange={field.onChange}
+                      error={!!error}
+                      slotProps={{
+                        input: {
+                          inputComponent: PhoneMaskCustom as any,
+                          className: 'bg-white !rounded-2xl',
+                          startAdornment: (
+                            <Box className='mr-2'>
+                              <BsTelephone size={20} color='black' />
+                            </Box>
+                          ),
+                        },
+                      }}
+                    />
+                    {error && (
+                      <FormHelperText error className='md:ml-3'>
+                        {error.message}
+                      </FormHelperText>
+                    )}
+                  </Box>
+                )}
+              />
+            </Box>
 
             <Controller
               name='mail'
@@ -205,14 +242,12 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
                     value={field.value}
                     onChange={field.onChange}
                     error={!!error}
-                    size='small'
-                    autoComplete='off'
                     slotProps={{
                       input: {
                         className: '!rounded-2xl bg-white',
                         startAdornment: (
                           <Box className='mr-2'>
-                            <HiOutlineMail size={16} color='black' />
+                            <HiOutlineMail size={20} color='black' />
                           </Box>
                         ),
                       },
@@ -230,18 +265,16 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
                 <TextField
                   fullWidth
                   multiline
-                  rows={2}
+                  rows={3}
                   placeholder='Ваше сообщение'
                   value={field.value}
                   onChange={field.onChange}
-                  className='rounded-2xl bg-white'
-                  size='small'
-                  autoComplete='off'
                   slotProps={{
                     input: {
+                      className: '!rounded-2xl bg-white',
                       startAdornment: (
-                        <Box className='mr-2 mt-[-25px]'>
-                          <FiMessageCircle size={16} color='black' />
+                        <Box className='mr-2 mt-[-45px]'>
+                          <FiMessageCircle size={20} color='black' />
                         </Box>
                       ),
                     },
@@ -253,51 +286,78 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
             <Controller
               name='files'
               control={control}
-              render={({ field }) => (
-                <Button
-                  component='label'
-                  variant='outlined'
-                  startIcon={<FaCloudDownloadAlt />}
-                  className='bg-white text-black hover:bg-gray-100 w-full justify-center text-xs sm:text-sm py-1'
-                  size='small'
-                >
-                  {field.value && field.value.length > 0
-                    ? 'Файлов: ' + field.value.length
-                    : 'Загрузить файлы'}
-                  <VisuallyHiddenInput
-                    type='file'
-                    multiple
-                    onChange={e => {
-                      const fileList = e.target.files;
-                      if (fileList) {
-                        const filesArray = Array.from(fileList);
-                        field.onChange(filesArray);
-                      }
-                    }}
-                  />
-                </Button>
+              render={({ field, fieldState: { error } }) => (
+                <Box className='flex flex-col gap-2'>
+                  <Button
+                    component='label'
+                    variant='outlined'
+                    startIcon={<FaCloudDownloadAlt />}
+                    className='bg-white text-black hover:bg-gray-100 w-full justify-center text-xs sm:text-sm py-1'
+                    size='small'
+                  >
+                    {field.value && field.value.length > 0
+                      ? 'Файлов: ' + field.value.length
+                      : 'Загрузить файлы'}
+                    <VisuallyHiddenInput
+                      type='file'
+                      multiple
+                      accept='.pdf,.dxf,.dwg,.stl,.step,.igs'
+                      onChange={e => {
+                        const fileList = e.target.files;
+                        if (fileList) {
+                          const allowedExtensions = ['pdf', 'dxf', 'dwg', 'stl', 'step', 'igs'];
+                          const filesArray = Array.from(fileList).filter(file => {
+                            const ext = file.name.split('.').pop()?.toLowerCase() || '';
+                            return allowedExtensions.includes(ext);
+                          });
+
+                          if (filesArray.length !== fileList.length) {
+                            setSnackbar({
+                              open: true,
+                              message:
+                                'Некоторые файлы не были добавлены. Поддерживаются только PDF, DXF, DWG, STL, STEP, IGS.',
+                              severity: 'error',
+                            });
+                          }
+
+                          field.onChange([...field.value, ...filesArray]);
+                        }
+                      }}
+                    />
+                  </Button>
+                  {error && (
+                    <FormHelperText error className='md:ml-3'>
+                      {error.message}
+                    </FormHelperText>
+                  )}
+                </Box>
               )}
             />
 
             {files && files.length > 0 && (
-              <Box className='bg-gray-100 rounded p-1 sm:p-2'>
+              <Box className='bg-gray-100 rounded-xl p-1 sm:p-2'>
                 <Box className='flex flex-wrap gap-1 sm:gap-2'>
-                  {files.slice(0, 2).map((file, index) => (
-                    <Box key={index} className='bg-white rounded px-1 py-0.5 flex items-center'>
+                  {(showAllFiles ? files : files.slice(0, 2)).map((file, index) => (
+                    <Box
+                      key={index}
+                      className='bg-white rounded-xl px-1 py-0.5 flex items-center gap-1'
+                    >
                       <Typography variant='caption' className='font-medium'>
                         {file?.name}
                       </Typography>
                       <Typography variant='caption' className='text-gray-500 ml-1'>
                         ({(file?.size / 1024).toFixed(0)} КБ)
                       </Typography>
-                      <IconButton size='small' onClick={() => undefined} sx={{ ml: 0.5, p: 0.2 }}>
+                      <IconButton size='small' onClick={() => onDeleteFiles(index)}>
                         <MdClose size={16} />
                       </IconButton>
                     </Box>
                   ))}
                   {files.length > 2 && (
-                    <Box className='bg-white rounded px-1 py-0.5 flex items-center'>
-                      <Typography variant='caption'>... и еще {files.length - 2}</Typography>
+                    <Box className='bg-white rounded-full px-1 flex items-center'>
+                      <Button size='small' onClick={() => setShowAllFiles(!showAllFiles)}>
+                        {showAllFiles ? 'Скрыть' : `... и еще ${files.length - 2}`}
+                      </Button>
                     </Box>
                   )}
                 </Box>
@@ -314,7 +374,6 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
                       <Checkbox
                         checked={field.value}
                         onChange={field.onChange}
-                        size='small'
                         sx={{
                           color: 'white',
                           '&.Mui-checked': {
@@ -339,10 +398,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
               variant='contained'
               fullWidth
               type='submit'
-              size='small'
               sx={{
-                mt: 1,
-                py: 0.75,
                 opacity: isValid ? 1 : 0.7,
                 '&:hover': {
                   cursor: isValid ? 'pointer' : 'not-allowed',
@@ -354,6 +410,12 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
           </form>
         </div>
       </DialogContent>
+
+      <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={handleCloseSnackbar}>
+        <Alert severity={snackbar.severity} variant='filled'>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Dialog>
   );
 };

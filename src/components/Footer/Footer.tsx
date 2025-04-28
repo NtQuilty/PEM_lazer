@@ -10,8 +10,7 @@ import { ContactItem } from './components/ContactItem';
 import { NavLink } from './components/NavLink';
 
 export const Footer: React.FC = () => {
-  const servicesNav = navigationLinks.find(item => item.id === 'services');
-
+  const service = navigationLinks.find(item => item.id === 'laser-cutting');
   return (
     <footer className='bg-[#1a1e2c] py-8 md:py-12'>
       <div className='px-4 mx-auto md:max-w-[1350px]'>
@@ -59,11 +58,16 @@ export const Footer: React.FC = () => {
           <div>
             <h3 className='text-white font-bold text-base md:text-lg mb-3 md:mb-4'>Услуги</h3>
             <nav className='space-y-2 md:space-y-3'>
-              {servicesNav?.options?.map(service => (
+              <NavLink key={service?.id} to={service?.link || ''}>
+                {service?.title}
+              </NavLink>
+
+              {/* TODO: Если вдруг понадобятся */}
+              {/* {servicesNav?.options?.map(service => (
                 <NavLink key={service.id} to={service.link}>
                   {service.title}
                 </NavLink>
-              ))}
+              ))} */}
             </nav>
           </div>
 
@@ -79,8 +83,12 @@ export const Footer: React.FC = () => {
                 zakaz24@nrg-m.ru
               </ContactItem>
 
-              <ContactItem isLink={false} icon={IoLocationSharp} size={14}>
-                г. Санкт-Петербург, ул. Седова 57.
+              <ContactItem
+                to='https://yandex.ru/maps/org/petroenergomash/104925148159/?ll=30.426208%2C59.880216&z=17'
+                icon={IoLocationSharp}
+                size={14}
+              >
+                г. Санкт-Петербург, ул. Седова 57
               </ContactItem>
             </div>
           </div>

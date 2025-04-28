@@ -44,11 +44,11 @@ export const Projects = () => {
                 alt={project.title}
                 className='w-full h-full object-cover'
               />
-              <Box className='project-overlay absolute bottom-0 left-0 right-0 bg-black/70 p-2 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100'>
+              <Box className='project-overlay absolute bottom-0 left-0 right-0 bg-black/70 p-2 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 md:p-3'>
                 <Typography variant='subtitle1' className='text-white text-sm md:text-base mb-1'>
                   {project.title}
                 </Typography>
-                <Button variant='text' className='text-white text-xs md:text-sm p-0 md:p-1'>
+                <Button variant='text' className='text-white text-xs md:text-sm !p-0'>
                   Смотреть проект
                 </Button>
               </Box>
@@ -72,16 +72,15 @@ export const Projects = () => {
 
       <Modal open={open} onClose={handleClose} className='flex items-center justify-center'>
         <Box className='bg-[#1a1e2c] p-4 rounded-lg max-w-[90%] md:max-w-[80%] relative'>
-          <Button
-            onClick={handleClose}
-            className='absolute top-2 right-2 text-white'
-            aria-label='close'
-          >
-            <IoClose size={24} />
-          </Button>
-          <Typography variant='h6' className='text-white mb-3 text-base md:text-lg'>
-            {selectedTitle}
-          </Typography>
+          <Box className='flex justify-between items-center mb-2'>
+            <Typography variant='h6' className='text-white mb-3 text-base md:text-lg'>
+              {selectedTitle}
+            </Typography>
+            <Button onClick={handleClose} className='!rounded-full' aria-label='close'>
+              <IoClose size={24} />
+            </Button>
+          </Box>
+
           <Box
             component='img'
             src={selectedImage}
