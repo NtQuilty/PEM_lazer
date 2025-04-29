@@ -33,7 +33,7 @@ export const MainContent = () => {
                     </p>
                     <div className='flex justify-between md:justify-start md:gap-4'>
                       <button
-                        onClick={openOrderForm}
+                        onClick={() => openOrderForm('order')}
                         className='bg-[#3198FF] text-white rounded-xl md:rounded-[20px] text-sm md:text-[16px] px-4 py-2 md:px-6 md:py-3'
                       >
                         Рассчитать стоимость
@@ -55,7 +55,7 @@ export const MainContent = () => {
                     </p>
                     <div className='flex justify-between md:justify-start md:gap-4'>
                       <button
-                        onClick={openOrderForm}
+                        onClick={() => openOrderForm('order')}
                         className='bg-[#3198FF] text-white rounded-xl md:rounded-[20px] text-sm md:text-[16px] px-4 py-2 md:px-6 md:py-3'
                       >
                         Рассчитать стоимость
