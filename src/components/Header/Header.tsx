@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { navigationLinks, NavigationOption } from '../../config';
+import { EMAIL, navigationLinks, NavigationOption, TELEPHONE_NUMBER } from '../../config';
 import { BsTelephoneFill } from 'react-icons/bs';
 import { TbMailFilled } from 'react-icons/tb';
 import _React, { FC, useState, useEffect } from 'react';
@@ -7,11 +7,15 @@ import { Menu, MenuItem } from '@mui/material';
 import { MdKeyboardArrowDown, MdKeyboardArrowLeft } from 'react-icons/md';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { HeaderDrawer } from './components/HeaderDrawer';
+import { SocialLink } from '../Footer/components/SocialLink';
+import { useOrderForm } from '../../contexts/OrderFormContext';
 
 export const Header: FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [servicesAnchorEl, setServicesAnchorEl] = useState<null | HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const { openOrderForm } = useOrderForm();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,22 +58,6 @@ export const Header: FC = () => {
         <Link to='/' className='relative z-10 ml-14'>
           <img src='/images/logo.png' alt='logo' className='h-8 md:h-10' />
         </Link>
-
-        {/* Мобильные иконки телефона и почты - видны только на мобильных */}
-        <div className='flex items-center gap-3 md:hidden'>
-          <a
-            href='tel:+78122192015'
-            className='flex items-center justify-center  rounded-full border border-[#dadada] p-[6px]'
-          >
-            <BsTelephoneFill className='text-white' size={16} />
-          </a>
-          <a
-            href='mailto:zakaz24@nrg-m.ru'
-            className='flex items-center justify-center  rounded-full border border-[#dadada]  p-[6px]'
-          >
-            <TbMailFilled className='text-white' size={16} />
-          </a>
-        </div>
 
         <div className='hidden md:flex items-center justify-around flex-1 ml-8'>
           {navigationLinks.map(navigationLink => {
@@ -141,24 +129,18 @@ export const Header: FC = () => {
           })}
         </div>
 
+        <div className='flex items-center gap-6 md:mr-10'>
+          <SocialLink to={`tel:${TELEPHONE_NUMBER}`} icon={BsTelephoneFill} size='24' />
+          <SocialLink to={`mailto:${EMAIL}`} icon={TbMailFilled} size='24' />
+        </div>
+
         {/* Правая часть десктопного хедера - скрыта на мобильных */}
         <div className='hidden md:flex items-center gap-[16px]'>
-          <div className='flex items-center border-2 border-[#dadada] hover:border-[#3198ff] transition-colors rounded-full p-3 relative group'>
-            <div className='absolute w-full h-full bg-[rgba(48,152,255,0.35)] blur-[50px] opacity-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none group-hover:opacity-100 transition-opacity duration-300'></div>
-            <BsTelephoneFill
-              className='text-white group-hover:text-[#3198ff] transition-colors'
-              size={24}
-            />
-          </div>
-          <div className='flex items-center border-2 border-[#dadada] hover:border-[#3198ff] transition-colors rounded-full p-3 relative group'>
-            <div className='absolute w-full h-full bg-[rgba(48,152,255,0.35)] blur-[50px] opacity-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none group-hover:opacity-100 transition-opacity duration-300'></div>
-            <TbMailFilled
-              className='text-white group-hover:text-[#3198ff] transition-colors'
-              size={24}
-            />
-          </div>
           <div className='relative group'>
-            <button className='text-[#fff] text-lg bg-[#3198ff] px-[40px] py-[10px] rounded-xl group-hover:bg-[#1d80e2] transition-colors'>
+            <button
+              onClick={() => openOrderForm('order')}
+              className='text-[#fff] text-lg bg-[#3198ff] px-[40px] py-[10px] rounded-xl group-hover:bg-[#1d80e2] transition-colors'
+            >
               Заказать
             </button>
           </div>

@@ -1,22 +1,18 @@
 import { useState, useRef } from 'react';
 import { services } from '../../config';
 import { FaChevronDown } from 'react-icons/fa';
-import { OrderForm } from '../OrderForm/OrderForm';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
+import { useOrderForm } from '../../contexts/OrderFormContext';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
 
 export const LandingHero = () => {
-  const [orderFormOpen, setOrderFormOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperType | null>(null);
-
-  const openOrderForm = () => {
-    setOrderFormOpen(true);
-  };
+  const { openOrderForm } = useOrderForm();
 
   const activeService = services[activeIndex];
 
@@ -59,7 +55,7 @@ export const LandingHero = () => {
 
           <div className='flex flex-col sm:flex-row gap-4 sm:gap-[35px]'>
             <button
-              onClick={openOrderForm}
+              onClick={() => openOrderForm('order')}
               className='
               bg-[#3198FF] text-white rounded-[20px] text-base sm:text-lg md:text-xl lg:text-[23px]
               w-full sm:w-[260px] md:w-[300px] lg:w-[340px]
@@ -68,7 +64,6 @@ export const LandingHero = () => {
               Рассчитать стоимость
             </button>
 
-            <OrderForm open={orderFormOpen} onClose={() => setOrderFormOpen(false)} />
             <button
               className='
               border-[1px] border-solid border-[#3198ff]

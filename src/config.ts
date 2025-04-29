@@ -61,4 +61,6 @@ export const services = [
   },
 ] as const;
 
-//Лазерная резка, токарная обработка
+export const TELEPHONE_NUMBER = '+78122192015';
+export const EMAIL = 'zakaz24@nrg-m.ru';
+export const ADDRESS = 'г. Санкт-Петербург, ул. Седова 57';

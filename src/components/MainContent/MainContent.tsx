@@ -1,6 +1,9 @@
 import { servicesData } from './const';
+import { useOrderForm } from '../../contexts/OrderFormContext';
 
 export const MainContent = () => {
+  const { openOrderForm } = useOrderForm();
+
   return (
     <div className='relative mx-auto'>
       <div className='px-4 mx-auto md:max-w-[1350px]'>
@@ -29,7 +32,10 @@ export const MainContent = () => {
                       {service.description}
                     </p>
                     <div className='flex justify-between md:justify-start md:gap-4'>
-                      <button className='bg-[#3198FF] text-white rounded-xl md:rounded-[20px] text-sm md:text-[16px] px-4 py-2 md:px-6 md:py-3'>
+                      <button
+                        onClick={openOrderForm}
+                        className='bg-[#3198FF] text-white rounded-xl md:rounded-[20px] text-sm md:text-[16px] px-4 py-2 md:px-6 md:py-3'
+                      >
                         Рассчитать стоимость
                       </button>
                       <button className='border-[1px] border-solid border-[#3198ff] text-[#a7a8ab] rounded-xl md:rounded-[20px] text-sm md:text-[16px] px-4 py-2 md:px-6 md:py-3'>
@@ -48,7 +54,10 @@ export const MainContent = () => {
                       {service.description}
                     </p>
                     <div className='flex justify-between md:justify-start md:gap-4'>
-                      <button className='bg-[#3198FF] text-white rounded-xl md:rounded-[20px] text-sm md:text-[16px] px-4 py-2 md:px-6 md:py-3'>
+                      <button
+                        onClick={openOrderForm}
+                        className='bg-[#3198FF] text-white rounded-xl md:rounded-[20px] text-sm md:text-[16px] px-4 py-2 md:px-6 md:py-3'
+                      >
                         Рассчитать стоимость
                       </button>
                       <button className='border-[1px] border-solid border-[#3198ff] text-[#a7a8ab] rounded-xl md:rounded-[20px] text-sm md:text-[16px] px-4 py-2 md:px-6 md:py-3'>

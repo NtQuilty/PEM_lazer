@@ -1,6 +1,9 @@
 import React from 'react';
+import { useOrderForm } from '../../contexts/OrderFormContext';
 
 export const ConsultationPromo: React.FC = () => {
+  const { openOrderForm } = useOrderForm();
+
   return (
     <div className='container mx-auto px-4'>
       <div className='flex relative overflow-hidden mx-auto align-center mt-[-60px] '>
@@ -17,7 +20,10 @@ export const ConsultationPromo: React.FC = () => {
             Проконсультируем по любому интересующему вас вопросу.
           </h2>
           <div className='flex justify-end md:justify-normal items-center gap-[24px]'>
-            <button className='bg-[#3B82F6] rounded-[10px] text-white py-3 md:py-4 px-[30px] md:px-[80px] max-w-[180px] md:max-w-none  text-center'>
+            <button
+              onClick={() => openOrderForm('consultation')}
+              className='bg-[#3B82F6] rounded-[10px] text-white py-3 md:py-4 px-[30px] md:px-[80px] max-w-[180px] md:max-w-none text-center'
+            >
               Консультация
             </button>
             <p className='hidden md:block text-xs text-[rgba(214,214,214,0.8)]'>

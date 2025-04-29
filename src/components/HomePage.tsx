@@ -16,7 +16,7 @@ export const HomePage = () => {
       <ConsultationPromo />
       <Projects />
       <FAQ />
-      <About isVisible={false} />
+      <About />
       <DiscountForm />
     </>
   );
