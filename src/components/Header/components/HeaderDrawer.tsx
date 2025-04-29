@@ -2,9 +2,10 @@ import _React, { FC, useState } from 'react';
 import { Drawer, IconButton } from '@mui/material';
 import { MdClose, MdKeyboardArrowDown } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { navigationLinks } from '../../../config';
+import { navigationLinks, TELEPHONE_NUMBER } from '../../../config';
 import { FaTelegram } from 'react-icons/fa';
 import { BsTelephoneFill } from 'react-icons/bs';
+import { useOrderForm } from '../../../contexts/OrderFormContext';
 
 interface HeaderDrawerProps {
   drawerOpen: boolean;
@@ -13,9 +14,15 @@ interface HeaderDrawerProps {
 
 export const HeaderDrawer: FC<HeaderDrawerProps> = ({ drawerOpen, toggleDrawer }) => {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const { openOrderForm } = useOrderForm();
 
   const toggleMobileServices = () => {
     setMobileServicesOpen(!mobileServicesOpen);
+  };
+
+  const handleOrderClick = () => {
+    openOrderForm('order');
+    toggleDrawer(false);
   };
 
   return (
@@ -100,7 +107,10 @@ export const HeaderDrawer: FC<HeaderDrawerProps> = ({ drawerOpen, toggleDrawer }
         </div>
 
         {/* Кнопка заказа */}
-        <button className='mt-8 bg-[#3198ff] text-white py-3 px-6 rounded-lg hover:bg-[#1d80e2] transition-colors text-base w-full'>
+        <button
+          onClick={handleOrderClick}
+          className='mt-8 bg-[#3198ff] text-white py-3 px-6 rounded-lg hover:bg-[#1d80e2] transition-colors text-base w-full'
+        >
           Быстрый заказ
         </button>
 
@@ -116,7 +126,7 @@ export const HeaderDrawer: FC<HeaderDrawerProps> = ({ drawerOpen, toggleDrawer }
           </a>
 
           <a
-            href='tel:+78122192015'
+            href={`tel:${TELEPHONE_NUMBER}`}
             className='bg-[#2a2d39] hover:bg-[#3a3e4d] transition-colors w-10 h-10 rounded-full flex items-center justify-center'
           >
             <BsTelephoneFill size={18} className='text-white' />

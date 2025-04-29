@@ -4,7 +4,7 @@ import { IoArrowDown } from 'react-icons/io5';
 import { IoClose } from 'react-icons/io5';
 import { projectsData } from './const';
 
-export const Projects = () => {
+export const Projects = ({ isHomePage = false }: { isHomePage?: boolean }) => {
   const [open, setOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [selectedTitle, setSelectedTitle] = useState('');
@@ -24,7 +24,7 @@ export const Projects = () => {
     setShowAll(true);
   };
 
-  const visibleProjects = showAll ? projectsData : projectsData.slice(0, 3);
+  const visibleProjects = showAll && !isHomePage ? projectsData : projectsData.slice(0, 6);
 
   return (
     <Box className='py-4 md:py-5 bg-[#1a1e2c]'>
@@ -56,7 +56,7 @@ export const Projects = () => {
           ))}
         </Box>
 
-        {!showAll && projectsData.length > 3 && (
+        {!showAll && projectsData.length > 6 && (
           <Box className='flex justify-center mt-3 md:mt-4'>
             <Button
               variant='text'

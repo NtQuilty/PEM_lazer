@@ -1,29 +1,102 @@
 import React, { useState } from 'react';
+import {
+  TextField,
+  Button,
+  Typography,
+  Checkbox,
+  FormControlLabel,
+  Box,
+  FormHelperText,
+  Snackbar,
+  Alert,
+} from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { IoPersonOutline } from 'react-icons/io5';
+import { BsTelephone } from 'react-icons/bs';
+import { HiOutlineMail } from 'react-icons/hi';
+import { PhoneMaskCustom } from '../OrderForm/components/PhoneMaskCustom';
+import { schema } from './hookform';
+import { textFieldStyles } from '../../helpers';
+
+interface FormValues {
+  name: string;
+  telephone: string;
+  mail: string;
+  agreeToTerms: boolean;
+}
 
 export const DiscountForm: React.FC = () => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [isAgreed, setIsAgreed] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: '',
+    severity: 'success' as 'success' | 'error',
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log({ name, phone, email, isAgreed });
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isValid },
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      name: '',
+      telephone: '',
+      mail: '',
+      agreeToTerms: false,
+    },
+    mode: 'onChange',
+  });
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
+
+  const onSubmit = async (data: FormValues) => {
+    const formData = new FormData();
+
+    Object.keys(data).forEach(key => {
+      formData.append(key, String(data[key as keyof FormValues]));
+    });
+
+    try {
+      const response = await fetch(
+        'https://meyson-bot-pem-zay-bxzly0-0d088f-194-164-235-187.traefik.me/api/submit-form',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+      const result = await response.json();
+      if (result.success) {
+        setSnackbar({
+          open: true,
+          message: `Заявка на скидку успешно отправлена!`,
+          severity: 'success',
+        });
+        reset();
+      }
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: 'Произошла ошибка при отправке заявки. Попробуйте снова или напишите нам на почту',
+        severity: 'error',
+      });
+    }
   };
 
   return (
     <section className='bg-[#13151e] py-16'>
       <div className='max-w-[1350px] mx-auto px-4'>
-        <div className='flex flex-col md:flex-row items-center justify-between gap-8'>
+        <div className='flex flex-col md:flex-row items-start justify-between gap-8'>
           {/* Левая часть с изображением и текстом */}
-          <div className='md:w-1/2'>
-            <div className='text-center md:text-left'>
-              <img
-                src='/images/sale.webp'
-                alt='Скидка 10%'
-                className='max-w-full h-auto mx-auto md:mx-0'
-              />
-            </div>
+          <div className='md:w-1/2 '>
+            <img
+              src='/images/sale.webp'
+              alt='Скидка 10%'
+              className='max-w-full h-auto mx-auto md:mx-0'
+            />
           </div>
 
           {/* Правая часть с формой */}
@@ -37,150 +110,160 @@ export const DiscountForm: React.FC = () => {
                 }}
               ></div>
 
-              <h3 className='text-3xl font-bold text-white mb-2 relative z-10'>Отправьте заявку</h3>
+              <h3 className='text-3xl font-bold text-white mb-2 '>Отправьте заявку</h3>
               <p className='text-[#D6D6D6CC] mb-6 relative z-10'>
                 И мы свяжемся с Вами в течение 15 минут
               </p>
 
-              <form onSubmit={handleSubmit}>
-                <div className='mb-4'>
-                  <div className='bg-[#1b1e29] flex items-center rounded p-3'>
-                    <span className='text-gray-400 mr-3'>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        fill='none'
-                        viewBox='0 0 24 24'
-                        stroke='currentColor'
-                        className='w-5 h-5'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
-                        />
-                      </svg>
-                    </span>
-                    <input
-                      type='text'
-                      placeholder='Ваше имя'
-                      className='bg-transparent w-full text-white focus:outline-none'
-                      value={name}
-                      onChange={e => setName(e.target.value)}
-                    />
-                  </div>
-                </div>
+              <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-4'>
+                <Controller
+                  name='name'
+                  control={control}
+                  render={({ field, fieldState: { error } }) => (
+                    <Box className='flex flex-col gap-2 flex-1'>
+                      <TextField
+                        fullWidth
+                        placeholder='Ваше имя *'
+                        value={field.value}
+                        onChange={field.onChange}
+                        error={!!error}
+                        sx={textFieldStyles}
+                        slotProps={{
+                          input: {
+                            className: 'bg-[#262d37] !rounded-2xl !text-white',
+                            startAdornment: (
+                              <Box className='mr-2'>
+                                <IoPersonOutline size={20} color='white' />
+                              </Box>
+                            ),
+                          },
+                        }}
+                      />
+                      {error && (
+                        <FormHelperText error className='md:ml-3'>
+                          {error.message}
+                        </FormHelperText>
+                      )}
+                    </Box>
+                  )}
+                />
 
-                <div className='mb-4'>
-                  <div className='bg-[#1b1e29] flex items-center rounded p-3'>
-                    <span className='text-gray-400 mr-3'>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        fill='none'
-                        viewBox='0 0 24 24'
-                        stroke='currentColor'
-                        className='w-5 h-5'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'
-                        />
-                      </svg>
-                    </span>
-                    <input
-                      type='tel'
-                      placeholder='Ваш телефон'
-                      className='bg-transparent w-full text-white focus:outline-none'
-                      value={phone}
-                      onChange={e => setPhone(e.target.value)}
-                    />
-                  </div>
-                </div>
+                <Controller
+                  name='telephone'
+                  control={control}
+                  render={({ field, fieldState: { error } }) => (
+                    <Box className='flex flex-col gap-2 flex-1'>
+                      <TextField
+                        fullWidth
+                        placeholder='Ваш телефон *'
+                        value={field.value}
+                        onChange={field.onChange}
+                        error={!!error}
+                        sx={textFieldStyles}
+                        slotProps={{
+                          input: {
+                            inputComponent: PhoneMaskCustom as any,
+                            className: 'bg-[#262d37] !rounded-2xl !text-white',
+                            startAdornment: (
+                              <Box className='mr-2'>
+                                <BsTelephone size={20} color='white' />
+                              </Box>
+                            ),
+                          },
+                        }}
+                      />
+                      {error && (
+                        <FormHelperText error className='md:ml-3'>
+                          {error.message}
+                        </FormHelperText>
+                      )}
+                    </Box>
+                  )}
+                />
 
-                <div className='mb-6'>
-                  <div className='bg-[#1b1e29] flex items-center rounded p-3'>
-                    <span className='text-gray-400 mr-3'>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        fill='none'
-                        viewBox='0 0 24 24'
-                        stroke='currentColor'
-                        className='w-5 h-5'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
-                        />
-                      </svg>
-                    </span>
-                    <input
-                      type='email'
-                      placeholder='Ваш Email'
-                      className='bg-transparent w-full text-white focus:outline-none'
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                    />
-                  </div>
-                </div>
+                <Controller
+                  name='mail'
+                  control={control}
+                  render={({ field, fieldState: { error } }) => (
+                    <>
+                      <TextField
+                        fullWidth
+                        placeholder='Ваш email'
+                        type='email'
+                        value={field.value}
+                        onChange={field.onChange}
+                        error={!!error}
+                        sx={textFieldStyles}
+                        slotProps={{
+                          input: {
+                            className: 'bg-[#262d37] !rounded-2xl !text-white',
+                            startAdornment: (
+                              <Box className='mr-2'>
+                                <HiOutlineMail size={20} color='white' />
+                              </Box>
+                            ),
+                          },
+                        }}
+                      />
+                      {error && <FormHelperText error>{error.message}</FormHelperText>}
+                    </>
+                  )}
+                />
 
-                <button
+                <Controller
+                  name='agreeToTerms'
+                  control={control}
+                  render={({ field, fieldState: { error } }) => (
+                    <>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={field.value}
+                            onChange={field.onChange}
+                            sx={{
+                              color: error?.message ? '#d32f2f' : '#0ea5e9',
+                              '&.Mui-checked': {
+                                color: '#0ea5e9',
+                              },
+                            }}
+                          />
+                        }
+                        label={
+                          <Typography variant='caption' className='text-gray-300'>
+                            Нажав кнопку "Получить скидку 10%", вы даете согласие на обработку
+                            персональных данных.
+                          </Typography>
+                        }
+                      />
+                      {error && <FormHelperText error>{error.message}</FormHelperText>}
+                    </>
+                  )}
+                />
+
+                <Button
                   type='submit'
-                  className='w-full bg-[#0ea5e9] hover:bg-blue-600 text-white font-medium py-3 px-4 rounded transition-colors'
+                  variant='contained'
+                  className='w-full bg-[#0ea5e9] hover:bg-blue-600 text-white font-medium py-3 px-4 rounded '
+                  sx={{
+                    opacity: isValid ? 1 : 0.7,
+                    '&:hover': {
+                      cursor: isValid ? 'pointer' : 'not-allowed',
+                    },
+                  }}
                 >
                   Получить скидку 10%
-                </button>
-
-                <div className='mt-4 flex items-start'>
-                  <div className='relative flex-shrink-0' style={{ width: '42px', height: '42px' }}>
-                    <input
-                      type='checkbox'
-                      id='privacy'
-                      checked={isAgreed}
-                      onChange={() => setIsAgreed(!isAgreed)}
-                      className='absolute w-full h-full opacity-0 cursor-pointer z-10'
-                    />
-                    <div
-                      className={`
-                      w-[42px] h-[42px]
-                      border-2 border-[#252d37]
-                      rounded-[15px]
-                      box-border
-                      flex items-center justify-center
-                      relative
-                      ${isAgreed ? 'bg-blue-500/20' : ''}
-                    `}
-                    >
-                      {isAgreed && (
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          className='h-6 w-6 text-blue-500'
-                          fill='none'
-                          viewBox='0 0 24 24'
-                          stroke='currentColor'
-                        >
-                          <path
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            strokeWidth={2}
-                            d='M5 13l4 4L19 7'
-                          />
-                        </svg>
-                      )}
-                    </div>
-                  </div>
-                  <label htmlFor='privacy' className='ml-3 text-sm text-[#D6D6D6CC]'>
-                    Нажав кнопку "Отправить", вы даете согласие на обработку персональных данных.
-                  </label>
-                </div>
+                </Button>
               </form>
             </div>
           </div>
         </div>
       </div>
+
+      <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={handleCloseSnackbar}>
+        <Alert severity={snackbar.severity} variant='filled'>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </section>
   );
 };

@@ -8,25 +8,26 @@ import { MainContent } from './components/MainContent/MainContent';
 import { Projects } from './components/Projects/Projects';
 import { Box } from '@mui/material';
 import { Contacts } from './components/Contacts/Contacts';
+import { OrderFormProvider } from './contexts/OrderFormContext';
 
 export const App = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
   return (
-    <>
+    <OrderFormProvider>
       <Header />
-      <Box className={isHomePage ? '' : 'pt-[100px]'}>
+      <Box className={isHomePage ? '' : 'pt-[50px] md:pt-[100px]'}>
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/services' element={<MainContent />} />
-          <Route path='/portfolio' element={<Projects />} />
+          <Route path='/portfolio' element={<Projects isHomePage={isHomePage} />} />
           <Route path='/help' element={<FAQ />} />
-          <Route path='/about' element={<About isVisible={true} />} />
+          <Route path='/about' element={<About isHomePage={isHomePage} />} />
           <Route path='/contacts' element={<Contacts />} />
         </Routes>
       </Box>
       <Footer />
-    </>
+    </OrderFormProvider>
   );
 };

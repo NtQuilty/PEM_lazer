@@ -1,10 +1,4 @@
-import React from 'react';
-
-interface AboutProps {
-  isVisible: boolean;
-}
-
-export const About: React.FC<AboutProps> = ({ isVisible }) => {
+export const About = ({ isHomePage = true }: { isHomePage?: boolean }) => {
   return (
     <section className='bg-[#1a1e2c] py-8 md:py-16'>
       <div className='px-4 mx-auto md:max-w-[1350px]'>
@@ -58,7 +52,7 @@ export const About: React.FC<AboutProps> = ({ isVisible }) => {
         </div>
 
         {/* Нижняя секция с изображением */}
-        {isVisible && (
+        {!isHomePage && (
           <div className='mt-8 md:mt-12'>
             <div className='flex flex-col md:flex-row gap-6'>
               <div className='w-full md:w-[40%]'>

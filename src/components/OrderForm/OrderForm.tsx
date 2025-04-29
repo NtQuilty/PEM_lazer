@@ -12,6 +12,7 @@ import {
   IconButton,
   Snackbar,
   Alert,
+  Tooltip,
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -25,10 +26,13 @@ import { FaCloudDownloadAlt } from 'react-icons/fa';
 import { VisuallyHiddenInput } from './style';
 import { MdClose } from 'react-icons/md';
 import { PhoneMaskCustom } from './components/PhoneMaskCustom';
+import { lightTextFieldStyles } from '../../helpers';
+import { OrderFormType } from '../../contexts/OrderFormContext';
 
 interface OrderFormProps {
   open: boolean;
   onClose: () => void;
+  formType: OrderFormType;
 }
 
 interface FormValues {
@@ -40,7 +44,7 @@ interface FormValues {
   files: File[];
 }
 
-export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
+export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType }) => {
   const {
     handleSubmit,
     control,
@@ -92,6 +96,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
       }
     });
 
+    formData.append('formType', formType);
+
     if (data.files && data.files.length > 0) {
       data.files.forEach((file: File) => {
         formData.append('files', file);
@@ -119,7 +125,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
     } catch (error) {
       setSnackbar({
         open: true,
-        message: 'Произошла ошибка при отправке заявки. Попробуйте снова',
+        message: 'Произошла ошибка при отправке заявки. Попробуйте снова или напишите нам на почту',
         severity: 'error',
       });
     }
@@ -141,7 +147,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
       slotProps={{
         paper: {
           style: {
-            backgroundImage: 'url(/images/zakaz.png)',
+            backgroundImage: `url(/images/${formType === 'order' ? 'zakaz.png' : 'bgmodal.png'})`,
             overflow: 'hidden',
           },
           className: '!rounded-2xl !bg-transparent',
@@ -158,10 +164,12 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
         <div className='md:w-1/2'>
           <div className='mb-2 sm:mb-4'>
             <Typography variant='h5' className='font-bold text-white sm:text-h4'>
-              Заказать услугу
+              {formType === 'order' ? 'Заказать услугу' : 'Заполните заявку'}
             </Typography>
             <Typography variant='body2' className='text-gray-300 sm:text-body1'>
-              Отправьте заявку и мы свяжемся с вами
+              {formType === 'order'
+                ? 'Отправьте заявку и мы свяжемся с вами'
+                : 'Мы свяжемся с вами в ближайшее время'}
             </Typography>
           </div>
 
@@ -178,6 +186,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
                       value={field.value}
                       onChange={field.onChange}
                       error={!!error}
+                      sx={lightTextFieldStyles}
                       slotProps={{
                         input: {
                           className: 'bg-white !rounded-2xl',
@@ -208,6 +217,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
                       value={field.value}
                       onChange={field.onChange}
                       error={!!error}
+                      sx={lightTextFieldStyles}
                       slotProps={{
                         input: {
                           inputComponent: PhoneMaskCustom as any,
@@ -242,6 +252,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
                     value={field.value}
                     onChange={field.onChange}
                     error={!!error}
+                    sx={lightTextFieldStyles}
                     slotProps={{
                       input: {
                         className: '!rounded-2xl bg-white',
@@ -269,6 +280,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
                   placeholder='Ваше сообщение'
                   value={field.value}
                   onChange={field.onChange}
+                  sx={lightTextFieldStyles}
                   slotProps={{
                     input: {
                       className: '!rounded-2xl bg-white',
@@ -283,58 +295,75 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose }) => {
               )}
             />
 
-            <Controller
-              name='files'
-              control={control}
-              render={({ field, fieldState: { error } }) => (
-                <Box className='flex flex-col gap-2'>
-                  <Button
-                    component='label'
-                    variant='outlined'
-                    startIcon={<FaCloudDownloadAlt />}
-                    className='bg-white text-black hover:bg-gray-100 w-full justify-center text-xs sm:text-sm py-1'
-                    size='small'
-                  >
-                    {field.value && field.value.length > 0
-                      ? 'Файлов: ' + field.value.length
-                      : 'Загрузить файлы'}
-                    <VisuallyHiddenInput
-                      type='file'
-                      multiple
-                      accept='.pdf,.dxf,.dwg,.stl,.step,.igs'
-                      onChange={e => {
-                        const fileList = e.target.files;
-                        if (fileList) {
-                          const allowedExtensions = ['pdf', 'dxf', 'dwg', 'stl', 'step', 'igs'];
-                          const filesArray = Array.from(fileList).filter(file => {
-                            const ext = file.name.split('.').pop()?.toLowerCase() || '';
-                            return allowedExtensions.includes(ext);
-                          });
+            {formType === 'order' && (
+              <Controller
+                name='files'
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                  <Box className='flex flex-col gap-2'>
+                    <Tooltip
+                      title='Поддерживаются форматы: PDF, DXF, DWG, STL, STEP, IGS'
+                      arrow
+                      placement='top'
+                    >
+                      <Button
+                        component='label'
+                        variant='outlined'
+                        startIcon={<FaCloudDownloadAlt />}
+                        className='bg-white text-black hover:bg-gray-100 w-full justify-center text-xs sm:text-sm py-1 border-blue-500'
+                        size='small'
+                        sx={{
+                          borderColor: '#3198FF',
+                          borderWidth: '1px',
+                          '&:hover': {
+                            borderColor: '#1d80e2',
+                            borderWidth: '1px',
+                            bgcolor: '#f0f7ff',
+                          },
+                        }}
+                      >
+                        {field.value && field.value.length > 0
+                          ? 'Файлов: ' + field.value.length
+                          : 'Загрузить файлы'}
+                        <VisuallyHiddenInput
+                          type='file'
+                          multiple
+                          accept='.pdf,.dxf,.dwg,.stl,.step,.igs'
+                          onChange={e => {
+                            const fileList = e.target.files;
+                            if (fileList) {
+                              const allowedExtensions = ['pdf', 'dxf', 'dwg', 'stl', 'step', 'igs'];
+                              const filesArray = Array.from(fileList).filter(file => {
+                                const ext = file.name.split('.').pop()?.toLowerCase() || '';
+                                return allowedExtensions.includes(ext);
+                              });
 
-                          if (filesArray.length !== fileList.length) {
-                            setSnackbar({
-                              open: true,
-                              message:
-                                'Некоторые файлы не были добавлены. Поддерживаются только PDF, DXF, DWG, STL, STEP, IGS.',
-                              severity: 'error',
-                            });
-                          }
+                              if (filesArray.length !== fileList.length) {
+                                setSnackbar({
+                                  open: true,
+                                  message:
+                                    'Некоторые файлы не были добавлены. Поддерживаются только PDF, DXF, DWG, STL, STEP, IGS.',
+                                  severity: 'error',
+                                });
+                              }
 
-                          field.onChange([...field.value, ...filesArray]);
-                        }
-                      }}
-                    />
-                  </Button>
-                  {error && (
-                    <FormHelperText error className='md:ml-3'>
-                      {error.message}
-                    </FormHelperText>
-                  )}
-                </Box>
-              )}
-            />
+                              field.onChange([...field.value, ...filesArray]);
+                            }
+                          }}
+                        />
+                      </Button>
+                    </Tooltip>
+                    {error && (
+                      <FormHelperText error className='md:ml-3'>
+                        {error.message}
+                      </FormHelperText>
+                    )}
+                  </Box>
+                )}
+              />
+            )}
 
-            {files && files.length > 0 && (
+            {files && files.length > 0 && formType === 'order' && (
               <Box className='bg-gray-100 rounded-xl p-1 sm:p-2'>
                 <Box className='flex flex-wrap gap-1 sm:gap-2'>
                   {(showAllFiles ? files : files.slice(0, 2)).map((file, index) => (

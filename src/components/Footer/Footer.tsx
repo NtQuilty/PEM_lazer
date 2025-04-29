@@ -1,5 +1,5 @@
 import React from 'react';
-import { navigationLinks } from '../../config';
+import { ADDRESS, EMAIL, navigationLinks, TELEPHONE_NUMBER } from '../../config';
 import { Link } from 'react-router-dom';
 import { FaTelegram, FaWhatsapp } from 'react-icons/fa';
 import { BsTelephoneFill } from 'react-icons/bs';
@@ -8,6 +8,7 @@ import { IoLocationSharp } from 'react-icons/io5';
 import { SocialLink } from './components/SocialLink';
 import { ContactItem } from './components/ContactItem';
 import { NavLink } from './components/NavLink';
+import { formatPhoneNumber } from '../../helpers';
 
 export const Footer: React.FC = () => {
   const service = navigationLinks.find(item => item.id === 'laser-cutting');
@@ -22,9 +23,7 @@ export const Footer: React.FC = () => {
                 <img
                   src='/images/logo.png'
                   alt='PEM'
-                  width={50}
-                  height={30}
-                  className='md:w-[40px] md:h-[40px]'
+                  className='w-[50px] h-[30px] md:w-[80px] md:h-[40px]'
                 />
                 <div className='ml-2'>
                   <div className='text-white font-bold text-xs md:text-sm'>ПЕТРО</div>
@@ -75,12 +74,12 @@ export const Footer: React.FC = () => {
           <div>
             <h3 className='text-white font-bold text-base md:text-lg mb-3 md:mb-4'>Контакты</h3>
             <div className='space-y-2 md:space-y-3'>
-              <ContactItem to='tel:+74955322269' icon={BsTelephoneFill} size={14}>
-                +7 (812) 219 20 15
+              <ContactItem to={`tel:${TELEPHONE_NUMBER}`} icon={BsTelephoneFill} size={14}>
+                {formatPhoneNumber(TELEPHONE_NUMBER)}
               </ContactItem>
 
-              <ContactItem to='mailto:zakaz24@nrg-m.ru' icon={TbMailFilled} size={14}>
-                zakaz24@nrg-m.ru
+              <ContactItem to={`mailto:${EMAIL}`} icon={TbMailFilled} size={14}>
+                {EMAIL}
               </ContactItem>
 
               <ContactItem
@@ -88,7 +87,7 @@ export const Footer: React.FC = () => {
                 icon={IoLocationSharp}
                 size={14}
               >
-                г. Санкт-Петербург, ул. Седова 57
+                {ADDRESS}
               </ContactItem>
             </div>
           </div>
