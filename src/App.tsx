@@ -23,7 +23,7 @@ export const App = () => {
   return (
     <OrderFormProvider>
       <Header />
-      <Box className={isHomePage ? '' : 'pt-[76px] md:pt-[100px]'}>
+      <Box className={isHomePage ? '' : 'pt-[92px] md:pt-[100px]'}>
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/laser-cutting' element={<LazerCutting />} />

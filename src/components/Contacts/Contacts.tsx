@@ -9,7 +9,7 @@ export const Contacts: React.FC = () => {
   return (
     <section className='min-h-screen w-full flex flex-col md:relative'>
       {/* Контентная часть - сначала на мобильных */}
-      <div className='bg-[#13151e]/90 backdrop-blur-md p-6 md:p-20 rounded-2xl w-full md:max-w-lg md:absolute md:top-[5%] md:left-[5%] z-10'>
+      <div className='bg-[#13151e]/90 backdrop-blur-md p-6 lg:p-10 md:p-20 rounded-2xl w-full md:max-w-lg md:absolute lg:top-1 md:top-[5%] md:left-[5%] z-10'>
         <h1 className='text-4xl font-bold text-white mb-8'>Контакты</h1>
 
         <div className='space-y-8'>
