@@ -8,6 +8,7 @@ import { useOrderForm } from '../../contexts/OrderFormContext';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
+import { Link } from 'react-router-dom';
 
 export const LandingHero = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -39,7 +40,10 @@ export const LandingHero = () => {
         >
           {services.map(service => (
             <SwiperSlide key={service.id} className='w-full h-full'>
-              <img src={service.image} alt={service.id} className='w-full h-full object-cover' />
+              <div className='relative w-full h-full'>
+                <img src={service.image} alt={service.id} className='w-full h-full object-cover' />
+                <div className='absolute inset-0 bg-black opacity-50'></div>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>
@@ -64,18 +68,20 @@ export const LandingHero = () => {
               Рассчитать стоимость
             </button>
 
-            <button
+            <Link
+              to='/laser-cutting'
               className='
-              border-[1px] border-solid border-[#3198ff]
-              text-[#a7a8ab]
-              rounded-[20px]
-              text-base sm:text-lg md:text-xl lg:text-[23px]
-              w-full sm:w-[200px] md:w-[230px] lg:w-[260px]
-              py-3 md:py-4 lg:py-[25px]
-            '
+                border-[1px] border-solid border-[#3198ff]
+                text-[#a7a8ab]
+                rounded-[20px]
+                text-base sm:text-lg md:text-xl lg:text-[23px]
+                w-full sm:w-[200px] md:w-[230px] lg:w-[260px]
+                py-3 md:py-4 lg:py-[25px]
+                flex items-center justify-center
+              '
             >
               Подробнее
-            </button>
+            </Link>
           </div>
         </div>
       </div>

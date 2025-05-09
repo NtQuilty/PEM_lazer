@@ -23,7 +23,7 @@ export const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onCl
 
   return (
     <div className='border-b border-gray-800 py-5 relative group'>
-      <div className='absolute w-4/5 h-3/5 bg-[rgba(48,152,255,0.35)] blur-[100px] opacity-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none group-hover:opacity-100 transition-opacity duration-300'></div>
+      <div className='absolute w-4/5 bg-[rgba(48,152,255,0.35)] blur-[100px] opacity-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none group-hover:opacity-100 transition-opacity duration-300'></div>
 
       <button
         className={`w-full flex justify-between items-center text-left relative z-10 transition-colors duration-200 ${

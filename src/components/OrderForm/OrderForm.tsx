@@ -87,7 +87,27 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
     setSnackbar({ ...snackbar, open: false });
   };
 
+  const canSubmitForm = (): boolean => {
+    const lastSubmitTime = localStorage.getItem('lastFormSubmitTime');
+
+    if (lastSubmitTime) {
+      const timeDifference = Date.now() - parseInt(lastSubmitTime);
+      return timeDifference > 30000;
+    }
+
+    return true;
+  };
+
   const onSubmit = async (data: FormValues) => {
+    if (!canSubmitForm()) {
+      setSnackbar({
+        open: true,
+        message: 'Вы не можете отправлять заявки чаще, чем раз в 30 секунд. Пожалуйста, подождите.',
+        severity: 'error',
+      });
+      return;
+    }
+
     const formData = new FormData();
 
     Object.keys(data).forEach(key => {
@@ -114,6 +134,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
       );
       const result = await response.json();
       if (result.success) {
+        localStorage.setItem('lastFormSubmitTime', Date.now().toString());
+
         setSnackbar({
           open: true,
           message: `Заявка #${result.orderId} успешно отправлена!`,
@@ -160,7 +182,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
         </IconButton>
       </Box>
 
-      <DialogContent className='p-4 sm:p-6 md:p-8'>
+      <DialogContent className='p-4 md:!py-2 md:!px-4'>
         <div className='md:w-1/2'>
           <div className='mb-2 sm:mb-4'>
             <Typography variant='h5' className='font-bold text-white sm:text-h4'>
