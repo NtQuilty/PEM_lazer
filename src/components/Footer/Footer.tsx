@@ -23,13 +23,8 @@ export const Footer: React.FC = () => {
                 <img
                   src='/images/logo.png'
                   alt='PEM'
-                  className='w-[50px] h-[30px] md:w-[80px] md:h-[40px]'
+                  className='w-[150px] h-[60px] md:w-[180px] md:h-[75px]'
                 />
-                <div className='ml-2'>
-                  <div className='text-white font-bold text-xs md:text-sm'>ПЕТРО</div>
-                  <div className='text-white font-bold text-xs md:text-sm'>ЭНЕРГО</div>
-                  <div className='text-white font-bold text-xs md:text-sm'>МАШ</div>
-                </div>
               </div>
             </Link>
             <div className='flex space-x-3 mb-6'>
@@ -43,7 +38,7 @@ export const Footer: React.FC = () => {
             <h3 className='text-white font-bold text-base md:text-lg mb-3 md:mb-4'>Навигация</h3>
             <nav className='space-y-2 md:space-y-3'>
               {navigationLinks.map(item => {
-                if (item.id === 'home') return null;
+                if (item.id === 'home' || item.id === 'laser-cutting') return null;
                 return (
                   <NavLink key={item.id} to={item.link}>
                     {item.title}

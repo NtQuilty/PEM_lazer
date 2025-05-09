@@ -123,7 +123,7 @@ export const FAQ: React.FC = () => {
 
                   <div className='mb-8'>
                     <h3 className='text-xl font-bold text-white mb-4'>
-                      Доставка по Москве в пределах МКАД
+                      Доставка по Санкт-Петербургу
                     </h3>
                     <p className='text-[rgba(214,214,214,0.8)]'>
                       Наша компания сотрудничает с сервисами Яндекс.Доставка и СДЭК, также у нас

@@ -5,7 +5,7 @@ export const ConsultationPromo: React.FC = () => {
   const { openOrderForm } = useOrderForm();
 
   return (
-    <div className='container mx-auto px-4'>
+    <div className='container mx-auto pr-4 md:px-4'>
       <div className='flex relative overflow-hidden mx-auto align-center mt-[-60px] '>
         <div>
           <img

@@ -3,7 +3,7 @@ import { EMAIL, navigationLinks, NavigationOption, TELEPHONE_NUMBER } from '../.
 import { BsTelephoneFill } from 'react-icons/bs';
 import { TbMailFilled } from 'react-icons/tb';
 import _React, { FC, useState, useEffect } from 'react';
-import { Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem, Tooltip } from '@mui/material';
 import { MdKeyboardArrowDown, MdKeyboardArrowLeft } from 'react-icons/md';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { HeaderDrawer } from './components/HeaderDrawer';
@@ -55,11 +55,15 @@ export const Header: FC = () => {
           <RxHamburgerMenu size={24} color='white' />
         </button>
 
-        <Link to='/' className='relative z-10 ml-14'>
-          <img src='/images/logo.png' alt='logo' className='h-8 md:h-10' />
+        <Link to='/' className='relative z-10 ml-10'>
+          <img
+            src='/images/logo.png'
+            alt='logo'
+            className='w-[150px] h-[60px] md:w-[180px] md:h-[75px]'
+          />
         </Link>
 
-        <div className='hidden md:flex items-center justify-around flex-1 ml-8'>
+        <div className='hidden md:flex items-center justify-around flex-1'>
           {navigationLinks.map(navigationLink => {
             if (navigationLink.id === 'home') return null;
 
@@ -130,8 +134,57 @@ export const Header: FC = () => {
         </div>
 
         <div className='flex items-center gap-6 md:mr-10'>
-          <SocialLink to={`tel:${TELEPHONE_NUMBER}`} icon={BsTelephoneFill} size='24' />
-          <SocialLink to={`mailto:${EMAIL}`} icon={TbMailFilled} size='24' />
+          <Tooltip
+            title={TELEPHONE_NUMBER}
+            arrow
+            placement='bottom'
+            slotProps={{
+              tooltip: {
+                sx: {
+                  bgcolor: '#1d2233',
+                  color: '#3198ff',
+                  '& .MuiTooltip-arrow': {
+                    color: '#1d2233',
+                  },
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                  fontWeight: 'medium',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                },
+              },
+            }}
+          >
+            <span>
+              <SocialLink to={`tel:${TELEPHONE_NUMBER}`} icon={BsTelephoneFill} size='24' />
+            </span>
+          </Tooltip>
+
+          <Tooltip
+            title={EMAIL}
+            arrow
+            placement='bottom'
+            slotProps={{
+              tooltip: {
+                sx: {
+                  bgcolor: '#1d2233',
+                  color: '#3198ff',
+                  '& .MuiTooltip-arrow': {
+                    color: '#1d2233',
+                  },
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                  fontWeight: 'medium',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  fontSize: '14px',
+                },
+              },
+            }}
+          >
+            <span>
+              <SocialLink to={`mailto:${EMAIL}`} icon={TbMailFilled} size='24' />
+            </span>
+          </Tooltip>
         </div>
 
         {/* Правая часть десктопного хедера - скрыта на мобильных */}

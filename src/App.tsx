@@ -9,17 +9,24 @@ import { Projects } from './components/Projects/Projects';
 import { Box } from '@mui/material';
 import { Contacts } from './components/Contacts/Contacts';
 import { OrderFormProvider } from './contexts/OrderFormContext';
+import { LazerCutting } from './components/LazerCutting/LazerCutting';
+import { useEffect } from 'react';
 
 export const App = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <OrderFormProvider>
       <Header />
-      <Box className={isHomePage ? '' : 'pt-[50px] md:pt-[100px]'}>
+      <Box className={isHomePage ? '' : 'pt-[76px] md:pt-[100px]'}>
         <Routes>
           <Route path='/' element={<HomePage />} />
+          <Route path='/laser-cutting' element={<LazerCutting />} />
           <Route path='/services' element={<MainContent />} />
           <Route path='/portfolio' element={<Projects isHomePage={isHomePage} />} />
           <Route path='/help' element={<FAQ />} />
