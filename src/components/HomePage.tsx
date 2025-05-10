@@ -9,7 +9,7 @@ import { Projects } from './Projects/Projects';
 
 export const HomePage = () => {
   return (
-    <>
+    <div className='pt-[92px] md:pt-0'>
       <LandingHero />
       <MainContent />
       <Advantages />
@@ -18,6 +18,6 @@ export const HomePage = () => {
       <FAQ />
       <About />
       <DiscountForm />
-    </>
+    </div>
   );
 };

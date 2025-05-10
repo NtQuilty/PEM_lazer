@@ -42,7 +42,7 @@ export const LandingHero = () => {
             <SwiperSlide key={service.id} className='w-full h-full'>
               <div className='relative w-full h-full'>
                 <img src={service.image} alt={service.id} className='w-full h-full object-cover' />
-                <div className='absolute inset-0 bg-black opacity-50'></div>
+                <div className='absolute inset-0 bg-black opacity-70'></div>
               </div>
             </SwiperSlide>
           ))}

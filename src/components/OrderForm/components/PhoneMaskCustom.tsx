@@ -13,18 +13,18 @@ export const PhoneMaskCustom = forwardRef<HTMLInputElement, PhoneMaskCustomProps
     return (
       <IMaskInput
         {...other}
-        mask='+7(000)-000-00-00'
+        mask='+0(000)-000-00-00'
         inputRef={ref}
         onAccept={(value: any) => {
-          onChange({ target: { name, value } });
+          let formattedValue = value;
+          console.log(value);
+          if (value.startsWith('+8')) {
+            formattedValue = '+7' + value.substring(2);
+          }
+
+          onChange({ target: { name, value: formattedValue } });
         }}
         overwrite
-        prepare={(str: string) => {
-          if (str.startsWith('8') || str.startsWith('7')) {
-            return '+7' + str.substring(1);
-          }
-          return str;
-        }}
       />
     );
   }
