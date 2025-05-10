@@ -1,7 +1,7 @@
 import React from 'react';
 import { ADDRESS, EMAIL, navigationLinks, TELEPHONE_NUMBER } from '../../config';
 import { Link } from 'react-router-dom';
-import { FaTelegram, FaWhatsapp } from 'react-icons/fa';
+import { FaTelegram, FaVk } from 'react-icons/fa';
 import { BsTelephoneFill } from 'react-icons/bs';
 import { TbMailFilled } from 'react-icons/tb';
 import { IoLocationSharp } from 'react-icons/io5';
@@ -17,7 +17,7 @@ export const Footer: React.FC = () => {
       <div className='px-4 mx-auto md:max-w-[1350px]'>
         <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4'>
           {/* Колонка 1: Логотип и соцсети */}
-          <div>
+          <div className='flex justify-between items-center md:flex-col md:items-start'>
             <Link to='/' className='block mb-4 md:mb-6'>
               <div className='flex items-center'>
                 <img
@@ -29,7 +29,7 @@ export const Footer: React.FC = () => {
             </Link>
             <div className='flex space-x-3 mb-6'>
               <SocialLink to='https://t.me/dmpmax' icon={FaTelegram} />
-              <SocialLink to='https://vk.com/nrgmru' icon={FaWhatsapp} />
+              <SocialLink to='https://vk.com/nrgmru' icon={FaVk} />
             </div>
           </div>
 
