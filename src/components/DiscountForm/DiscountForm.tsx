@@ -62,7 +62,7 @@ export const DiscountForm: React.FC = () => {
 
     try {
       const response = await fetch(
-        'https://meyson-bot-pem-zay-bxzly0-0d088f-194-164-235-187.traefik.me/api/submit-form',
+        'https://petroenergomash-telegrambot-vv6lqh-fbe1df-91-218-246-125.traefik.me/api/submit-form',
         {
           method: 'POST',
           body: formData,

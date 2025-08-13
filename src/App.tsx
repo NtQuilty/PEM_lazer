@@ -10,7 +10,9 @@ import { Box } from '@mui/material';
 import { Contacts } from './components/Contacts/Contacts';
 import { OrderFormProvider } from './contexts/OrderFormContext';
 import { LazerCutting } from './components/LazerCutting/LazerCutting';
+import { CookieConsent } from './components/CookieConsent/CookieConsent';
 import { useEffect } from 'react';
+import { CookiePolicy } from './components/CookieConsent/CookiePolicy';
 
 export const App = () => {
   const location = useLocation();
@@ -32,9 +34,11 @@ export const App = () => {
           <Route path='/help' element={<FAQ />} />
           <Route path='/about' element={<About isHomePage={isHomePage} />} />
           <Route path='/contacts' element={<Contacts />} />
+          <Route path='/cookies' element={<CookiePolicy />} />
         </Routes>
       </Box>
       <Footer />
+      <CookieConsent />
     </OrderFormProvider>
   );
 };

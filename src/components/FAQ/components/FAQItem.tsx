@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { FiMinusCircle } from 'react-icons/fi';
 import { GoPlusCircle } from 'react-icons/go';
+import { useNavigate } from 'react-router-dom';
 
 interface FAQItemProps {
   question: string;
@@ -12,7 +13,8 @@ interface FAQItemProps {
 export const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = React.useState(0);
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     if (isOpen && contentRef.current) {
       setHeight(contentRef.current.scrollHeight);
@@ -52,7 +54,14 @@ export const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onCl
         style={{ height: `${height}px` }}
       >
         <div ref={contentRef} className='py-3 text-[rgba(214,214,214,0.8)] text-sm'>
-          {answer}
+          {answer === '' ? (
+            <button className='inline-flex items-center gap-2 px-4 py-2 mt-2 bg-[#3198ff] hover:bg-[#2980e6] text-white text-sm font-medium rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200 ml-4' onClick={() => navigate('/cookies')}>
+              Ознакомиться
+              <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M9 5l7 7-7 7' />
+              </svg>
+            </button>
+          ) : answer }
         </div>
       </div>
     </div>

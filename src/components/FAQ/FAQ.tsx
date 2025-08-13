@@ -74,7 +74,7 @@ export const FAQ: React.FC = () => {
                     </p>
                     <p className='text-[rgba(214,214,214,0.8)] mb-2'>
                       Адрес пункта выдачи:
-                      <span className='text-white'>{''} улица пушкина дом колотушкина</span>
+                      <span className='text-white'>г. Санкт-Петербург, ул. Седова 57</span>
                     </p>
                     <p className='text-[rgba(214,214,214,0.8)] mb-2'>Время работы:</p>
                     <p className='text-[rgba(214,214,214,0.8)] mb-2'>Пн. - Пт.: с 10:00 до 19:00</p>

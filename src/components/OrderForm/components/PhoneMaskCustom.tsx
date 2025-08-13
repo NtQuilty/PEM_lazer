@@ -17,7 +17,6 @@ export const PhoneMaskCustom = forwardRef<HTMLInputElement, PhoneMaskCustomProps
         inputRef={ref}
         onAccept={(value: any) => {
           let formattedValue = value;
-          console.log(value);
           if (value.startsWith('+8')) {
             formattedValue = '+7' + value.substring(2);
           }

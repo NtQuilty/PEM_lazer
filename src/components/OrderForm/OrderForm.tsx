@@ -126,7 +126,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
 
     try {
       const response = await fetch(
-        'https://meyson-bot-pem-zay-bxzly0-0d088f-194-164-235-187.traefik.me/api/submit-form',
+        'https://petroenergomash-lazertag-zt5mtu-aee437-91-218-246-125.traefik.me/api/submit-form',
         {
           method: 'POST',
           body: formData,
@@ -172,7 +172,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
             backgroundImage: `url(/images/${formType === 'order' ? 'zakaz.png' : 'bgmodal.png'})`,
             overflow: 'hidden',
           },
-          className: '!rounded-2xl !bg-transparent',
+          className: '!rounded-2xl !bg-transparent border-2 border-white',
         },
       }}
     >
@@ -182,7 +182,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
         </IconButton>
       </Box>
 
-      <DialogContent className='p-4 md:!py-2 md:!px-4'>
+      <DialogContent className='p-5'>
         <div className='md:w-1/2'>
           <div className='mb-2 sm:mb-4'>
             <Typography variant='h5' className='font-bold text-white sm:text-h4'>

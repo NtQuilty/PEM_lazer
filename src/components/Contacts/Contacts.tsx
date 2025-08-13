@@ -1,15 +1,15 @@
 import React from 'react';
-import { BsTelephoneFill } from 'react-icons/bs';
-import { FaTelegram } from 'react-icons/fa';
+import { BsFillGeoAltFill, BsTelephoneFill } from 'react-icons/bs';
+import { FaRegClock, FaTelegram } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { EMAIL, TELEPHONE_NUMBER } from '../../config';
 import { formatPhoneNumber } from '../../helpers';
+import { TbBrandMessenger, TbMailFilled } from 'react-icons/tb';
 
 export const Contacts: React.FC = () => {
   return (
     <section className='min-h-screen w-full flex flex-col md:relative'>
-      {/* Контентная часть - сначала на мобильных */}
-      <div className='bg-[#13151e]/90 backdrop-blur-md p-6 lg:p-10 md:p-20 rounded-2xl w-full md:max-w-lg md:absolute lg:top-1 md:top-[5%] md:left-[5%] z-10'>
+      <div className='bg-[#13151e]/90 backdrop-blur-md p-6 lg:p-10 md:p-20 rounded-2xl w-full md:max-w-lg md:absolute md:top-[15%] md:left-[5%] z-10'>
         <h1 className='text-4xl font-bold text-white mb-8'>Контакты</h1>
 
         <div className='space-y-8'>
@@ -28,28 +28,9 @@ export const Contacts: React.FC = () => {
             </div>
           </div>
 
-          {/* Адрес */}
           <div className='flex items-start'>
             <div className='w-10 h-10 rounded-full flex items-center justify-center bg-[#1b1e29] mr-4'>
-              <svg
-                className='w-5 h-5 text-gray-400'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z'
-                />
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M15 11a3 3 0 11-6 0 3 3 0 016 0z'
-                />
-              </svg>
+              <BsFillGeoAltFill size={18} className='text-white' />
             </div>
             <div>
               <p className='text-gray-400 text-sm'>Адрес</p>
@@ -57,22 +38,9 @@ export const Contacts: React.FC = () => {
             </div>
           </div>
 
-          {/* Режим работы */}
           <div className='flex items-start'>
             <div className='w-10 h-10 rounded-full flex items-center justify-center bg-[#1b1e29] mr-4'>
-              <svg
-                className='w-5 h-5 text-gray-400'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
-                />
-              </svg>
+              <FaRegClock size={18} className='text-white' />
             </div>
             <div>
               <p className='text-gray-400 text-sm'>Режим работы</p>
@@ -81,22 +49,9 @@ export const Contacts: React.FC = () => {
             </div>
           </div>
 
-          {/* E-mail */}
           <div className='flex items-start'>
             <div className='w-10 h-10 rounded-full flex items-center justify-center bg-[#1b1e29] mr-4'>
-              <svg
-                className='w-5 h-5 text-gray-400'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
-                />
-              </svg>
+              <TbMailFilled size={18} className='text-white' />
             </div>
             <div>
               <p className='text-gray-400 text-sm'>E-mail</p>
@@ -109,22 +64,9 @@ export const Contacts: React.FC = () => {
             </div>
           </div>
 
-          {/* Мессенджеры */}
           <div className='flex items-start'>
             <div className='w-10 h-10 rounded-full flex items-center justify-center bg-[#1b1e29] mr-4'>
-              <svg
-                className='w-5 h-5 text-gray-400'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'
-                />
-              </svg>
+              <TbBrandMessenger size={18} className='text-white' />
             </div>
             <div>
               <p className='text-gray-400 text-sm'>Мессенджеры</p>
