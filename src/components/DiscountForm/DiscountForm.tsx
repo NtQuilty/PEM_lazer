@@ -19,6 +19,7 @@ import { PhoneMaskCustom } from '../OrderForm/components/PhoneMaskCustom';
 import { schema } from './hookform';
 import { textFieldStyles } from '../../helpers';
 
+
 interface FormValues {
   name: string;
   telephone: string;
@@ -62,7 +63,7 @@ export const DiscountForm: React.FC = () => {
 
     try {
       const response = await fetch(
-        'https://petroenergomash-telegrambot-vv6lqh-fbe1df-91-218-246-125.traefik.me/api/submit-form',
+        import.meta.env.VITE_BOT_API,
         {
           method: 'POST',
           body: formData,

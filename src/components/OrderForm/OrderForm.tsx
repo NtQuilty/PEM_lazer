@@ -126,7 +126,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
 
     try {
       const response = await fetch(
-        'https://petroenergomash-lazertag-zt5mtu-aee437-91-218-246-125.traefik.me/api/submit-form',
+        import.meta.env.VITE_BOT_API,
         {
           method: 'POST',
           body: formData,
@@ -150,6 +150,9 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
         message: 'Произошла ошибка при отправке заявки. Попробуйте снова или напишите нам на почту',
         severity: 'error',
       });
+      onClose();
+              reset();
+
     }
   };
 
