@@ -13,14 +13,23 @@ import { LazerCutting } from './components/LazerCutting/LazerCutting';
 import { CookieConsent } from './components/CookieConsent/CookieConsent';
 import { useEffect } from 'react';
 import { CookiePolicy } from './components/CookieConsent/CookiePolicy';
+import { useCookieConsent } from './hooks/useCookieConsent';
+import { initOpenReplay } from './analytics/openreplay';
 
 export const App = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+  const { consentStatus } = useCookieConsent();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (import.meta.env.PROD && consentStatus === 'accepted') {
+      initOpenReplay();
+    }
+  }, [consentStatus]);
 
   return (
     <OrderFormProvider>
