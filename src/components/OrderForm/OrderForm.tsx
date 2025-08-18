@@ -164,6 +164,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
   };
 
   return (
+    <>
     <Dialog
       open={open}
       onClose={handleClose}
@@ -175,11 +176,11 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
             backgroundImage: `url(/images/${formType === 'order' ? 'zakaz.png' : 'bgmodal.png'})`,
             overflow: 'hidden',
           },
-          className: '!rounded-2xl !bg-transparent border-2 border-white',
+          className: '!rounded-2xl !bg-black border-2 border-white',
         },
       }}
     >
-      <Box sx={{ position: 'absolute', right: 16, top: 16 }}>
+      <Box className="absolute right-4 top-4 hidden md:block">
         <IconButton onClick={handleClose} sx={{ color: 'white' }}>
           <IoMdClose size={32} />
         </IconButton>
@@ -465,11 +466,11 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
         </div>
       </DialogContent>
 
-      <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={handleCloseSnackbar}>
+      
+    </Dialog><Snackbar open={snackbar.open} autoHideDuration={3000} onClose={handleCloseSnackbar}>
         <Alert severity={snackbar.severity} variant='filled'>
           {snackbar.message}
         </Alert>
-      </Snackbar>
-    </Dialog>
+      </Snackbar></>
   );
 };
