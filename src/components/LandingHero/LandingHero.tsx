@@ -26,14 +26,6 @@ export const LandingHero = () => {
             direction='horizontal'
             autoplay={{
               delay: 10000,
-              disableOnInteraction: false,
-            }}
-            onReachEnd={() => {
-              setTimeout(() => {
-                if (swiperRef.current) {
-                  swiperRef.current.slideTo(0);
-                }
-              }, 5000);
             }}
             loop={false}
             speed={1000}
