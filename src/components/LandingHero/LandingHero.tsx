@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import { services } from '../../config';
-import { FaChevronDown } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -26,17 +25,24 @@ export const LandingHero = () => {
             effect='fade'
             direction='horizontal'
             autoplay={{
-              delay: 5000,
+              delay: 10000,
               disableOnInteraction: false,
             }}
-            loop={true}
+            onReachEnd={() => {
+              setTimeout(() => {
+                if (swiperRef.current) {
+                  swiperRef.current.slideTo(0);
+                }
+              }, 5000);
+            }}
+            loop={false}
             speed={1000}
             className='w-full h-full'
             onSwiper={swiper => {
               swiperRef.current = swiper;
             }}
             onSlideChange={swiper => {
-              setActiveIndex(swiper.realIndex);
+              setActiveIndex(swiper.activeIndex);
             }}
           >
             {services.map(service => (
@@ -51,7 +57,7 @@ export const LandingHero = () => {
           </Swiper>
         </div>
 
-        <div className='col-start-1 row-start-1 z-10 w-full h-full flex flex-col justify-between'>
+        <div className='col-start-1 row-start-1 z-10 w-full h-full flex flex-col justify-between gap-[10px]'>
           <div className='flex-1 flex items-center justify-start'>
             <div className='w-full max-w-7xl mx-auto px-4 sm:px-8 md:px-12 lg:px-20'>
               <div className='flex flex-col justify-center md:mb-[-150px] gap-3 md:gap-6 max-w-full md:max-w-[950px]'>
@@ -93,18 +99,25 @@ export const LandingHero = () => {
             </div>
           </div>
 
-          <div className='flex justify-center pb-6 md:pb-8'>
-            <button
-              onClick={() => {
-                if (swiperRef.current) {
-                  swiperRef.current.slideNext();
-                }
-              }}
-              className='text-white hover:text-[#3198FF] transition-colors duration-200 p-2'
-              aria-label='Следующий слайд'
-            >
-              <FaChevronDown size={24} className='md:text-3xl' />
-            </button>
+          <div className='flex flex-col items-center gap-6 pb-6 md:pb-8'>
+            <div className='flex gap-3'>
+              {services.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    if (swiperRef.current) {
+                      swiperRef.current.slideTo(index);
+                    }
+                  }}
+                  className={`w-2.5 h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
+                    index === activeIndex
+                      ? 'bg-[#3198FF]'
+                      : 'bg-white/50 hover:bg-white/70'
+                  }`}
+                  aria-label={`Перейти к слайду ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
