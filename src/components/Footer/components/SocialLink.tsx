@@ -12,9 +12,9 @@ export const SocialLink = ({
 }) => (
   <Link
     to={to}
-    target='_blank'
-    rel='noopener noreferrer'
-    className='flex items-center justify-center bg-[#1b1e29] hover:bg-[rgba(49,152,255,0.1)] hover:border-[#3198ff] transition-colors border-2 border-[#dadada] rounded-full p-2'
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center justify-center rounded-full border-2 border-[#dadada] bg-[#1b1e29] p-2 transition-colors hover:border-[#3198ff] hover:bg-[rgba(49,152,255,0.1)]"
   >
     {icon({ className: 'text-white group-hover:fill-[#3198ff] transition-colors', size })}
   </Link>

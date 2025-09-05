@@ -27,7 +27,7 @@ export const ExampleMarketingComponent: React.FC = () => {
   const { isAccepted } = useCookieConsent();
 
   if (!isAccepted) {
-    return null; 
+    return null;
   }
 
   return (

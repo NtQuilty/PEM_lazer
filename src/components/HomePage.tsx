@@ -9,12 +9,12 @@ import { Projects } from './Projects/Projects';
 
 export const HomePage = () => {
   return (
-    <div className='pt-[92px] md:pt-0'>
+    <div className="pt-[92px] md:pt-0">
       <LandingHero />
       <MainContent />
       <Advantages />
       <ConsultationPromo />
-      <Projects />
+      <Projects isHomePage={true} />
       <FAQ />
       <About />
       <DiscountForm />

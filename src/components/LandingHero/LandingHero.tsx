@@ -8,6 +8,7 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/autoplay';
 import { Link } from 'react-router-dom';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 
 export const LandingHero = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -16,20 +17,42 @@ export const LandingHero = () => {
 
   const activeService = services[activeIndex];
 
+  const goToPrevSlide = () => {
+    if (swiperRef.current) {
+      if (activeIndex === 0) {
+        // Если мы на первом слайде, переходим к последнему
+        swiperRef.current.slideTo(services.length - 1);
+      } else {
+        swiperRef.current.slidePrev();
+      }
+    }
+  };
+
+  const goToNextSlide = () => {
+    if (swiperRef.current) {
+      if (activeIndex === services.length - 1) {
+        // Если мы на последнем слайде, переходим к первому
+        swiperRef.current.slideTo(0);
+      } else {
+        swiperRef.current.slideNext();
+      }
+    }
+  };
+
   return (
-    <div className='w-full h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px] mb-12 md:mb-20 lg:mb-28'>
-      <div className='w-full h-full grid grid-cols-1 grid-rows-1'>
-        <div className='col-start-1 row-start-1 w-full h-full overflow-hidden'>
+    <div className="mb-12 h-[500px] w-full sm:h-[600px] md:mb-20 md:h-[700px] lg:mb-28 lg:h-[800px]">
+      <div className="grid h-full w-full grid-cols-1 grid-rows-1">
+        <div className="col-start-1 row-start-1 h-full w-full overflow-hidden">
           <Swiper
             modules={[EffectFade, Autoplay]}
-            effect='fade'
-            direction='horizontal'
+            effect="fade"
+            direction="horizontal"
             autoplay={{
               delay: 10000,
             }}
             loop={false}
             speed={1000}
-            className='w-full h-full'
+            className="h-full w-full"
             onSwiper={swiper => {
               swiperRef.current = swiper;
             }}
@@ -38,51 +61,68 @@ export const LandingHero = () => {
             }}
           >
             {services.map(service => (
-              <SwiperSlide key={service.id} className='w-full h-full'>
-                <div className='w-full h-full '>
-                  <img src={service.image} alt={service.id} className='w-full h-full object-cover bg-black' />
-                  <div className='absolute inset-0 bg-black opacity-70'></div>
-
+              <SwiperSlide key={service.id} className="h-full w-full">
+                <div className="h-full w-full ">
+                  <img
+                    src={service.image}
+                    alt={service.id}
+                    className="h-full w-full bg-black object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black opacity-70"></div>
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
 
-        <div className='col-start-1 row-start-1 z-10 w-full h-full flex flex-col justify-between gap-[10px]'>
-          <div className='flex-1 flex items-center justify-start'>
-            <div className='w-full max-w-7xl mx-auto px-4 sm:px-8 md:px-12 lg:px-20'>
-              <div className='flex flex-col justify-center md:mb-[-150px] gap-3 md:gap-6 max-w-full md:max-w-[950px]'>
-                <h1 className='text-[#c1c1c1] text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold md:font-extrabold leading-tight md:leading-[63px]'>
-                  {activeService.title}
-                </h1>
-                <p className='text-[#c1c1c1] text-base sm:text-lg md:text-xl lg:text-[24px] font-light leading-normal md:leading-[43px] mb-4 md:mb-[40px] max-w-full md:max-w-[722px]'>
+        <div className="z-[5] col-start-1 row-start-1 flex h-full w-full flex-col justify-between gap-[10px]">
+          <div className="relative flex flex-1 items-center justify-start">
+            {/* Desktop Navigation Arrows */}
+            <button
+              onClick={goToPrevSlide}
+              className="absolute left-4 top-1/2 z-[8] hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20 md:flex"
+              aria-label="Предыдущий слайд"
+            >
+              <MdKeyboardArrowLeft className="h-6 w-6" />
+            </button>
+            
+            <button
+              onClick={goToNextSlide}
+              className="absolute right-4 top-1/2 z-[8] hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20 md:flex"
+              aria-label="Следующий слайд"
+            >
+              <MdKeyboardArrowRight className="h-6 w-6" />
+            </button>
+
+            <div className="mx-auto w-full max-w-7xl px-4 sm:px-8 md:px-12 lg:px-20">
+              <div className="flex max-w-full flex-col justify-center gap-3 md:mb-[-150px] md:max-w-[950px] md:gap-6">
+                <h1 className="heading-h1">{activeService.title}</h1>
+                <p className="text-body-lg mb-4 max-w-full md:mb-[40px] md:max-w-[722px]">
                   {activeService.description}
                 </p>
 
-                <div className='flex flex-col sm:flex-row gap-4 sm:gap-[35px]'>
+                <div className="flex flex-col gap-4 sm:flex-row sm:gap-[35px]">
                   <button
                     onClick={() => openOrderForm('order')}
-                    className='
-                    bg-[#3198FF] text-white rounded-[20px] text-base sm:text-lg md:text-xl lg:text-[23px]
-                    w-full sm:w-[260px] md:w-[300px] lg:w-[340px]
-                    py-3 md:py-4 lg:py-[25px] transition-all duration-200 hover:bg-[#2980e6]'
+                    className="
+                    btn-text-lg w-full rounded-[20px] bg-[#3198FF]
+                    py-3 text-white transition-all duration-200
+                    hover:bg-[#2980e6] sm:w-[260px] md:w-[300px] md:py-4 lg:w-[340px] lg:py-[25px]"
                   >
                     Рассчитать стоимость
                   </button>
 
                   <Link
-                    to='/laser-cutting'
-                    className='
-                      border-[1px] border-solid border-[#3198ff]
-                      text-[#a7a8ab] hover:text-white hover:bg-[#3198ff]
-                      rounded-[20px]
-                      text-base sm:text-lg md:text-xl lg:text-[23px]
-                      w-full sm:w-[200px] md:w-[230px] lg:w-[260px]
-                      py-3 md:py-4 lg:py-[25px]
-                      flex items-center justify-center
-                      transition-all duration-200
-                    '
+                    to="/laser-cutting"
+                    className="
+                      btn-text-lg flex w-full
+                      items-center justify-center rounded-[20px]
+                      border-[1px] border-solid
+                      border-[#3198ff] py-3 text-gray-400 transition-all
+                      duration-200 hover:bg-[#3198ff] hover:text-white
+                      sm:w-[200px] md:w-[230px] md:py-4
+                      lg:w-[260px] lg:py-[25px]
+                    "
                   >
                     Подробнее
                   </Link>
@@ -91,8 +131,45 @@ export const LandingHero = () => {
             </div>
           </div>
 
-          <div className='flex flex-col items-center gap-6 pb-6 md:pb-8'>
-            <div className='flex gap-3'>
+          <div className="flex flex-col items-center gap-6 pb-6 md:pb-8">
+            {/* Mobile Navigation Arrows */}
+            <div className="flex items-center gap-6 md:hidden">
+              <button
+                onClick={goToPrevSlide}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20"
+                aria-label="Предыдущий слайд"
+              >
+                <MdKeyboardArrowLeft className="h-5 w-5" />
+              </button>
+              
+              <div className="flex gap-3">
+                {services.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      if (swiperRef.current) {
+                        swiperRef.current.slideTo(index);
+                      }
+                    }}
+                    className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+                      index === activeIndex ? 'bg-[#3198FF]' : 'bg-white/50 hover:bg-white/70'
+                    }`}
+                    aria-label={`Перейти к слайду ${index + 1}`}
+                  />
+                ))}
+              </div>
+              
+              <button
+                onClick={goToNextSlide}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20"
+                aria-label="Следующий слайд"
+              >
+                <MdKeyboardArrowRight className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Desktop dots only */}
+            <div className="hidden gap-3 md:flex">
               {services.map((_, index) => (
                 <button
                   key={index}
@@ -101,10 +178,8 @@ export const LandingHero = () => {
                       swiperRef.current.slideTo(index);
                     }
                   }}
-                  className={`w-2.5 h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
-                    index === activeIndex
-                      ? 'bg-[#3198FF]'
-                      : 'bg-white/50 hover:bg-white/70'
+                  className={`h-3 w-3 rounded-full transition-all duration-300 ${
+                    index === activeIndex ? 'bg-[#3198FF]' : 'bg-white/50 hover:bg-white/70'
                   }`}
                   aria-label={`Перейти к слайду ${index + 1}`}
                 />

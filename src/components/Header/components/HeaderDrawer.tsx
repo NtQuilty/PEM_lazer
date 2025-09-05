@@ -1,4 +1,4 @@
-import _React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { Drawer, IconButton } from '@mui/material';
 import { MdClose, MdKeyboardArrowDown } from 'react-icons/md';
 import { Link } from 'react-router-dom';
@@ -27,7 +27,7 @@ export const HeaderDrawer: FC<HeaderDrawerProps> = ({ drawerOpen, toggleDrawer }
 
   return (
     <Drawer
-      anchor='left'
+      anchor="left"
       open={drawerOpen}
       onClose={toggleDrawer(false)}
       slotProps={{
@@ -45,28 +45,28 @@ export const HeaderDrawer: FC<HeaderDrawerProps> = ({ drawerOpen, toggleDrawer }
         },
       }}
     >
-      <div className='p-4 flex flex-col'>
+      <div className="flex flex-col p-4">
         {/* Шапка с логотипом и кнопкой закрытия */}
-        <div className='flex justify-between items-center mb-8'>
-          <Link to='/' onClick={toggleDrawer(false)} className='flex items-center'>
-            <img src='/images/logo.png' alt='logo' className='h-8' />
+        <div className="mb-8 flex items-center justify-between">
+          <Link to="/" onClick={toggleDrawer(false)} className="flex items-center">
+            <img src="/images/logo.png" alt="logo" className="h-8" />
           </Link>
-          <IconButton onClick={toggleDrawer(false)} className='text-white'>
-            <MdClose size={24} color='white' />
+          <IconButton onClick={toggleDrawer(false)} className="text-white">
+            <MdClose size={24} color="white" />
           </IconButton>
         </div>
 
         {/* Навигационные ссылки */}
-        <div className='flex flex-col gap-6'>
+        <div className="flex flex-col gap-6">
           {navigationLinks.map(link => {
             if (link.id === 'home') return null;
 
             if (link.id === 'services') {
               return (
-                <div key={link.id} className='border-b border-gray-700 pb-4'>
+                <div key={link.id} className="border-b border-gray-700 pb-4">
                   <button
                     onClick={toggleMobileServices}
-                    className='text-[#a7a8ab] hover:text-[#3198ff] transition-colors text-lg flex items-center justify-between w-full'
+                    className="flex w-full items-center justify-between text-lg text-[#a7a8ab] transition-colors hover:text-[#3198ff]"
                   >
                     {link.title}
                     <MdKeyboardArrowDown
@@ -76,13 +76,13 @@ export const HeaderDrawer: FC<HeaderDrawerProps> = ({ drawerOpen, toggleDrawer }
                   </button>
 
                   {mobileServicesOpen && link?.options && (
-                    <div className='mt-4 ml-4 flex flex-col gap-3'>
+                    <div className="ml-4 mt-4 flex flex-col gap-3">
                       {link.options.map(option => (
                         <Link
                           key={option.id}
                           to={option.link}
                           onClick={toggleDrawer(false)}
-                          className='text-[#a7a8ab] hover:text-[#3198ff] transition-colors'
+                          className="text-[#a7a8ab] transition-colors hover:text-[#3198ff]"
                         >
                           {option.title}
                         </Link>
@@ -98,7 +98,7 @@ export const HeaderDrawer: FC<HeaderDrawerProps> = ({ drawerOpen, toggleDrawer }
                 key={link.id}
                 to={link.link}
                 onClick={toggleDrawer(false)}
-                className='text-[#a7a8ab] hover:text-[#3198ff] transition-colors text-lg border-b border-gray-700 pb-4'
+                className="border-b border-gray-700 pb-4 text-lg text-[#a7a8ab] transition-colors hover:text-[#3198ff]"
               >
                 {link.title}
               </Link>
@@ -109,27 +109,27 @@ export const HeaderDrawer: FC<HeaderDrawerProps> = ({ drawerOpen, toggleDrawer }
         {/* Кнопка заказа */}
         <button
           onClick={handleOrderClick}
-          className='mt-8 bg-[#3198ff] text-white py-3 px-6 rounded-lg hover:bg-[#1d80e2] transition-colors text-base w-full'
+          className="mt-8 w-full rounded-lg bg-[#3198ff] px-6 py-3 text-base text-white transition-colors hover:bg-[#1d80e2]"
         >
           Быстрый заказ
         </button>
 
         {/* Социальные сети и контакты */}
-        <div className='mt-auto pt-8 flex gap-4'>
+        <div className="mt-auto flex gap-4 pt-8">
           <a
-            href='https://t.me/nrgmru'
-            target='_blank'
-            rel='noopener noreferrer'
-            className='bg-[#2a2d39] hover:bg-[#3a3e4d] transition-colors w-10 h-10 rounded-full flex items-center justify-center'
+            href="https://t.me/nrgmru"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-[#2a2d39] transition-colors hover:bg-[#3a3e4d]"
           >
-            <FaTelegram size={20} className='text-white' />
+            <FaTelegram size={20} className="text-white" />
           </a>
 
           <a
             href={`tel:${TELEPHONE_NUMBER}`}
-            className='bg-[#2a2d39] hover:bg-[#3a3e4d] transition-colors w-10 h-10 rounded-full flex items-center justify-center'
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-[#2a2d39] transition-colors hover:bg-[#3a3e4d]"
           >
-            <BsTelephoneFill size={18} className='text-white' />
+            <BsTelephoneFill size={18} className="text-white" />
           </a>
         </div>
       </div>
