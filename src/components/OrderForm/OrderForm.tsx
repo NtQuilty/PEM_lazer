@@ -18,7 +18,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { IoPersonOutline } from 'react-icons/io5';
 import { IoMdClose } from 'react-icons/io';
-import { BsTelephone } from 'react-icons/bs';
 import { HiOutlineMail } from 'react-icons/hi';
 import { FiMessageCircle } from 'react-icons/fi';
 import { schema } from './hookform';
