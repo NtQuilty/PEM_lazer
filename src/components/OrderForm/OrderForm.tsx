@@ -45,6 +45,8 @@ interface FormValues {
 }
 
 export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType }) => {
+  const [selectedCountry, setSelectedCountry] = useState('RU');
+  
   const {
     handleSubmit,
     control,
@@ -125,34 +127,30 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
     }
 
     try {
-      const response = await fetch(
-        import.meta.env.VITE_BOT_API,
-        {
-          method: 'POST',
-          body: formData,
-        }
-      );
+      const response = await fetch(import.meta.env.VITE_BOT_API, {
+        method: 'POST',
+        body: formData,
+      });
       const result = await response.json();
       if (result.success) {
         localStorage.setItem('lastFormSubmitTime', Date.now().toString());
 
         setSnackbar({
           open: true,
-          message: `Заявка #${result.orderId} успешно отправлена!`,
+          message: `#${result.orderId} успешно отправлен! Мы свяжемся с вами в ближайшее время.`,
           severity: 'success',
         });
         reset();
         onClose();
       }
-    } catch (error) {
+    } catch {
       setSnackbar({
         open: true,
         message: 'Произошла ошибка при отправке заявки. Попробуйте снова или напишите нам на почту',
         severity: 'error',
       });
       onClose();
-              reset();
-
+      reset();
     }
   };
 
@@ -165,312 +163,305 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
 
   return (
     <>
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      maxWidth='lg'
-      fullWidth
-      slotProps={{
-        paper: {
-          style: {
-            backgroundImage: `url(/images/${formType === 'order' ? 'zakaz.png' : 'bgmodal.png'})`,
-            overflow: 'hidden',
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="lg"
+        fullWidth
+        slotProps={{
+          paper: {
+            style: {
+              backgroundImage: `url(/images/${formType === 'order' ? 'zakaz.png' : 'bgmodal.png'})`,
+              overflow: 'hidden',
+            },
+            className: '!rounded-2xl !bg-black border-2 border-white',
           },
-          className: '!rounded-2xl !bg-black border-2 border-white',
-        },
-      }}
-    >
-      <Box className="absolute right-4 top-4 hidden md:block">
-        <IconButton onClick={handleClose} sx={{ color: 'white' }}>
-          <IoMdClose size={32} />
-        </IconButton>
-      </Box>
+        }}
+      >
+        <Box className="absolute right-4 top-4 hidden md:block">
+          <IconButton onClick={handleClose} sx={{ color: 'white' }}>
+            <IoMdClose size={32} />
+          </IconButton>
+        </Box>
 
-      <DialogContent className='p-5'>
-        <div className='md:w-1/2'>
-          <div className='mb-2 sm:mb-4'>
-            <Typography variant='h5' className='font-bold text-white sm:text-h4'>
-              {formType === 'order' ? 'Заказать услугу' : 'Заполните заявку'}
-            </Typography>
-            <Typography variant='body2' className='text-gray-300 sm:text-body1'>
-              {formType === 'order'
-                ? 'Отправьте заявку и мы свяжемся с вами'
-                : 'Мы свяжемся с вами в ближайшее время'}
-            </Typography>
-          </div>
+        <DialogContent className="p-5">
+          <div className="md:w-1/2">
+            <div className="mb-2 sm:mb-4">
+              <Typography variant="h5" className="sm:text-h4 font-bold text-white">
+                {formType === 'order' ? 'Заказать услугу' : 'Заполните заявку'}
+              </Typography>
+              <Typography variant="body2" className="sm:text-body1 text-gray-300">
+                {formType === 'order'
+                  ? 'Отправьте заявку и мы свяжемся с вами'
+                  : 'Мы свяжемся с вами в ближайшее время'}
+              </Typography>
+            </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className='space-y-2 sm:space-y-4'>
-            <Box className='flex justify-center gap-3 flex-col md:flex-row'>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 sm:space-y-4">
+              <Box className="flex flex-col justify-center gap-3 md:flex-row">
+                <Controller
+                  name="name"
+                  control={control}
+                  render={({ field, fieldState: { error } }) => (
+                    <Box className="flex flex-1 flex-col gap-2">
+                      <TextField
+                        fullWidth
+                        placeholder="Ваше имя *"
+                        value={field.value}
+                        onChange={field.onChange}
+                        error={!!error}
+                        sx={lightTextFieldStyles}
+                        slotProps={{
+                          input: {
+                            className: 'bg-white !rounded-2xl',
+                            startAdornment: (
+                              <Box className="mr-2">
+                                <IoPersonOutline size={20} color="black" />
+                              </Box>
+                            ),
+                          },
+                        }}
+                      />
+                      {error && (
+                        <FormHelperText error className="md:ml-3">
+                          {error.message}
+                        </FormHelperText>
+                      )}
+                    </Box>
+                  )}
+                />
+                <Controller
+                  name="telephone"
+                  control={control}
+                  render={({ field, fieldState: { error } }) => (
+                    <Box className="flex flex-1 flex-col gap-2">
+                      <PhoneMaskCustom
+                        value={field.value}
+                        onChange={field.onChange}
+                        onCountryChange={(country) => setSelectedCountry(country || 'RU')}
+                      />
+                      {error && selectedCountry === 'RU' && (
+                        <FormHelperText error className="md:ml-3">
+                          {error.message}
+                        </FormHelperText>
+                      )}
+                    </Box>
+                  )}
+                />
+              </Box>
+
               <Controller
-                name='name'
+                name="mail"
                 control={control}
                 render={({ field, fieldState: { error } }) => (
-                  <Box className='flex flex-col gap-2 flex-1'>
+                  <>
                     <TextField
                       fullWidth
-                      placeholder='Ваше имя *'
+                      placeholder="Ваш email"
+                      type="email"
                       value={field.value}
                       onChange={field.onChange}
                       error={!!error}
                       sx={lightTextFieldStyles}
                       slotProps={{
                         input: {
-                          className: 'bg-white !rounded-2xl',
+                          className: '!rounded-2xl bg-white',
                           startAdornment: (
-                            <Box className='mr-2'>
-                              <IoPersonOutline size={20} color='black' />
+                            <Box className="mr-2">
+                              <HiOutlineMail size={20} color="black" />
                             </Box>
                           ),
                         },
                       }}
                     />
-                    {error && (
-                      <FormHelperText error className='md:ml-3'>
-                        {error.message}
-                      </FormHelperText>
-                    )}
-                  </Box>
+                    {error && <FormHelperText error>{error.message}</FormHelperText>}
+                  </>
                 )}
               />
-              <Controller
-                name='telephone'
-                control={control}
-                render={({ field, fieldState: { error } }) => (
-                  <Box className='flex flex-col gap-2 flex-1'>
-                    <TextField
-                      fullWidth
-                      placeholder='Ваш телефон *'
-                      value={field.value}
-                      onChange={field.onChange}
-                      error={!!error}
-                      sx={lightTextFieldStyles}
-                      slotProps={{
-                        input: {
-                          inputComponent: PhoneMaskCustom as any,
-                          className: 'bg-white !rounded-2xl',
-                          startAdornment: (
-                            <Box className='mr-2'>
-                              <BsTelephone size={20} color='black' />
-                            </Box>
-                          ),
-                        },
-                      }}
-                    />
-                    {error && (
-                      <FormHelperText error className='md:ml-3'>
-                        {error.message}
-                      </FormHelperText>
-                    )}
-                  </Box>
-                )}
-              />
-            </Box>
 
-            <Controller
-              name='mail'
-              control={control}
-              render={({ field, fieldState: { error } }) => (
-                <>
+              <Controller
+                name="message"
+                control={control}
+                render={({ field }) => (
                   <TextField
                     fullWidth
-                    placeholder='Ваш email'
-                    type='email'
+                    multiline
+                    rows={3}
+                    placeholder="Ваше сообщение"
                     value={field.value}
                     onChange={field.onChange}
-                    error={!!error}
                     sx={lightTextFieldStyles}
                     slotProps={{
                       input: {
                         className: '!rounded-2xl bg-white',
                         startAdornment: (
-                          <Box className='mr-2'>
-                            <HiOutlineMail size={20} color='black' />
+                          <Box className="mr-2 mt-[-45px]">
+                            <FiMessageCircle size={20} color="black" />
                           </Box>
                         ),
                       },
                     }}
                   />
-                  {error && <FormHelperText error>{error.message}</FormHelperText>}
-                </>
-              )}
-            />
-
-            <Controller
-              name='message'
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={3}
-                  placeholder='Ваше сообщение'
-                  value={field.value}
-                  onChange={field.onChange}
-                  sx={lightTextFieldStyles}
-                  slotProps={{
-                    input: {
-                      className: '!rounded-2xl bg-white',
-                      startAdornment: (
-                        <Box className='mr-2 mt-[-45px]'>
-                          <FiMessageCircle size={20} color='black' />
-                        </Box>
-                      ),
-                    },
-                  }}
-                />
-              )}
-            />
-
-            {formType === 'order' && (
-              <Controller
-                name='files'
-                control={control}
-                render={({ field, fieldState: { error } }) => (
-                  <Box className='flex flex-col gap-2'>
-                    <Tooltip
-                      title='Поддерживаются форматы: PDF, DXF, DWG, STL, STEP, IGS'
-                      arrow
-                      placement='top'
-                    >
-                      <Button
-                        component='label'
-                        variant='outlined'
-                        startIcon={<FaCloudDownloadAlt />}
-                        className='bg-white text-black hover:bg-gray-100 w-full justify-center text-xs sm:text-sm py-1 border-blue-500'
-                        size='small'
-                        sx={{
-                          borderColor: '#3198FF',
-                          borderWidth: '1px',
-                          '&:hover': {
-                            borderColor: '#1d80e2',
-                            borderWidth: '1px',
-                            bgcolor: '#f0f7ff',
-                          },
-                        }}
-                      >
-                        {field.value && field.value.length > 0
-                          ? 'Файлов: ' + field.value.length
-                          : 'Загрузить файлы'}
-                        <VisuallyHiddenInput
-                          type='file'
-                          multiple
-                          accept='.pdf,.dxf,.dwg,.stl,.step,.igs'
-                          onChange={e => {
-                            const fileList = e.target.files;
-                            if (fileList) {
-                              const allowedExtensions = ['pdf', 'dxf', 'dwg', 'stl', 'step', 'igs'];
-                              const filesArray = Array.from(fileList).filter(file => {
-                                const ext = file.name.split('.').pop()?.toLowerCase() || '';
-                                return allowedExtensions.includes(ext);
-                              });
-
-                              if (filesArray.length !== fileList.length) {
-                                setSnackbar({
-                                  open: true,
-                                  message:
-                                    'Некоторые файлы не были добавлены. Поддерживаются только PDF, DXF, DWG, STL, STEP, IGS.',
-                                  severity: 'error',
-                                });
-                              }
-
-                              field.onChange([...field.value, ...filesArray]);
-                            }
-                          }}
-                        />
-                      </Button>
-                    </Tooltip>
-                    {error && (
-                      <FormHelperText error className='md:ml-3'>
-                        {error.message}
-                      </FormHelperText>
-                    )}
-                  </Box>
                 )}
               />
-            )}
 
-            {files && files.length > 0 && formType === 'order' && (
-              <Box className='bg-gray-100 rounded-xl p-1 sm:p-2'>
-                <Box className='flex flex-wrap gap-1 sm:gap-2'>
-                  {(showAllFiles ? files : files.slice(0, 2)).map((file, index) => (
-                    <Box
-                      key={index}
-                      className='bg-white rounded-xl px-1 py-0.5 flex items-center gap-1'
-                    >
-                      <Typography variant='caption' className='font-medium'>
-                        {file?.name}
-                      </Typography>
-                      <Typography variant='caption' className='text-gray-500 ml-1'>
-                        ({(file?.size / 1024).toFixed(0)} КБ)
-                      </Typography>
-                      <IconButton size='small' onClick={() => onDeleteFiles(index)}>
-                        <MdClose size={16} />
-                      </IconButton>
-                    </Box>
-                  ))}
-                  {files.length > 2 && (
-                    <Box className='bg-white rounded-full px-1 flex items-center'>
-                      <Button size='small' onClick={() => setShowAllFiles(!showAllFiles)}>
-                        {showAllFiles ? 'Скрыть' : `... и еще ${files.length - 2}`}
-                      </Button>
+              {formType === 'order' && (
+                <Controller
+                  name="files"
+                  control={control}
+                  render={({ field, fieldState: { error } }) => (
+                    <Box className="flex flex-col gap-2">
+                      <Tooltip
+                        title="Поддерживаются форматы: PDF, DXF, DWG, STL, STEP, IGS"
+                        arrow
+                        placement="top"
+                      >
+                        <Button
+                          component="label"
+                          variant="outlined"
+                          startIcon={<FaCloudDownloadAlt />}
+                          className="w-full justify-center border-blue-500 bg-white py-1 text-xs text-black hover:bg-gray-100 sm:text-sm"
+                          size="small"
+                          sx={{
+                            borderColor: '#3198FF',
+                            borderWidth: '1px',
+                            '&:hover': {
+                              borderColor: '#1d80e2',
+                              borderWidth: '1px',
+                              bgcolor: '#f0f7ff',
+                            },
+                          }}
+                        >
+                          {field.value && field.value.length > 0
+                            ? 'Файлов: ' + field.value.length
+                            : 'Загрузить файлы'}
+                          <VisuallyHiddenInput
+                            type="file"
+                            multiple
+                            accept=".pdf,.dxf,.dwg,.stl,.step,.igs"
+                            onChange={e => {
+                              const fileList = e.target.files;
+                              if (fileList) {
+                                const allowedExtensions = [
+                                  'pdf',
+                                  'dxf',
+                                  'dwg',
+                                  'stl',
+                                  'step',
+                                  'igs',
+                                ];
+                                const filesArray = Array.from(fileList).filter(file => {
+                                  const ext = file.name.split('.').pop()?.toLowerCase() || '';
+                                  return allowedExtensions.includes(ext);
+                                });
+
+                                if (filesArray.length !== fileList.length) {
+                                  setSnackbar({
+                                    open: true,
+                                    message:
+                                      'Некоторые файлы не были добавлены. Поддерживаются только PDF, DXF, DWG, STL, STEP, IGS.',
+                                    severity: 'error',
+                                  });
+                                }
+
+                                field.onChange([...field.value, ...filesArray]);
+                              }
+                            }}
+                          />
+                        </Button>
+                      </Tooltip>
+                      {error && (
+                        <FormHelperText error className="md:ml-3">
+                          {error.message}
+                        </FormHelperText>
+                      )}
                     </Box>
                   )}
-                </Box>
-              </Box>
-            )}
-
-            <Controller
-              name='agreeToTerms'
-              control={control}
-              render={({ field, fieldState: { error } }) => (
-                <>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={field.value}
-                        onChange={field.onChange}
-                        sx={{
-                          color: 'white',
-                          '&.Mui-checked': {
-                            color: 'primary.main',
-                          },
-                        }}
-                      />
-                    }
-                    label={
-                      <Typography variant='caption' className='text-gray-300'>
-                        Нажав кнопку "Отправить", вы даете согласие на обработку персональных
-                        данных.
-                      </Typography>
-                    }
-                  />
-                  {error && <FormHelperText error>{error.message}</FormHelperText>}
-                </>
+                />
               )}
-            />
 
-            <Button
-              variant='contained'
-              fullWidth
-              type='submit'
-              sx={{
-                opacity: isValid ? 1 : 0.7,
-                '&:hover': {
-                  cursor: isValid ? 'pointer' : 'not-allowed',
-                },
-              }}
-            >
-              Отправить
-            </Button>
-          </form>
-        </div>
-      </DialogContent>
+              {files && files.length > 0 && formType === 'order' && (
+                <Box className="rounded-xl bg-gray-100 p-1 sm:p-2">
+                  <Box className="flex flex-wrap gap-1 sm:gap-2">
+                    {(showAllFiles ? files : files.slice(0, 2)).map((file, index) => (
+                      <Box
+                        key={index}
+                        className="flex items-center gap-1 rounded-xl bg-white px-1 py-0.5"
+                      >
+                        <Typography variant="caption" className="font-medium">
+                          {file?.name}
+                        </Typography>
+                        <Typography variant="caption" className="ml-1 text-gray-500">
+                          ({(file?.size / 1024).toFixed(0)} КБ)
+                        </Typography>
+                        <IconButton size="small" onClick={() => onDeleteFiles(index)}>
+                          <MdClose size={16} />
+                        </IconButton>
+                      </Box>
+                    ))}
+                    {files.length > 2 && (
+                      <Box className="flex items-center rounded-full bg-white px-1">
+                        <Button size="small" onClick={() => setShowAllFiles(!showAllFiles)}>
+                          {showAllFiles ? 'Скрыть' : `... и еще ${files.length - 2}`}
+                        </Button>
+                      </Box>
+                    )}
+                  </Box>
+                </Box>
+              )}
 
-      
-    </Dialog><Snackbar open={snackbar.open} autoHideDuration={3000} onClose={handleCloseSnackbar}>
-        <Alert severity={snackbar.severity} variant='filled'>
+              <Controller
+                name="agreeToTerms"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                  <>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={field.value}
+                          onChange={field.onChange}
+                          sx={{
+                            color: 'white',
+                            '&.Mui-checked': {
+                              color: 'primary.main',
+                            },
+                          }}
+                        />
+                      }
+                      label={
+                        <Typography variant="caption" className="text-gray-300">
+                          Нажав кнопку &quot;Отправить&quot;, вы даете согласие на обработку
+                          персональных данных.
+                        </Typography>
+                      }
+                    />
+                    {error && <FormHelperText error>{error.message}</FormHelperText>}
+                  </>
+                )}
+              />
+
+              <Button
+                variant="contained"
+                fullWidth
+                type="submit"
+                sx={{
+                  opacity: isValid ? 1 : 0.7,
+                  '&:hover': {
+                    cursor: isValid ? 'pointer' : 'not-allowed',
+                  },
+                }}
+              >
+                Отправить
+              </Button>
+            </form>
+          </div>
+        </DialogContent>
+      </Dialog>
+      <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={handleCloseSnackbar}>
+        <Alert severity={snackbar.severity} variant="filled">
           {snackbar.message}
         </Alert>
-      </Snackbar></>
+      </Snackbar>
+    </>
   );
 };
