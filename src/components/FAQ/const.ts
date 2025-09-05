@@ -43,6 +43,6 @@ export const questions = [
   },
   {
     question: 'Политика использования файлов cookies',
-    answer: '', 
+    answer: '',
   },
 ] as const;

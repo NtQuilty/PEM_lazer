@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
-import { 
-  getCookieConsentStatus, 
-  isCookieConsentAccepted, 
+import {
+  getCookieConsentStatus,
+  isCookieConsentAccepted,
   isCookieConsentDeclined,
   hasCookieConsent,
-  type CookieConsentStatus 
+  type CookieConsentStatus,
 } from '../utils/cookieConsent';
 
 export const useCookieConsent = () => {
-  const [consentStatus, setConsentStatus] = useState<CookieConsentStatus>(
-    getCookieConsentStatus()
-  );
+  const [consentStatus, setConsentStatus] = useState<CookieConsentStatus>(getCookieConsentStatus());
 
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
