@@ -7,7 +7,6 @@ export default defineConfig({
   appType: 'spa',
   base: '/',
   build: {
-    target: 'esnext',
     rollupOptions: {
       output: {
         manualChunks: undefined,
