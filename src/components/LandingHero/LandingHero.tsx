@@ -1,14 +1,14 @@
-import { useState, useRef } from 'react';
-import { services } from '../../config';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectFade } from 'swiper/modules';
-import type { Swiper as SwiperType } from 'swiper';
-import { useOrderForm } from '../../contexts/OrderFormContext';
-import 'swiper/css';
-import 'swiper/css/effect-fade';
-import 'swiper/css/autoplay';
-import { Link } from 'react-router-dom';
+import { useRef, useState } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import type { Swiper as SwiperType } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/effect-fade';
+import { Autoplay, EffectFade } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { services } from '../../config';
+import { useOrderForm } from '../../contexts/OrderFormContext';
 
 export const LandingHero = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -40,7 +40,7 @@ export const LandingHero = () => {
   };
 
   return (
-    <div className="mb-12 h-[500px] w-full sm:h-[600px] md:mb-20 md:h-[700px] lg:mb-28 lg:h-[800px]">
+    <div className="mb-12 h-[800px] w-full md:mb-20 lg:mb-28">
       <div className="grid h-full w-full grid-cols-1 grid-rows-1">
         <div className="col-start-1 row-start-1 h-full w-full overflow-hidden">
           <Swiper
@@ -75,8 +75,8 @@ export const LandingHero = () => {
           </Swiper>
         </div>
 
-        <div className="z-[5] col-start-1 row-start-1 flex h-full w-full flex-col justify-between gap-[10px]">
-          <div className="relative flex flex-1 items-center justify-start">
+        <div className="z-[5] col-start-1 row-start-1 flex h-full w-full flex-col justify-between gap-[150px] lg:gap-[0px]">
+          <div className="relative flex flex-1 items-end justify-start lg:items-center">
             {/* Desktop Navigation Arrows */}
             <button
               onClick={goToPrevSlide}
@@ -95,7 +95,7 @@ export const LandingHero = () => {
             </button>
 
             <div className="mx-auto w-full max-w-7xl px-4 sm:px-8 md:px-20 lg:px-20">
-              <div className="flex max-w-full flex-col justify-center gap-3 md:mb-[-150px] md:max-w-[950px] md:gap-6">
+              <div className="flex max-w-full flex-col justify-center gap-3 md:mb-[-100px] md:max-w-[950px] md:gap-6">
                 <h1 className="heading-h1">{activeService.title}</h1>
                 <p className="text-body-lg mb-4 max-w-full md:mb-[40px] md:max-w-[722px]">
                   {activeService.description}
