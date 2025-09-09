@@ -24,6 +24,7 @@ export const MainContent = ({ isHomePage = true }: { isHomePage?: boolean }) => 
               <img
                 src={service.image}
                 alt={service.title}
+                loading="lazy"
                 className={`max-h-64 object-contain md:max-h-96 md:w-1/2 ${index % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}
               />
               <div

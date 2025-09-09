@@ -8,8 +8,8 @@ import { TbBrandMessenger, TbMailFilled } from 'react-icons/tb';
 
 export const Contacts: React.FC = () => {
   return (
-    <section className="relative mx-auto flex min-h-screen w-full flex-col pt-[20px] md:relative">
-      <div className="lg:py-25 z-[5] w-full rounded-2xl bg-[#13151e]/90 p-6 backdrop-blur-md md:absolute md:left-[5%] md:top-[15%] md:max-w-lg md:px-20 lg:p-10">
+    <section className="relative mx-auto flex min-h-screen w-full flex-col pt-[20px] lg:relative">
+      <div className="lg:py-25 z-[5] w-full rounded-2xl bg-[#13151e]/90 p-6 backdrop-blur-md lg:absolute lg:left-[5%] lg:top-[15%] lg:max-w-lg lg:px-20 lg:p-10">
         <h1 className="heading-h1 mb-8">Контакты</h1>
 
         <div className="space-y-8">
@@ -86,12 +86,12 @@ export const Contacts: React.FC = () => {
       </div>
 
       {/* Фоновая карта - снизу на мобильных */}
-      <div className="h-[60vh] w-full md:absolute md:inset-0 md:h-screen md:max-h-screen md:overflow-hidden">
+      <div className="h-[60vh] w-full lg:absolute lg:inset-0 lg:h-screen lg:max-h-screen lg:overflow-hidden">
         <iframe
           src="https://yandex.ru/map-widget/v1/?um=constructor%3A1_bPGipJIRyuCIuWrZ2dVK6CYVPMo0Rz&amp;source=constructor&amp;ll=30.424308%2C59.880216&amp;z=16&amp;pt=30.426208%2C59.880216,pm2rdl~%D0%9F%D0%B5%D1%82%D1%80%D0%BE%D0%AD%D0%BD%D0%B5%D1%80%D0%B3%D0%BE%D0%9C%D0%B0%D1%88&amp;scroll=false"
           width="100%"
           height="100%"
-          className="opacity-70 md:opacity-70"
+          className="opacity-70 lg:opacity-70"
         ></iframe>
       </div>
     </section>

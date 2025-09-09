@@ -51,19 +51,19 @@ export const Header: FC = () => {
       }`}
     >
       <div className="mx-auto flex items-center justify-between px-4 md:max-w-[1350px]">
-        <button onClick={toggleDrawer(true)} className="ml-3 block md:hidden" aria-label="Меню">
+        <button onClick={toggleDrawer(true)} className="ml-3 block lg:hidden" aria-label="Меню">
           <RxHamburgerMenu size={24} color="white" />
         </button>
 
         <Link to="/" className="relative z-10 ml-10">
           <img
-            src="/images/logo.png"
+            src="/images/logo.webp"
             alt="logo"
             className="h-[60px] w-[150px] md:h-[75px] md:w-[180px]"
           />
         </Link>
 
-        <div className="hidden flex-1 items-center justify-around md:flex">
+        <div className="hidden flex-1 items-center justify-around lg:flex">
           {navigationLinks.map(navigationLink => {
             if (navigationLink.id === 'home') return null;
 
@@ -188,7 +188,7 @@ export const Header: FC = () => {
         </div>
 
         {/* Правая часть десктопного хедера - скрыта на мобильных */}
-        <div className="hidden items-center gap-[16px] md:flex">
+        <div className="hidden items-center gap-[16px] lg:flex">
           <div className="group relative">
             <button
               onClick={() => openOrderForm('order')}

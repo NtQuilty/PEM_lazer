@@ -11,6 +11,7 @@ export const ConsultationPromo: React.FC = () => {
           <img
             src="/images/blue-crystal.webp"
             alt="Кристалл"
+            loading="lazy"
             className="-translate-x-1/2 transform md:h-[500px] md:-translate-x-1/4"
           />
         </div>

@@ -42,6 +42,7 @@ export const Projects = ({ isHomePage }: { isHomePage: boolean }) => {
                 component="img"
                 src={project.imagePath}
                 alt={project.title}
+                loading="lazy"
                 className="h-full w-full object-cover"
               />
               <Box className="project-overlay width-[100%] absolute bottom-0 left-0 right-0 bg-black/70 p-2 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 md:p-3">
@@ -70,24 +71,24 @@ export const Projects = ({ isHomePage }: { isHomePage: boolean }) => {
         )}
       </div>
 
-      <Modal open={open} onClose={handleClose} className="flex items-center justify-center p-2">
-        <Box className="relative w-full max-w-none rounded-lg bg-[#1a1e2c] p-3 md:p-4" maxWidth="90vw" maxHeight="90vh">
-          <Box className="mb-2 flex items-center justify-between">
-            <Typography variant="h6" className="mb-3 text-base text-white md:text-lg">
+      <Modal open={open} onClose={handleClose} className="flex items-center justify-center p-4">
+        <div className="rounded-lg bg-[#1a1e2c] p-4 sm:p-6 md:p-8">
+          <div className="mb-4 flex items-center justify-between">
+            <Typography variant="h6" className="text-sm text-white sm:text-base md:text-lg">
               {selectedTitle}
             </Typography>
-            <Button onClick={handleClose} className="!rounded-full" aria-label="close">
-              <IoClose size={24} />
+             <Button onClick={handleClose} className="!min-w-0 rounded-full !p-[4px] transition-colors hover:bg-[#3198FF]/20" aria-label="close">
+              <IoClose size={20} className="text-white" />
             </Button>
-          </Box>
-
-          <Box
-            component="img"
+          </div>
+          
+          <img
             src={selectedImage}
             alt={selectedTitle}
-            className="h-auto w-full object-contain"
+            loading="lazy"
+            className="max-h-[75vh] min-h-[50vh] min-w-[70vw] max-w-[85vw] object-contain"
           />
-        </Box>
+        </div>
       </Modal>
     </Box>
   );

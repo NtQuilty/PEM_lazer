@@ -50,7 +50,7 @@ export const services = [
     title: 'Лазерная резка черных и цветных металлов с высокой точностью',
     description:
       'Режем с точностью от 0,02мм черную сталь толщиной до 40мм, нержавейку до 20мм, алюминий до 10мм и другие металлы.',
-    image: '/images/services-images/service-lazer.png',
+    image: '/images/services-images/service-lazer.webp',
   },
   {
     id: 'lathe',
@@ -58,7 +58,7 @@ export const services = [
       '8-ми летний производственный опыт, компетентные инженеры и технологи, контроль качества',
     description:
       'Сделаем раскладку, быстро рассчитаем стоимость изготовления, дадим реальные сроки. Бережно относимся к материалам заказчика, гарантируем высокое качество деталей.',
-    image: '/images/services-images/service-lathe.png',
+    image: '/images/services-images/service-lathe.webp',
   },
 ] as const;
 

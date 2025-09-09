@@ -92,6 +92,7 @@ export const DiscountForm: React.FC = () => {
             <img
               src="/images/sale.webp"
               alt="Скидка 10%"
+              loading="lazy"
               className="mx-auto h-auto max-w-full md:mx-0"
             />
           </div>

@@ -31,18 +31,5 @@ export const initOpenReplay = (): Tracker | null => {
   return tracker;
 };
 
-const getOpenReplay = (): Tracker | null => tracker;
-
-const trackEvent = (name: string, payload?: Record<string, any>): void => {
-  tracker?.event(name, payload);
-};
-
-const setUserID = (userID: string): void => {
-  tracker?.setUserID(userID);
-};
-
-const setMetadata = (key: string, value: string): void => {
-  tracker?.setMetadata(key, value);
-};
 
 

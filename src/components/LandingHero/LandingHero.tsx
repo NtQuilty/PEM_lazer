@@ -94,7 +94,7 @@ export const LandingHero = () => {
               <MdKeyboardArrowRight className="h-6 w-6" />
             </button>
 
-            <div className="mx-auto w-full max-w-7xl px-4 sm:px-8 md:px-12 lg:px-20">
+            <div className="mx-auto w-full max-w-7xl px-4 sm:px-8 md:px-20 lg:px-20">
               <div className="flex max-w-full flex-col justify-center gap-3 md:mb-[-150px] md:max-w-[950px] md:gap-6">
                 <h1 className="heading-h1">{activeService.title}</h1>
                 <p className="text-body-lg mb-4 max-w-full md:mb-[40px] md:max-w-[722px]">

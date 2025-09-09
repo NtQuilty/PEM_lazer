@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FAQItem } from './components/FAQItem';
 import { questions } from './const';
+import { deliveryInfo } from './delivery-const';
 import { useOrderForm } from '../../contexts/OrderFormContext';
 import { useLocation } from 'react-router-dom';
-import { TELEPHONE_NUMBER } from '../../config';
 
 export const FAQ: React.FC = () => {
   const location = useLocation();
@@ -19,10 +19,11 @@ export const FAQ: React.FC = () => {
   return (
     <section className="relative mx-auto pb-[50px]">
       <div
-        className={`relative mx-auto bg-[#13151e] pb-[50px] ${isHomePage ? 'pt-[100px]' : 'pt-[50px]'}`}
-        style={!isHomePage ? { backgroundImage: `url(/images/faq-banner-new.png)` } : undefined}
+        className={`relative mx-auto bg-[#13151e] pb-[50px] ${isHomePage ? 'pt-[100px]' : 'pt-[50px]'} ${
+          !isHomePage ? 'bg-[url(/images/faq-banner-new.webp)] bg-cover bg-[22%_center] bg-no-repeat md:bg-contain md:bg-right' : ''
+        }`}
       >
-        <div className="mx-auto px-4 md:max-w-[1350px]">
+        <div className="relative z-10 mx-auto px-4 md:max-w-[1350px]">
           <div className={`max-w-[660px] ${!isHomePage ? 'md:ml-auto' : ''}`}>
             <h2 className="heading-lg mb-8">Ответы на вопросы</h2>
 
@@ -54,89 +55,42 @@ export const FAQ: React.FC = () => {
       {!isHomePage && (
         <div className="mt-16 bg-[#13151e]">
           <div className="mx-auto px-4 md:max-w-[1350px]">
-            <div className="flex flex-col gap-0 md:flex-row md:gap-8">
-              <div className="w-full md:w-2/3">
-                <h2 className="heading-md mb-6">Условия доставки</h2>
+            <h2 className="heading-md mb-6">{deliveryInfo.mainTitle}</h2>
+            
+            <p className="mb-8 text-[rgba(214,214,214,0.8)] md:mb-12">
+              {deliveryInfo.intro}
+            </p>
 
-                <p className="mb-8 text-[rgba(214,214,214,0.8)]">
-                  Для вашего удобства мы предлагаем разные варианты доставки заказов. Вы можете
-                  выбрать один из вариантов: забрать заказ из пункта выдачи, оформить доставку
-                  курьером по Москве, а также заказать отправку заказа по России и в другие страны.
-                </p>
-
-                <div className="mb-8">
-                  <h3 className="heading-sm mb-4">Самовывоз</h3>
-                  <p className="mb-4 text-[rgba(214,214,214,0.8)]">
-                    В офисе ПетроЭнергоМаш вы можете самостоятельно забрать готовый заказ. Обращаем
-                    ваше внимание на то, что забрать заказ можно только после подтверждения о его
-                    готовности по телефону или уведомлением на адрес электронной почты.
-                  </p>
-                  <p className="mb-2 text-[rgba(214,214,214,0.8)]">
-                    Адрес пункта выдачи:{' '}
-                    <span className="text-body">г. Санкт-Петербург, ул. Седова 57</span>
-                  </p>
-                  <p className="mb-2 text-[rgba(214,214,214,0.8)]">Время работы:</p>
-                  <p className="mb-2 text-[rgba(214,214,214,0.8)]">Пн. - Пт.: с 10:00 до 19:00</p>
-                  <p className="mb-2 text-[rgba(214,214,214,0.8)]">
-                    Сб. - Вс.: Забрать заказ можно по предварительной договоренности.
-                  </p>
-                  <p className="text-[rgba(214,214,214,0.8)]">
-                    Телефон: <span className="text-white">{TELEPHONE_NUMBER}</span>
-                  </p>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+              {deliveryInfo.sections.map((section) => (
+                <div key={section.title} className="rounded-2xl border border-gray-700/30 bg-[#1b1e29] p-6 transition-all duration-200 hover:border-gray-600/50">
+                  <div className="mb-4 flex items-center gap-3">
+                    {section.icon && (
+                      <span className="text-2xl" role="img" aria-label={section.title}>
+                        {section.icon}
+                      </span>
+                    )}
+                    <h3 className="heading-sm text-white">{section.title}</h3>
+                  </div>
+                  
+                  {Array.isArray(section.content) ? (
+                    <div className="space-y-3">
+                      {section.content.map((text, pIndex) => (
+                        <p 
+                          key={pIndex} 
+                          className="leading-relaxed text-[rgba(214,214,214,0.9)]"
+                          dangerouslySetInnerHTML={{ __html: text }}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <p 
+                      className="leading-relaxed text-[rgba(214,214,214,0.9)]"
+                      dangerouslySetInnerHTML={{ __html: section.content }}
+                    />
+                  )}
                 </div>
-
-                <div className="mb-8">
-                  <h3 className="heading-sm mb-4">Цена доставки</h3>
-                  <p className="mb-4 text-[rgba(214,214,214,0.8)]">
-                    <span className="text-body">
-                      По Санкт-Петербургу и Ленинградской области составляет 300 рублей
-                    </span>
-                    , при условии: общий вес заказа не превышает 10 кг и общие габариты не превышают
-                    150 см
-                  </p>
-                  <p className="text-[rgba(214,214,214,0.8)]">
-                    Цена доставки в другие регионы и страны рассчитывается индивидуально для каждого
-                    отправления. Всю информацию предоставит менеджер ведущий ваш заказ.
-                  </p>
-                </div>
-              </div>
-
-              <div className="w-full md:w-1/2">
-                <div className="mb-8">
-                  <h3 className="heading-sm mb-4">Доставка по Санкт-Петербургу</h3>
-                  <p className="text-[rgba(214,214,214,0.8)]">
-                    Наша компания сотрудничает с сервисами Яндекс.Доставка и СДЭК, также у нас есть
-                    свой водитель. Можем привезти груз как в пункт выдачи курьерской службы, так и
-                    доставить до адреса. Согласовать удобное время и дату доставки можно с
-                    менеджером ПетроЭнергоМаш.
-                  </p>
-                </div>
-
-                <div className="mb-8">
-                  <h3 className="heading-sm mb-4">По России</h3>
-                  <p className="text-[rgba(214,214,214,0.8)]">
-                    Мы отправляем заказы в другие города России с помощью транспортной компании
-                    СДЭК. При необходимости вы можете уточнить у специалиста возможность отправки
-                    другими курьерскими службами.
-                  </p>
-                </div>
-
-                <div className="mb-8">
-                  <h3 className="heading-sm mb-4">В СНГ</h3>
-                  <p className="text-[rgba(214,214,214,0.8)]">
-                    Расчет стоимости доставки и выбор транспортной компании для доставки заказов в
-                    страны ближнего зарубежья осуществляется в индивидуальном порядке.
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="heading-sm mb-4">Другие страны</h3>
-                  <p className="text-[rgba(214,214,214,0.8)]">
-                    Доставка отправленных заказов в другие страны рассчитывается индивидуально.
-                    Стоимость и сроки пересылки уточняйте у менеджера, который ведет ваш заказ.
-                  </p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

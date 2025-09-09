@@ -13,7 +13,7 @@ export const LazerCutting: React.FC = () => {
       </div>
 
       <div className="flex items-center justify-center">
-        <img src="/images/error-image.png" className="w-full object-cover md:h-[500px]"></img>
+        <img src="/images/error-image.webp" loading="lazy" className="w-full object-cover md:h-[500px]"></img>
         <div className="absolute bg-black/50 p-4 text-white">
           <span>Произошла ошибка. Отправьте заявку через</span>{' '}
           <button onClick={() => openOrderForm('order')} className="text-[#3B82F6] underline">

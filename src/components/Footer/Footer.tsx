@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
             <Link to="/" className="mb-4 block md:mb-6">
               <div className="flex items-center">
                 <img
-                  src="/images/logo.png"
+                  src="/images/logo.webp"
                   alt="PEM"
                   className="h-[60px] w-[150px] md:h-[75px] md:w-[180px]"
                 />

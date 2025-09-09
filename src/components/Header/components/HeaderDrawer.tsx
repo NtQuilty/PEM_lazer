@@ -49,7 +49,7 @@ export const HeaderDrawer: FC<HeaderDrawerProps> = ({ drawerOpen, toggleDrawer }
         {/* Шапка с логотипом и кнопкой закрытия */}
         <div className="mb-8 flex items-center justify-between">
           <Link to="/" onClick={toggleDrawer(false)} className="flex items-center">
-            <img src="/images/logo.png" alt="logo" className="h-8" />
+            <img src="/images/logo.webp" alt="logo" className="h-8" />
           </Link>
           <IconButton onClick={toggleDrawer(false)} className="text-white">
             <MdClose size={24} color="white" />

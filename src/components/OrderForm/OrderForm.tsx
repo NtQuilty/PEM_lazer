@@ -170,7 +170,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
         slotProps={{
           paper: {
             style: {
-              backgroundImage: `url(/images/${formType === 'order' ? 'zakaz.png' : 'bgmodal.png'})`,
+              backgroundImage: `url(/images/bgmodal.webp})`,
               overflow: 'hidden',
             },
             className: '!rounded-2xl !bg-black border-2 border-white',
