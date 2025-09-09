@@ -34,7 +34,9 @@ export const Footer: React.FC = () => {
 
           {/* Колонка 2: Навигация */}
           <div>
-            <h3 className="mb-3 text-base font-bold text-[#d6d6d6] md:mb-4 md:text-lg">Навигация</h3>
+            <h3 className="mb-3 text-base font-bold text-[#d6d6d6] md:mb-4 md:text-lg">
+              Навигация
+            </h3>
             <nav className="space-y-2 md:space-y-3">
               {navigationLinks.map(item => {
                 if (item.id === 'home' || item.id === 'laser-cutting') return null;
@@ -66,7 +68,9 @@ export const Footer: React.FC = () => {
 
           {/* Колонка 4: Контакты */}
           <div>
-            <h3 className="mb-3 text-base font-bold  text-[#d6d6d6] md:mb-4 md:text-lg">Контакты</h3>
+            <h3 className="mb-3 text-base font-bold  text-[#d6d6d6] md:mb-4 md:text-lg">
+              Контакты
+            </h3>
             <div className="space-y-2 md:space-y-3">
               <ContactItem to={`tel:${TELEPHONE_NUMBER}`} icon={BsTelephoneFill} size={14}>
                 {formatPhoneNumber(TELEPHONE_NUMBER)}

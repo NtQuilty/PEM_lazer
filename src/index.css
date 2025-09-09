@@ -109,7 +109,7 @@
 }
 
 .text-body-lg {
-  color: hsla(0, 0%, 84%, .7);
+  color: hsla(0, 0%, 84%, 0.7);
   line-height: 1.625;
   font-size: 1rem;
 }

@@ -30,6 +30,3 @@ export const initOpenReplay = (): Tracker | null => {
 
   return tracker;
 };
-
-
-

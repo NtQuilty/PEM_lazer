@@ -154,7 +154,7 @@ export const DiscountForm: React.FC = () => {
                       <PhoneMaskCustom
                         value={field.value}
                         onChange={field.onChange}
-                        onCountryChange={(country) => setSelectedCountry(country || 'RU')}
+                        onCountryChange={country => setSelectedCountry(country || 'RU')}
                         isLightTheme={false}
                       />
                       {error && selectedCountry === 'RU' && (

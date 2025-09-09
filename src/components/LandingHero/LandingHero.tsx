@@ -85,7 +85,7 @@ export const LandingHero = () => {
             >
               <MdKeyboardArrowLeft className="h-6 w-6" />
             </button>
-            
+
             <button
               onClick={goToNextSlide}
               className="absolute right-4 top-1/2 z-[8] hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20 md:flex"
@@ -141,7 +141,7 @@ export const LandingHero = () => {
               >
                 <MdKeyboardArrowLeft className="h-5 w-5" />
               </button>
-              
+
               <div className="flex gap-3">
                 {services.map((_, index) => (
                   <button
@@ -158,7 +158,7 @@ export const LandingHero = () => {
                   />
                 ))}
               </div>
-              
+
               <button
                 onClick={goToNextSlide}
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/20"

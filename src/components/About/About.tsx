@@ -1,6 +1,8 @@
 export const About = ({ isHomePage = true }: { isHomePage?: boolean }) => {
   return (
-    <section className={`relative mx-auto bg-[#1a1e2c] pb-[50px] ${isHomePage ? ' pt-[100px]' : 'pt-[50px]'}`}>
+    <section
+      className={`relative mx-auto bg-[#1a1e2c] pb-[50px] ${isHomePage ? ' pt-[100px]' : 'pt-[50px]'}`}
+    >
       <div className="mx-auto px-4 md:max-w-[1350px]">
         {/* Заголовок секции */}
         <h1 className="heading-h1 mb-6 md:mb-12">О компании</h1>

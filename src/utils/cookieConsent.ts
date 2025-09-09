@@ -18,4 +18,3 @@ export const isCookieConsentDeclined = (): boolean => {
 export const hasCookieConsent = (): boolean => {
   return getCookieConsentStatus() !== null;
 };
-

@@ -1,35 +1,34 @@
-import React, { useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
+  Alert,
+  Box,
+  Button,
+  Checkbox,
   Dialog,
   DialogContent,
-  DialogTitle,
-  TextField,
-  Button,
-  Typography,
-  Checkbox,
   FormControlLabel,
-  Box,
   FormHelperText,
   IconButton,
   Snackbar,
-  Alert,
+  TextField,
   Tooltip,
+  Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { IoPersonOutline } from 'react-icons/io5';
-import { IoMdClose } from 'react-icons/io';
-import { HiOutlineMail } from 'react-icons/hi';
-import { FiMessageCircle } from 'react-icons/fi';
-import { schema } from './hookform';
 import { FaCloudDownloadAlt } from 'react-icons/fa';
-import { VisuallyHiddenInput } from './style';
+import { FiMessageCircle } from 'react-icons/fi';
+import { HiOutlineMail } from 'react-icons/hi';
+import { IoMdClose } from 'react-icons/io';
+import { IoPersonOutline } from 'react-icons/io5';
 import { MdClose } from 'react-icons/md';
-import { PhoneMaskCustom } from './components/PhoneMaskCustom';
-import { lightTextFieldStyles } from '../../helpers';
 import { OrderFormType } from '../../contexts/OrderFormContext';
+import { lightTextFieldStyles } from '../../helpers';
+import { PhoneMaskCustom } from './components/PhoneMaskCustom';
+import { schema } from './hookform';
+import { VisuallyHiddenInput } from './style';
 
 interface OrderFormProps {
   open: boolean;
@@ -50,7 +49,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
   const [selectedCountry, setSelectedCountry] = useState('RU');
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  
+
   const {
     handleSubmit,
     control,
@@ -189,12 +188,12 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
           </IconButton>
         </Box>
         <DialogContent className="!flex !min-h-full flex-col !items-center !justify-start gap-4 !p-4 md:!items-start md:!px-[50px] md:!py-[100px]">
-          <div className='flex w-full justify-end md:hidden'>
+          <div className="flex w-full justify-end md:hidden">
             <IconButton onClick={handleClose} sx={{ color: 'white' }}>
-            <IoMdClose size={32} />
-          </IconButton>
+              <IoMdClose size={32} />
+            </IconButton>
           </div>
-          
+
           <div className="mt-16 md:mt-0 md:w-1/2">
             <div className="mb-6 sm:mb-4">
               <Typography variant="h5" className="sm:text-h4 font-bold text-[#d6d6d6]">
@@ -248,7 +247,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
                       <PhoneMaskCustom
                         value={field.value}
                         onChange={field.onChange}
-                        onCountryChange={(country) => setSelectedCountry(country || 'RU')}
+                        onCountryChange={country => setSelectedCountry(country || 'RU')}
                       />
                       {error && selectedCountry === 'RU' && (
                         <FormHelperText error className="md:ml-3">

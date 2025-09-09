@@ -27,7 +27,9 @@ export const Projects = ({ isHomePage }: { isHomePage: boolean }) => {
   const visibleProjects = showAll && !isHomePage ? projectsData : projectsData.slice(0, 6);
 
   return (
-    <Box className={`relative mx-auto bg-[#1a1e2c] pb-[50px] ${isHomePage ? 'pt-[100px]' : 'pt-[50px]'}`}>
+    <Box
+      className={`relative mx-auto bg-[#1a1e2c] pb-[50px] ${isHomePage ? 'pt-[100px]' : 'pt-[50px]'}`}
+    >
       <div className="mx-auto px-4 md:max-w-[1350px]">
         <div className="heading-lg mb-10">Наши проекты</div>
 
@@ -77,11 +79,15 @@ export const Projects = ({ isHomePage }: { isHomePage: boolean }) => {
             <Typography variant="h6" className="text-sm text-white sm:text-base md:text-lg">
               {selectedTitle}
             </Typography>
-             <Button onClick={handleClose} className="!min-w-0 rounded-full !p-[4px] transition-colors hover:bg-[#3198FF]/20" aria-label="close">
+            <Button
+              onClick={handleClose}
+              className="!min-w-0 rounded-full !p-[4px] transition-colors hover:bg-[#3198FF]/20"
+              aria-label="close"
+            >
               <IoClose size={20} className="text-white" />
             </Button>
           </div>
-          
+
           <img
             src={selectedImage}
             alt={selectedTitle}
