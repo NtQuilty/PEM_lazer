@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
   TextField,
   Button,
   Typography,
@@ -178,20 +179,25 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
               backgroundImage: `url(/images/bgmodal.webp)`,
               overflow: 'hidden',
             },
-            className: '!rounded-2xl !bg-black border-2 border-white',
+            className: '!rounded-2xl !bg-[#1B1E29] border-2 border-white',
           },
         }}
       >
-        <Box className="absolute right-4 top-4 z-11">
+        <Box className="absolute right-4 top-4 z-10 hidden md:block">
           <IconButton onClick={handleClose} sx={{ color: 'white' }}>
             <IoMdClose size={32} />
           </IconButton>
         </Box>
-
-        <DialogContent className="!flex !min-h-full !items-center !justify-start !p-4 md:!px-[50px] md:!py-[100px]">
-          <div className="md:w-1/2">
+        <DialogContent className="!flex !min-h-full flex-col !items-center !justify-start gap-4 !p-4 md:!items-start md:!px-[50px] md:!py-[100px]">
+          <div className='flex w-full justify-end md:hidden'>
+            <IconButton onClick={handleClose} sx={{ color: 'white' }}>
+            <IoMdClose size={32} />
+          </IconButton>
+          </div>
+          
+          <div className="mt-16 md:mt-0 md:w-1/2">
             <div className="mb-6 sm:mb-4">
-              <Typography variant="h5" className="sm:text-h4 font-bold text-white">
+              <Typography variant="h5" className="sm:text-h4 font-bold text-[#d6d6d6]">
                 {formType === 'order' ? 'Заказать услугу' : 'Заполните заявку'}
               </Typography>
               <Typography variant="body2" className="sm:text-body1 text-gray-300">
@@ -220,7 +226,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
                             className: 'bg-white !rounded-2xl',
                             startAdornment: (
                               <Box className="mr-2">
-                                <IoPersonOutline size={20} color="black" />
+                                <IoPersonOutline size={20} color="rgb(67, 80, 96)" />
                               </Box>
                             ),
                           },
@@ -272,7 +278,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
                           className: '!rounded-2xl bg-white',
                           startAdornment: (
                             <Box className="mr-2">
-                              <HiOutlineMail size={20} color="black" />
+                              <HiOutlineMail size={20} color="rgb(67, 80, 96)" />
                             </Box>
                           ),
                         },
@@ -300,7 +306,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
                         className: '!rounded-2xl bg-white',
                         startAdornment: (
                           <Box className="mr-2 mt-[-45px]">
-                            <FiMessageCircle size={20} color="black" />
+                            <FiMessageCircle size={20} color="rgb(67, 80, 96)" />
                           </Box>
                         ),
                       },
@@ -433,7 +439,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
                         />
                       }
                       label={
-                        <Typography variant="caption" className="text-gray-300">
+                        <Typography variant="caption" className="text-[#d6d6d6]">
                           Нажав кнопку &quot;Отправить&quot;, вы даете согласие на обработку
                           персональных данных.
                         </Typography>

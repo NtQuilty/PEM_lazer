@@ -29,7 +29,7 @@ export const textFieldStyles = {
 
 export const lightTextFieldStyles = {
   '& .MuiInputBase-root': {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#262d37',
     borderRadius: '16px',
     color: '#333333',
   },
@@ -39,12 +39,12 @@ export const lightTextFieldStyles = {
     '&.Mui-focused fieldset': { borderColor: '#0ea5e9' },
   },
   '& .MuiInputBase-input': {
-    color: '#333333',
+    color: '#ffffff',
     '&:-webkit-autofill': {
       transition: 'background-color 5000s ease-in-out 0s',
-      WebkitTextFillColor: '#333333',
-      caretColor: '#333333',
-      WebkitBoxShadow: '0 0 0 1000px #ffffff inset',
+      WebkitTextFillColor: '#ffffff !important',
+      caretColor: '#ffffff',
+      WebkitBoxShadow: '0 0 0 1000px #262d37 inset',
     },
   },
 };
