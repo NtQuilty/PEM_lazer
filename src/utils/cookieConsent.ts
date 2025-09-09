@@ -19,6 +19,6 @@ export const hasCookieConsent = (): boolean => {
   return getCookieConsentStatus() !== null;
 };
 
-export const clearCookieConsent = (): void => {
+const clearCookieConsent = (): void => {
   localStorage.removeItem(COOKIE_CONSENT_KEY);
 };

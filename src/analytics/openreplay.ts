@@ -31,17 +31,17 @@ export const initOpenReplay = (): Tracker | null => {
   return tracker;
 };
 
-export const getOpenReplay = (): Tracker | null => tracker;
+const getOpenReplay = (): Tracker | null => tracker;
 
-export const trackEvent = (name: string, payload?: Record<string, any>): void => {
+const trackEvent = (name: string, payload?: Record<string, any>): void => {
   tracker?.event(name, payload);
 };
 
-export const setUserID = (userID: string): void => {
+const setUserID = (userID: string): void => {
   tracker?.setUserID(userID);
 };
 
-export const setMetadata = (key: string, value: string): void => {
+const setMetadata = (key: string, value: string): void => {
   tracker?.setMetadata(key, value);
 };
 
