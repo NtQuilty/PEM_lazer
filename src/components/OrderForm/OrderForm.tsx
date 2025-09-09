@@ -149,7 +149,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
         setNotificationModal({
           open: true,
           type: 'success',
-          orderId: `Заказ-${result.orderId}`,
+          orderId: `${result.orderId}`,
           title: '',
           message: '',
         });
