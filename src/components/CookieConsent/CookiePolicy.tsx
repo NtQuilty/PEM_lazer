@@ -2,7 +2,7 @@ import React from 'react';
 
 export const CookiePolicy: React.FC = () => {
   return (
-    <section className="relative mx-auto bg-[#1a1e2c] pt-[20px]">
+    <section className="relative mx-auto bg-[#1a1e2c] pt-[92px] md:pt-[100px]">
       <div className="mx-auto px-4 md:max-w-[1350px]">
         <h1 className="heading-h1 mb-8 md:mb-12">Политика в отношении cookie-файлов</h1>
 

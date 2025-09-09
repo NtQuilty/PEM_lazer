@@ -1,6 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  Alert,
   Box,
   Button,
   Checkbox,
@@ -9,7 +8,6 @@ import {
   FormControlLabel,
   FormHelperText,
   IconButton,
-  Snackbar,
   TextField,
   Tooltip,
   Typography,
@@ -27,6 +25,7 @@ import { MdClose } from 'react-icons/md';
 import { OrderFormType } from '../../contexts/OrderFormContext';
 import { lightTextFieldStyles } from '../../helpers';
 import { PhoneMaskCustom } from './components/PhoneMaskCustom';
+import { SuccessModal } from './components/SuccessModal';
 import { schema } from './hookform';
 import { VisuallyHiddenInput } from './style';
 
@@ -73,14 +72,12 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
   const files = watch('files');
 
   const [showAllFiles, setShowAllFiles] = useState(false);
-  const [snackbar, setSnackbar] = useState<{
-    open: boolean;
-    message: string;
-    severity: 'success' | 'error';
-  }>({
+  const [notificationModal, setNotificationModal] = useState({
     open: false,
+    type: 'success' as 'success' | 'error',
+    orderId: '',
+    title: '',
     message: '',
-    severity: 'success',
   });
 
   const handleClose = () => {
@@ -88,8 +85,17 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
     onClose();
   };
 
-  const handleCloseSnackbar = () => {
-    setSnackbar({ ...snackbar, open: false });
+  const handleNotificationClose = () => {
+    setNotificationModal({
+      open: false,
+      type: 'success',
+      orderId: '',
+      title: '',
+      message: '',
+    });
+    if (notificationModal.type === 'success') {
+      onClose();
+    }
   };
 
   const canSubmitForm = (): boolean => {
@@ -105,12 +111,14 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
 
   const onSubmit = async (data: FormValues) => {
     if (!canSubmitForm()) {
-      setSnackbar({
+      setNotificationModal({
         open: true,
+        type: 'error',
+        orderId: '',
+        title: 'Слишком часто!',
         message: 'Вы не можете отправлять заявки чаще, чем раз в 30 секунд. Пожалуйста, подождите.',
-        severity: 'error',
       });
-      return;
+      return handleClose();
     }
 
     const formData = new FormData();
@@ -138,23 +146,27 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
       if (result.success) {
         localStorage.setItem('lastFormSubmitTime', Date.now().toString());
 
-        setSnackbar({
+        setNotificationModal({
           open: true,
-          message: `#${result.orderId} успешно отправлен! Мы свяжемся с вами в ближайшее время.`,
-          severity: 'success',
+          type: 'success',
+          orderId: `Заказ-${result.orderId}`,
+          title: '',
+          message: '',
         });
         reset();
-        onClose();
       }
     } catch {
-      setSnackbar({
+      setNotificationModal({
         open: true,
-        message: 'Произошла ошибка при отправке заявки. Попробуйте снова или напишите нам на почту',
-        severity: 'error',
+        type: 'error',
+        orderId: '',
+        title: 'Ошибка отправки',
+        message:
+          'Произошла ошибка при отправке заявки. Попробуйте снова или напишите нам на почту.',
       });
-      onClose();
       reset();
     }
+    handleClose();
   };
 
   const onDeleteFiles = (index: number) => {
@@ -365,11 +377,13 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
                                 });
 
                                 if (filesArray.length !== fileList.length) {
-                                  setSnackbar({
+                                  setNotificationModal({
                                     open: true,
+                                    type: 'error',
+                                    orderId: '',
+                                    title: 'Неподдерживаемые файлы',
                                     message:
                                       'Некоторые файлы не были добавлены. Поддерживаются только PDF, DXF, DWG, STL, STEP, IGS.',
-                                    severity: 'error',
                                   });
                                 }
 
@@ -466,11 +480,14 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
           </div>
         </DialogContent>
       </Dialog>
-      <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={handleCloseSnackbar}>
-        <Alert severity={snackbar.severity} variant="filled">
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
+      <SuccessModal
+        open={notificationModal.open}
+        onClose={handleNotificationClose}
+        type={notificationModal.type}
+        orderId={notificationModal.orderId}
+        title={notificationModal.title}
+        message={notificationModal.message}
+      />
     </>
   );
 };

@@ -5,7 +5,7 @@ export const LazerCutting: React.FC = () => {
   const { openOrderForm } = useOrderForm();
 
   return (
-    <div className="relative mx-auto bg-[#1a1e2c] pt-[50px]">
+    <div className="relative mx-auto bg-[#1a1e2c] pt-[92px] md:pt-[100px]">
       <div className="mx-auto px-4 md:max-w-[1350px]">
         <h1 className="heading-h1 mb-6 md:mb-12">Лазерная резка металла</h1>
       </div>

@@ -1,12 +1,12 @@
-import { servicesData } from './const';
-import { useOrderForm } from '../../contexts/OrderFormContext';
 import { Link } from 'react-router-dom';
+import { useOrderForm } from '../../contexts/OrderFormContext';
+import { servicesData } from './const';
 
 export const MainContent = ({ isHomePage = true }: { isHomePage?: boolean }) => {
   const { openOrderForm } = useOrderForm();
 
   return (
-    <div className={`relative mx-auto ${isHomePage ? 'pb-[50px]' : 'pt-[50px]'}`}>
+    <div className={`relative mx-auto ${isHomePage ? 'pb-[50px]' : 'pt-[92px] md:pt-[100px]'}`}>
       <div className="mx-auto px-4 md:max-w-[1350px]">
         <h2 className="mx-4 my-10 mb-10 max-w-full text-2xl leading-normal text-[#d6d6d6] md:my-[100px] md:ml-[145px] md:max-w-[800px] md:text-[40px] md:leading-[60px]">
           Мы изготавливаем детали технологией 2D и 3D лазерной резки

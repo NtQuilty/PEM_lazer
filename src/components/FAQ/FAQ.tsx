@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useOrderForm } from '../../contexts/OrderFormContext';
 import { FAQItem } from './components/FAQItem';
 import { questions } from './const';
 import { deliveryInfo } from './delivery-const';
-import { useOrderForm } from '../../contexts/OrderFormContext';
-import { useLocation } from 'react-router-dom';
 
 export const FAQ: React.FC = () => {
   const location = useLocation();
@@ -19,14 +19,15 @@ export const FAQ: React.FC = () => {
   return (
     <section className="relative mx-auto pb-[50px]">
       <div
-        className={`relative mx-auto bg-[#13151e] pb-[50px] ${isHomePage ? 'pt-[100px]' : 'pt-[50px]'} ${
+        className={`relative mx-auto bg-[#13151e] pb-[50px] ${isHomePage ? 'pt-[100px]' : 'pt-[92px] md:pt-[100px]'} ${
           !isHomePage
-            ? 'bg-[url(/images/faq-banner-new.webp)] bg-cover bg-[22%_center] bg-no-repeat md:bg-contain md:bg-right'
+            ? 'bg-[url(/images/faq-banner-new.png)] bg-cover bg-no-repeat md:bg-contain md:bg-center'
             : ''
         }`}
       >
+        {!isHomePage && <div className="absolute inset-0 bg-black/40"></div>}
         <div className="relative z-10 mx-auto px-4 md:max-w-[1350px]">
-          <div className={`max-w-[660px] ${!isHomePage ? 'md:ml-auto' : ''}`}>
+          <div className={`max-w-[660px] ${!isHomePage ? 'md:ml-auto md:mt-20' : ''}`}>
             <h2 className="heading-lg mb-8">Ответы на вопросы</h2>
 
             <div className="mb-8">
@@ -41,11 +42,13 @@ export const FAQ: React.FC = () => {
               ))}
             </div>
 
-            <div className="flex items-center">
-              <span className="text-body mr-4">Остались вопросы?</span>
+            <div className="flex w-full items-center justify-between">
+              <span className="text-body md:text-body-lg mr-4 hidden md:block">
+                Остались вопросы?
+              </span>
               <button
                 onClick={() => openOrderForm('consultation')}
-                className="btn-text rounded-md bg-[#3198FF] px-6 py-3 text-white transition-colors hover:bg-[#2980e6]"
+                className="btn-text md:btn-text-lg w-full rounded-md bg-[#3198FF] px-6 py-3 text-white transition-colors hover:bg-[#2980e6] md:w-auto md:px-12"
               >
                 {'Задать вопрос'}
               </button>

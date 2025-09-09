@@ -1,14 +1,14 @@
 import React from 'react';
 import { BsFillGeoAltFill, BsTelephoneFill } from 'react-icons/bs';
 import { FaRegClock, FaTelegram } from 'react-icons/fa';
+import { TbBrandMessenger, TbMailFilled } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 import { EMAIL, TELEPHONE_NUMBER } from '../../config';
 import { formatPhoneNumber } from '../../helpers';
-import { TbBrandMessenger, TbMailFilled } from 'react-icons/tb';
 
 export const Contacts: React.FC = () => {
   return (
-    <section className="relative mx-auto flex min-h-screen w-full flex-col pt-[20px] lg:relative">
+    <section className="relative mx-auto flex min-h-screen w-full flex-col pt-[92px] md:pt-[100px] lg:relative">
       <div className="lg:py-25 z-[5] w-full rounded-2xl bg-[#13151e]/90 p-6 backdrop-blur-md lg:absolute lg:left-[5%] lg:top-[15%] lg:max-w-lg lg:p-10 lg:px-20">
         <h1 className="heading-h1 mb-8">Контакты</h1>
 

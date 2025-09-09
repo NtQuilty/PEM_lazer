@@ -1,5 +1,5 @@
-import PhoneInput from 'react-phone-number-input';
 import { Box, styled } from '@mui/material';
+import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 
 const StyledPhoneBox = styled(Box, {
@@ -60,7 +60,6 @@ export const PhoneMaskCustom: React.FC<PhoneMaskCustomProps> = ({
         id="phone"
         value={value}
         onChange={value => {
-          console.log(value);
           onChange(value || '');
         }}
         onCountryChange={onCountryChange}

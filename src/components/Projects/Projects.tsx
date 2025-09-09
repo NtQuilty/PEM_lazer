@@ -1,7 +1,6 @@
+import { Box, Button, Modal, Typography } from '@mui/material';
 import { useState } from 'react';
-import { Box, Typography, Button, Modal } from '@mui/material';
-import { IoArrowDown } from 'react-icons/io5';
-import { IoClose } from 'react-icons/io5';
+import { IoArrowDown, IoClose } from 'react-icons/io5';
 import { projectsData } from './const';
 
 export const Projects = ({ isHomePage }: { isHomePage: boolean }) => {
@@ -28,7 +27,7 @@ export const Projects = ({ isHomePage }: { isHomePage: boolean }) => {
 
   return (
     <Box
-      className={`relative mx-auto bg-[#1a1e2c] pb-[50px] ${isHomePage ? 'pt-[100px]' : 'pt-[50px]'}`}
+      className={`relative mx-auto bg-[#1a1e2c] pb-[50px] ${isHomePage ? 'pt-[100px]' : 'pt-[100px] md:pt-[150px]'}`}
     >
       <div className="mx-auto px-4 md:max-w-[1350px]">
         <div className="heading-lg mb-10">Наши проекты</div>
