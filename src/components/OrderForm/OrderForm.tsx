@@ -13,6 +13,8 @@ import {
   Snackbar,
   Alert,
   Tooltip,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -45,6 +47,8 @@ interface FormValues {
 
 export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType }) => {
   const [selectedCountry, setSelectedCountry] = useState('RU');
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   
   const {
     handleSubmit,
@@ -167,25 +171,26 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
         onClose={handleClose}
         maxWidth="lg"
         fullWidth
+        fullScreen={isMobile}
         slotProps={{
           paper: {
             style: {
-              backgroundImage: `url(/images/bgmodal.webp})`,
+              backgroundImage: `url(/images/bgmodal.webp)`,
               overflow: 'hidden',
             },
             className: '!rounded-2xl !bg-black border-2 border-white',
           },
         }}
       >
-        <Box className="absolute right-4 top-4 hidden md:block">
+        <Box className="absolute right-4 top-4 z-11">
           <IconButton onClick={handleClose} sx={{ color: 'white' }}>
             <IoMdClose size={32} />
           </IconButton>
         </Box>
 
-        <DialogContent className="p-5">
+        <DialogContent className="!flex !min-h-full !items-center !justify-start !p-4 md:!px-[50px] md:!py-[100px]">
           <div className="md:w-1/2">
-            <div className="mb-2 sm:mb-4">
+            <div className="mb-6 sm:mb-4">
               <Typography variant="h5" className="sm:text-h4 font-bold text-white">
                 {formType === 'order' ? 'Заказать услугу' : 'Заполните заявку'}
               </Typography>
@@ -196,8 +201,8 @@ export const OrderForm: React.FC<OrderFormProps> = ({ open, onClose, formType })
               </Typography>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 sm:space-y-4">
-              <Box className="flex flex-col justify-center gap-3 md:flex-row">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 sm:space-y-4">
+              <Box className="flex flex-col justify-center gap-6 md:flex-row md:gap-3">
                 <Controller
                   name="name"
                   control={control}
