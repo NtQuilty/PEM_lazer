@@ -9,7 +9,7 @@ import { formatPhoneNumber } from '../../helpers';
 export const Contacts: React.FC = () => {
   return (
     <section className="relative mx-auto flex min-h-screen w-full flex-col pt-[92px] md:pt-[100px] lg:relative">
-      <div className="lg:py-25 z-[5] w-full rounded-2xl bg-[#13151e]/90 p-6 backdrop-blur-md lg:absolute lg:left-[5%] lg:top-[15%] lg:max-w-lg lg:p-10 lg:px-20">
+      <div className="lg:py-25 z-[5] w-full rounded-2xl bg-[#13151e]/90 p-6 backdrop-blur-md lg:absolute lg:left-[5%] lg:top-[20%] lg:max-w-lg lg:p-10 lg:px-20">
         <h1 className="heading-h1 mb-8">Контакты</h1>
 
         <div className="space-y-8">

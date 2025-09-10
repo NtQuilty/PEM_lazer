@@ -1,14 +1,14 @@
-import { Link } from 'react-router-dom';
-import { EMAIL, navigationLinks, NavigationOption, TELEPHONE_NUMBER } from '../../config';
-import { BsTelephoneFill } from 'react-icons/bs';
-import { TbMailFilled } from 'react-icons/tb';
-import { FC, useState, useEffect } from 'react';
 import { Menu, MenuItem, Tooltip } from '@mui/material';
+import { FC, useEffect, useState } from 'react';
+import { BsTelephoneFill } from 'react-icons/bs';
 import { MdKeyboardArrowDown, MdKeyboardArrowLeft } from 'react-icons/md';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { HeaderDrawer } from './components/HeaderDrawer';
-import { SocialLink } from '../Footer/components/SocialLink';
+import { TbMailFilled } from 'react-icons/tb';
+import { Link, useLocation } from 'react-router-dom';
+import { EMAIL, navigationLinks, NavigationOption, TELEPHONE_NUMBER } from '../../config';
 import { useOrderForm } from '../../contexts/OrderFormContext';
+import { SocialLink } from '../Footer/components/SocialLink';
+import { HeaderDrawer } from './components/HeaderDrawer';
 
 export const Header: FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -16,6 +16,7 @@ export const Header: FC = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const { openOrderForm } = useOrderForm();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,7 +46,7 @@ export const Header: FC = () => {
   return (
     <header
       className={`fixed left-0 right-0 top-0 z-50 py-4 transition-all duration-300 ${
-        isScrolled
+        isScrolled || location.pathname === '/contacts'
           ? 'bg-[rgba(19,21,30,0.5)] shadow-header backdrop-blur-[57.5px]'
           : 'bg-transparent'
       }`}
